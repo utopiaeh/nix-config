@@ -9,7 +9,7 @@ in
   # home-manager = {
   #     useGlobalPkgs = true;
   #     useUserPackages = true;
-  #     users.alex = import ../../../home/alex.nix;
+  #     users.utopiaeh = import ../../../home/utopiaeh.nix;
   # };
 
   virtualisation = {

@@ -36,38 +36,38 @@
 
       darwinConfigurations = {
         # personal
-        slartibartfast = libx.mkDarwin { hostname = "slartibartfast"; };
-        nauvis = libx.mkDarwin { hostname = "nauvis"; };
-        mac-studio = libx.mkDarwin { hostname = "mac-studio"; };
-        mac-mini = libx.mkDarwin { hostname = "mac-mini"; };
-        mooncake = libx.mkDarwin { hostname = "mooncake"; };
+        mac-pro = libx.mkDarwin { hostname = "mac-pro"; };
+        # nauvis = libx.mkDarwin { hostname = "nauvis"; };
+        # mac-studio = libx.mkDarwin { hostname = "mac-studio"; };
+        # mac-mini = libx.mkDarwin { hostname = "mac-mini"; };
+        # mooncake = libx.mkDarwin { hostname = "mooncake"; };
 
         # work
-        baldrick = libx.mkDarwin { hostname = "baldrick"; };
-        magrathea = libx.mkDarwin { hostname = "magrathea"; };
+        flow48 = libx.mkDarwin { hostname = "flow48"; };
+        # magrathea = libx.mkDarwin { hostname = "magrathea"; };
       };
 
-      colmena = {
-        meta = {
-          nixpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-          specialArgs = {
-            inherit inputs outputs stateVersion self;
-          };
-        };
+      # colmena = {
+      #   meta = {
+      #     nixpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+      #     specialArgs = {
+      #       inherit inputs outputs stateVersion self;
+      #     };
+      #   };
 
-        defaults = { lib, config, name, ... }: {
-          imports = [
-            inputs.home-manager.nixosModules.home-manager
-          ];
-        };
+      #   defaults = { lib, config, name, ... }: {
+      #     imports = [
+      #       inputs.home-manager.nixosModules.home-manager
+      #     ];
+      #   };
 
-        # wd
-        morphnix = import ./hosts/nixos/morphnix;
-        nvllama = import ./hosts/nixos/nvllama;
+      #   # wd
+      #   # morphnix = import ./hosts/nixos/morphnix;
+      #   # nvllama = import ./hosts/nixos/nvllama;
 
-        # test system
-        # yeager = nixosSystem "x86_64-linux" "yeager" "alex";
-      };
+      #   # test system
+      #   # yeager = nixosSystem "x86_64-linux" "yeager" "utopiaeh";
+      # };
 
     };
 
