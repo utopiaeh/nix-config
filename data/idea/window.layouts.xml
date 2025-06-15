@@ -1,0 +1,209 @@
+<application>
+  <component name="ToolWindowLayout"><![CDATA[{
+  "activeLayoutName": "LeftSideMaster",
+  "layouts": {
+    "LeftSideMaster": {
+      "v2": [
+        {
+          "id": "Bookmarks",
+          "isShowStripeButton": false,
+          "isSplit": true
+        },
+        {
+          "id": "Backup and Sync History",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Pull Requests",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Learn",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Database",
+          "order": 0,
+          "weight": 0.32969576
+        },
+        {
+          "id": "Notifications",
+          "order": 1,
+          "weight": 0.32969576
+        },
+        {
+          "id": "Welcome to GitHub Copilot",
+          "order": 2,
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Structure",
+          "order": 3,
+          "weight": 0.3298828,
+          "isSplit": true
+        },
+        {
+          "id": "AIAssistant",
+          "order": 4,
+          "weight": 0.3298828,
+          "isSplit": true
+        },
+        {
+          "id": "Database Changes",
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "TypeScript",
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Profiler",
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "TODO",
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "File Transfer",
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "HfCacheToolWindow",
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Version Control",
+          "order": 0,
+          "anchor": "BOTTOM",
+          "weight": 0.330518
+        },
+        {
+          "id": "Problems",
+          "order": 1,
+          "anchor": "BOTTOM"
+        },
+        {
+          "id": "Problems View",
+          "order": 2,
+          "anchor": "BOTTOM",
+          "weight": 0.330518
+        },
+        {
+          "id": "Terminal",
+          "order": 3,
+          "anchor": "BOTTOM",
+          "weight": 0.330518
+        },
+        {
+          "id": "Python Packages",
+          "order": 4,
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "GraphQL",
+          "order": 5,
+          "anchor": "BOTTOM",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Services",
+          "order": 6,
+          "anchor": "BOTTOM",
+          "weight": 0.330518
+        },
+        {
+          "id": "Plots",
+          "anchor": "RIGHT",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Endpoints",
+          "anchor": "RIGHT",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Coverage",
+          "anchor": "RIGHT",
+          "isShowStripeButton": false,
+          "isSplit": true
+        },
+        {
+          "id": "SciView",
+          "anchor": "RIGHT",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Project",
+          "order": 0,
+          "anchor": "RIGHT",
+          "contentUiType": "COMBO",
+          "weight": 0.18728018
+        },
+        {
+          "id": "Commit",
+          "order": 1,
+          "anchor": "RIGHT",
+          "weight": 0.32969576
+        },
+        {
+          "id": "Gradle",
+          "order": 2,
+          "anchor": "RIGHT",
+          "weight": 0.25
+        },
+        {
+          "id": "Key Promoter X",
+          "order": 3,
+          "anchor": "RIGHT",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Maven",
+          "order": 4,
+          "anchor": "RIGHT",
+          "weight": 0.25
+        },
+        {
+          "id": "make",
+          "order": 5,
+          "anchor": "RIGHT",
+          "isShowStripeButton": false,
+          "isSplit": true
+        },
+        {
+          "id": "github.copilotToolWindow",
+          "order": 6,
+          "anchor": "RIGHT",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "Python Console",
+          "order": 7,
+          "anchor": "RIGHT",
+          "isShowStripeButton": false
+        },
+        {
+          "id": "GitHub Copilot Chat",
+          "order": 8,
+          "anchor": "RIGHT",
+          "weight": 0.30041033
+        }
+      ],
+      "unifiedWeights": {
+        "top": 0.33,
+        "left": 0.3298828,
+        "bottom": 0.330518,
+        "right": 0.30041033
+      }
+    }
+  }
+}]]></component>
+</application>

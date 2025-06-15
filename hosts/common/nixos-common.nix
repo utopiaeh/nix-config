@@ -1,9 +1,9 @@
-{ pkgs, unstablePkgs, lib, inputs, stateVersion, ... }:
+{ pkgs, unstablePkgs, lib, inputs, stateVersion, username, ... }:
 let
   inherit (inputs) nixpkgs nixpkgs-unstable;
 in
 {
-  time.timeZone = "America/New_York";
+  time.timeZone = "Moldova/Chisinau";
   system.stateVersion = stateVersion;
 
   # home-manager = {
@@ -26,7 +26,7 @@ in
     settings = {
         experimental-features = [ "nix-command" "flakes" ];
         warn-dirty = false;
-        trusted-users = [ "@admin" "utopiaeh" ];
+        trusted-users = [ "@admin" "${username}" ];
         substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
         trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
     };

@@ -3,7 +3,7 @@ let
   inherit (inputs) nixpkgs nixpkgs-unstable;
 in
 {
-  users.users.utopiaeh.home = "/Users/utopiaeh";
+  users.users.${username}.home = "/Users/${username}";
 
   nix = {
     enable = false;
@@ -16,7 +16,7 @@ in
   system.stateVersion = 5;
 
   # Set primary user for system-wide activation
-  system.primaryUser = "utopiaeh";
+  system.primaryUser = "${username}";
 
   nixpkgs = {
     config.allowUnfree = true;
@@ -24,16 +24,6 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    ## unstable
-    # unstablePkgs.yt-dlp
-    # unstablePkgs.get_iplayer
-    # unstablePkgs.colmena
-
-    ## stable CLI
-    # pkgs.comma
-    # pkgs.hcloud
-    # pkgs.just
-    # pkgs.lima
     pkgs.nix
   ];
 
@@ -71,6 +61,7 @@ in
       autoUpdate = true;
       upgrade = true;
     };
+
     global.autoUpdate = true;
 
     brews = [
@@ -81,74 +72,28 @@ in
       #"FelixKratz/formulae" #sketchybar
     ];
     casks = [
-      # "screenflow"
-      "cleanshot"
-      # "adobe-creative-cloud"
-      #"nikitabobko/tap/aerospace"
-      # "alcove"
-      # "audacity"
-      #"balenaetcher"
-      # "bambu-studio"
-      # "bentobox"
-      #"clop"
-      "discord"
-      # "displaylink"
       #"docker"
-      # "element"
-      # "elgato-camera-hub"
-      # "elgato-control-center"
-      # "elgato-stream-deck"
-      # "firefox"
-      # "flameshot"
-      # "font-fira-code"
-      # "font-fira-code-nerd-font"
-      # "font-fira-mono-for-powerline"
-      # "font-hack-nerd-font"
-      # "font-jetbrains-mono-nerd-font"
-      # "font-meslo-lg-nerd-font"
-      # "ghostty"
+      "font-fira-code"
+      "font-fira-code-nerd-font"
+      "font-fira-mono-for-powerline"
+      "font-hack-nerd-font"
+      "font-jetbrains-mono-nerd-font"
+      "font-meslo-lg-nerd-font"
       "google-chrome"
+      "zen"
       "iina"
-      # "istat-menus"
       "iterm2"
-      # "jordanbaird-ice"
-      # "lm-studio"
-      # "logitech-options"
-      # "macwhisper"
-      # "marta"
-      # "mqtt-explorer"
-      # "music-decoy" # github/FuzzyIdeas/MusicDecoy
-      # "nextcloud"
-      # "notion"
-      # "obs"
-      # "obsidian"
-      # "ollama"
-      # "omnidisksweeper"
-      # "orbstack"
-      # "openscad"
-      # "openttd"
-      # "plexamp"
-      # "popclip"
-      # "prusaslicer"
-      # "raycast"
-      # "signal"
-      # "shortcat"
-      "slack"
+      "logitech-options"
+      "notion"
+      "raycast"
       "spotify"
-      # "steam"
-      # "tailscale"
-      #"wireshark"
-      # "viscosity"
-      # "visual-studio-code"
-      # "vlc"
-      # "lm-studio"
-
-      # # rogue amoeba
-      # "audio-hijack"
-      # "farrago"
-      # "loopback"
-      # "soundsource"
       "zed"
+      "intellij-idea"
+      "sublime-text"
+      "telegram"
+      "middleclick"
+
+
     ];
     masApps = {
       # these apps only available via uk apple id
@@ -191,6 +136,7 @@ in
     loginwindow.GuestEnabled = false;
     finder.FXPreferredViewStyle = "Nlsv";
   };
+
 
   system.defaults.CustomUserPreferences = {
       "com.apple.finder" = {
@@ -261,6 +207,54 @@ in
         DisablePrintPreview = true;
         PMPrintingExpandedStateForPrint2 = true;
       };
+
+      "com.apple.symbolichotkeys" = {
+        AppleSymbolicHotKeys = {
+            "60" = { enabled = false; };  # ⌘ + Space
+            "61" = { enabled = true; };  # ⌃ + Space
+            "64" = { enabled = false; };  # Spotlight
+            "65" = { enabled = true; };  # Spotlight (secondary)
+
+            # Screenshoots
+            "28" = { enabled = false; };
+            "29" = { enabled = false; };
+            "30" = { enabled = false; };
+            "31" = { enabled = false; };
+        };
+      };
   };
+
+
+    # Disassembly of this binary shows that it will read all of the values in
+    # com.apple.symbolichotkeys and bind all of those shortcuts, forcing them to take effect
+    # immediately. This allows anyone to adjust those shortcuts via defaults without restarting.
+    system.activationScripts.postActivation.text = ''
+      sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+
+#    Install specific version of cask for cleanshot
+#      sudo -u ${username} env \
+#          PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" \
+#          HOME="/Users/${username}" \
+#          USER="${username}" \
+#          LOGNAME="${username}" \
+#          brew uninstall --cask cleanshot || true
+
+#        sudo -u ${username} env \
+#          PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" \
+#          HOME="/Users/${username}" \
+#          USER="${username}" \
+#          LOGNAME="${username}" \
+#          brew install --cask /Users/${username}/nix-config/data/homebrew/cleanshot.rb || true
+
+    '';
+
+
+    system.activationScripts.localTap = {
+        text = ''
+          if ! brew tap | grep -q "^local/custom-tap\$"; then
+            brew tap local/custom-tap /Users/${username}/nix-config/data/homebrew
+          fi
+        '';
+      };
 
 }
