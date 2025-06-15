@@ -16,5 +16,6 @@ in
     watch
     wget
     zoxide
+    lazygit #GIT GUI
   ];
 }
