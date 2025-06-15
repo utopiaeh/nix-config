@@ -1,9 +1,10 @@
 { inputs, outputs, config, lib, hostname, system, username, pkgs, unstablePkgs, ... }:
 let
+  cleanshot = import ./apps/cleanshot.nix { inherit pkgs lib; };
   inherit (inputs) nixpkgs nixpkgs-unstable;
 in
 {
-  users.users.utopiaeh.home = "/Users/${username}";
+  users.users.${username}.home = "/Users/${username}";
 
   nix = {
     enable = false;
@@ -24,7 +25,12 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    cleanshot
     pkgs.nix
+  ];
+
+ nix-darwin.symlinkedApplications = [
+    "${cleanshot}/Applications/CleanShot X.app"
   ];
 
   fonts.packages = [
@@ -72,7 +78,6 @@ in
       #"FelixKratz/formulae" #sketchybar
     ];
     casks = [
-      "cleanshot"
       #"docker"
       "font-fira-code"
       "font-fira-code-nerd-font"
