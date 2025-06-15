@@ -1,0 +1,60 @@
+# Default key bindings
+[[ -n ${key[Delete]} ]] && bindkey "${key[Delete]}" delete-char
+[[ -n ${key[Home]} ]] && bindkey "${key[Home]}" beginning-of-line
+[[ -n ${key[End]} ]] && bindkey "${key[End]}" end-of-line
+[[ -n ${key[Up]} ]] && bindkey "${key[Up]}" up-line-or-search
+[[ -n ${key[Down]} ]] && bindkey "${key[Down]}" down-line-or-search
+
+# Default prompt
+PS1="%n@%m %1~ %# "
+if [[ "$(ps -o uid= $PPID)" -eq "$UID" ]]; then
+	PS1='%F{red}↳nix%f '"$PS1"
+fi
+
+# Enable colours in ls etc.
+export CLICOLOR=1
+export LSCOLORS=gxfxcxdxbxgggdabagacad
+export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+
+
+# path fix for homebrew
+export PATH=$PATH:/opt/homebrew/bin/
+export PATH=$PATH:/Users/utopiaeh/go/bin
+#export EDITOR=vi
+export VISUAL=/etc/profiles/per-user/utopiaeh/bin/nvim
+export EDITOR=/etc/profiles/per-user/utopiaeh/bin/nvim
+# export TERM=xterm
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+
+autoload -Uz compinit
+compinit
+# source <(kubectl completion zsh)
+# export KUBE_EDITOR="nvim"
+
+#alias tssh='sh function tssh () { test -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" && alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale" h="$( \ (echo -e 'DNS\tHostName\tOnline\tTags\tUser'; \ tailscale status --json | \ jq -r '. as $root | .Peer[] | . as $peer | $root.User[] | select(.ID == $peer.UserID) | [ $peer.DNSName, $peer.HostName, $peer.Online, ($peer.Tags // [] | join(",")), .DisplayName] | @tsv' | \ sort -t $'\t' -k3,3r -k5,5 -k4,4) | \ gum table -s $'\t' \ --height=$(tailscale status --json | jq '.Peer | length +1') \ --widths=30,10,6,25,14 | \ awk '{print $1}')" [ -n "$h" ] && ssh "$h" }'
+# alias ..='cd ..'
+# alias ...='cd ../..'
+# alias ....='cd ../../..'
+# alias .....='cd ../../../..'
+# alias ......='cd ../../../../..'
+# alias .......='cd ../../../../../..'
+# alias ........='cd ../../../../../../..'
+# alias kc='kubectl'
+# alias kcg='kubectl get'
+# alias kcgpo='kubectl get pod'
+alias cl="clear"
+
+, () {
+  nix run nixpkgs#comma -- "$@"
+}
+
+eval "$(starship init zsh)"
+# alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+# alias ghostty="/Applications/Ghostty.app/Contents/MacOS/ghostty"
+
+#/Users/utopiaeh/go/bin/figurine -f "Doom.flf" magrathea
