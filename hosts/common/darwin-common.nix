@@ -1,6 +1,5 @@
 { inputs, outputs, config, lib, hostname, system, username, pkgs, unstablePkgs, ... }:
 let
-  cleanshot = import ./apps/cleanshot.nix { inherit pkgs lib; };
   inherit (inputs) nixpkgs nixpkgs-unstable;
 in
 {
@@ -25,12 +24,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    cleanshot
     pkgs.nix
-  ];
-
- nix-darwin.symlinkedApplications = [
-    "${cleanshot}/Applications/CleanShot X.app"
   ];
 
   fonts.packages = [
@@ -214,14 +208,10 @@ in
 
       "com.apple.symbolichotkeys" = {
         AppleSymbolicHotKeys = {
-          # Disalbe spotlight shortcut
-          "64" = {
-            enabled = false;
-          };
-
-          "65" = {
-            enabled = false;
-          };
+            "60" = { enabled = false; };  # ⌘ + Space
+            "61" = { enabled = true; };  # ⌃ + Space
+            "64" = { enabled = false; };  # Spotlight
+            "65" = { enabled = true; };  # Spotlight (secondary)
         };
       };
   };
