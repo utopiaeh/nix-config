@@ -92,6 +92,7 @@ in
       "intellij-idea"
       "sublime-text"
       "telegram"
+      "middleclick"
     ];
     masApps = {
       # these apps only available via uk apple id
