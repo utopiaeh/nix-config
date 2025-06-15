@@ -3,7 +3,7 @@ let
   inherit (inputs) nixpkgs nixpkgs-unstable;
 in
 {
-  users.users.utopiaeh.home = "/Users/utopiaeh";
+  users.users.utopiaeh.home = "/Users/${username}";
 
   nix = {
     enable = false;
@@ -16,7 +16,7 @@ in
   system.stateVersion = 5;
 
   # Set primary user for system-wide activation
-  system.primaryUser = "utopiaeh";
+  system.primaryUser = "${username}";
 
   nixpkgs = {
     config.allowUnfree = true;
@@ -24,16 +24,6 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    ## unstable
-    # unstablePkgs.yt-dlp
-    # unstablePkgs.get_iplayer
-    # unstablePkgs.colmena
-
-    ## stable CLI
-    # pkgs.comma
-    # pkgs.hcloud
-    # pkgs.just
-    # pkgs.lima
     pkgs.nix
   ];
 
@@ -71,6 +61,7 @@ in
       autoUpdate = true;
       upgrade = true;
     };
+
     global.autoUpdate = true;
 
     brews = [
@@ -81,74 +72,26 @@ in
       #"FelixKratz/formulae" #sketchybar
     ];
     casks = [
-      # "screenflow"
       "cleanshot"
-      # "adobe-creative-cloud"
-      #"nikitabobko/tap/aerospace"
-      # "alcove"
-      # "audacity"
-      #"balenaetcher"
-      # "bambu-studio"
-      # "bentobox"
-      #"clop"
-      "discord"
-      # "displaylink"
       #"docker"
-      # "element"
-      # "elgato-camera-hub"
-      # "elgato-control-center"
-      # "elgato-stream-deck"
-      # "firefox"
-      # "flameshot"
-      # "font-fira-code"
-      # "font-fira-code-nerd-font"
-      # "font-fira-mono-for-powerline"
-      # "font-hack-nerd-font"
-      # "font-jetbrains-mono-nerd-font"
-      # "font-meslo-lg-nerd-font"
-      # "ghostty"
+      "font-fira-code"
+      "font-fira-code-nerd-font"
+      "font-fira-mono-for-powerline"
+      "font-hack-nerd-font"
+      "font-jetbrains-mono-nerd-font"
+      "font-meslo-lg-nerd-font"
       "google-chrome"
+      "zen"
       "iina"
-      # "istat-menus"
       "iterm2"
-      # "jordanbaird-ice"
-      # "lm-studio"
-      # "logitech-options"
-      # "macwhisper"
-      # "marta"
-      # "mqtt-explorer"
-      # "music-decoy" # github/FuzzyIdeas/MusicDecoy
-      # "nextcloud"
-      # "notion"
-      # "obs"
-      # "obsidian"
-      # "ollama"
-      # "omnidisksweeper"
-      # "orbstack"
-      # "openscad"
-      # "openttd"
-      # "plexamp"
-      # "popclip"
-      # "prusaslicer"
-      # "raycast"
-      # "signal"
-      # "shortcat"
-      "slack"
+      "logitech-options"
+      "notion"
+      "raycast"
       "spotify"
-      # "steam"
-      # "tailscale"
-      #"wireshark"
-      # "viscosity"
-      # "visual-studio-code"
-      # "vlc"
-      # "lm-studio"
-
-      # # rogue amoeba
-      # "audio-hijack"
-      # "farrago"
-      # "loopback"
-      # "soundsource"
       "zed"
+      "intellij-idea"
+      "sublime-text"
+      "telegram"
     ];
     masApps = {
       # these apps only available via uk apple id
@@ -191,6 +134,7 @@ in
     loginwindow.GuestEnabled = false;
     finder.FXPreferredViewStyle = "Nlsv";
   };
+
 
   system.defaults.CustomUserPreferences = {
       "com.apple.finder" = {
@@ -261,6 +205,25 @@ in
         DisablePrintPreview = true;
         PMPrintingExpandedStateForPrint2 = true;
       };
+
+      "com.apple.symbolichotkeys" = {
+        AppleSymbolicHotKeys = {
+          # Disalbe spotlight shortcut
+          "64" = {
+            enabled = false;
+          };
+
+          "65" = {
+            enabled = false;
+          };
+        };
+      };
   };
 
+  # Disassembly of this binary shows that it will read all of the values in
+  # com.apple.symbolichotkeys and bind all of those shortcuts, forcing them to take effect
+  # immediately. This allows anyone to adjust those shortcuts via defaults without restarting.
+  system.activationScripts.postActivation.text = ''
+      sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+ '';
 }

@@ -11,6 +11,7 @@
       specialArgs = { inherit system inputs username unstablePkgs; };
       #extraSpecialArgs = { inherit inputs; }
       modules = [
+        # ../modules/darwin
         ../hosts/common/common-packages.nix
         ../hosts/common/darwin-common.nix
         customConf

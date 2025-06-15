@@ -2,8 +2,10 @@
 {
   system.defaults.dock = {
     persistent-apps = [
-      "/Applications/Google Chrome.app"
-      # "/Applications/Ghostty.app"
+      "/Applications/Zen.app"
+      "/Applications/Telegram.app"
+      "/Applications/Slack.app"
+      "/Applications/IntelliJ IDEA.app"
     ];
   };
 }

@@ -5,7 +5,7 @@
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
 
-  # aerospace config
+  # # aerospace config
   # home.file = lib.mkMerge [
   #   (lib.mkIf pkgs.stdenv.isDarwin {
   #     ".config/aerospace/aerospace.toml".text = builtins.readFile ./aerospace/aerospace.toml;
@@ -187,4 +187,5 @@
   #     # };
   #   };
   # };
+  #
 }

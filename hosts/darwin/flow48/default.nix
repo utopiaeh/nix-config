@@ -6,7 +6,7 @@
 
   homebrew = {
     casks = [
-      # "zen"
+      "slack"
     ];
   };
 }
