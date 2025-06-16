@@ -17,5 +17,6 @@ in
     wget
     zoxide
     lazygit #GIT GUI
+    fzf
   ];
 }

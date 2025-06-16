@@ -30,7 +30,7 @@
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.${username} = { imports = [ ./../home/${username}.nix ]; };
+            home-manager.users.${username} = { imports = [ ./../home/profiles/${hostname}.nix ]; };
         }
         inputs.nix-homebrew.darwinModules.nix-homebrew {
           nix-homebrew = {
