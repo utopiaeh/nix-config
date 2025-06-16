@@ -8,5 +8,5 @@
     casks = [
       "discord"
     ];
-  }
+  };
 }
