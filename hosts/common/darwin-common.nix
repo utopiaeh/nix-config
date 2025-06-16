@@ -249,12 +249,5 @@ in
     '';
 
 
-    system.activationScripts.localTap = {
-        text = ''
-          if ! brew tap | grep -q "^local/custom-tap\$"; then
-            brew tap local/custom-tap /Users/${username}/nix-config/data/homebrew
-          fi
-        '';
-      };
 
 }
