@@ -1,15 +1,15 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./custom-dock.nix
   ];
 
-  home = {
-    packages = with pkgs; [
-      python3
-      poetry
-    ];
-  };
+#    home-manager.users.utopiaeh = {
+#        home.packages = with pkgs; [
+#          python3
+#          poetry
+#        ];
+#    };
 
   homebrew = {
     casks = [
