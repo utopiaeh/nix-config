@@ -242,21 +242,18 @@ in
   };
 
 
-    # Disassembly of this binary shows that it will read all of the values in
-    # com.apple.symbolichotkeys and bind all of those shortcuts, forcing them to take effect
-    # immediately. This allows anyone to adjust those shortcuts via defaults without restarting.
     system.activationScripts.postActivation.text = ''
-      sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+        # Forcing shortcuts to take effect immediately
+        sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
-    #It removes the quarantine attribute recursively from all .app folders inside /Applications.
+        #It removes the quarantine attribute recursively from all .app folders inside /Applications.
         sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-    # Install default settings for alt-tabs
-    ${setupAltTabScript} ${username}
+        # Install default settings for alt-tabs
+        ${setupAltTabScript} ${username}
 
-    # Install default settings for IntelliJIdea
-    ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
-
+        # Install default settings for IntelliJIdea
+        ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
     '';
 
