@@ -2,9 +2,8 @@
 let
   inherit (inputs) nixpkgs nixpkgs-unstable;
       setupAltTabScript = ./../../data/alt-tab/install.sh;
-      altTabPlist = pkgs.runCommand "com.lwouis.alt-tab-macos.plist" { } ''
-          cp ${./../../data/alt-tab/com.lwouis.alt-tab-macos.plist} $out
-        '';
+      setupIntelliJIdeaScript = ./../../data/idea/install.sh;
+      pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
 in
 {
   users.users.${username}.home = "/Users/${username}";
@@ -249,23 +248,15 @@ in
     system.activationScripts.postActivation.text = ''
       sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
-#    Install specific version of cask for cleanshot
-#      sudo -u ${username} env \
-#          PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" \
-#          HOME="/Users/${username}" \
-#          USER="${username}" \
-#          LOGNAME="${username}" \
-#          brew uninstall --cask cleanshot || true
+    #It removes the quarantine attribute recursively from all .app folders inside /Applications.
+        sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-#        sudo -u ${username} env \
-#          PATH="/opt/homebrew/bin:/usr/local/bin:$PATH" \
-#          HOME="/Users/${username}" \
-#          USER="${username}" \
-#          LOGNAME="${username}" \
-#          brew install --cask /Users/${username}/nix-config/data/homebrew/cleanshot.rb || true
+    # Install default settings for alt-tabs
+    ${setupAltTabScript} ${username}
 
+    # Install default settings for IntelliJIdea
+    ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
-          ${setupAltTabScript} ${username} "${altTabPlist}"
 
     '';
 
