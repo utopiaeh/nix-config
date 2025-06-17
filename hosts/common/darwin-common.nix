@@ -1,6 +1,10 @@
 { inputs, outputs, config, lib, hostname, system, username, pkgs, unstablePkgs, ... }:
 let
   inherit (inputs) nixpkgs nixpkgs-unstable;
+      setupAltTabScript = ./../../data/alt-tab/install.sh;
+      altTabPlist = pkgs.runCommand "com.lwouis.alt-tab-macos.plist" { } ''
+          cp ${./../../data/alt-tab/com.lwouis.alt-tab-macos.plist} $out
+        '';
 in
 {
   users.users.${username}.home = "/Users/${username}";
@@ -72,28 +76,42 @@ in
       #"FelixKratz/formulae" #sketchybar
     ];
     casks = [
-      #"docker"
+#    Fonts
       "font-fira-code"
       "font-fira-code-nerd-font"
       "font-fira-mono-for-powerline"
       "font-hack-nerd-font"
       "font-jetbrains-mono-nerd-font"
       "font-meslo-lg-nerd-font"
-      "google-chrome"
-      "zen"
-      "iina"
-      "iterm2"
-      "logitech-options"
-      "notion"
+#   System
       "raycast"
-      "spotify"
+#   Chat
+      "telegram"
+
+      "google-chrome"
       "zed"
+#   Media
+      "iina"
+      "spotify"
+      "notion"
+#   Utils
+      "logitech-options"
+      "middleclick"
+      "hiddenbar"
+      "alt-tab"
+      "transmission"
+      "pearcleaner"
+
+#      AI
+      "chatgpt"
+#
+      "iterm2"
+      "zen"
       "intellij-idea"
       "sublime-text"
-      "telegram"
-      "middleclick"
-
-
+      "postman"
+      "docker"
+      "figma"
     ];
     masApps = {
       # these apps only available via uk apple id
@@ -246,8 +264,10 @@ in
 #          LOGNAME="${username}" \
 #          brew install --cask /Users/${username}/nix-config/data/homebrew/cleanshot.rb || true
 
-    '';
 
+          ${setupAltTabScript} ${username} "${altTabPlist}"
+
+    '';
 
 
 }

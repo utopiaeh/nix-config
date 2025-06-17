@@ -7,6 +7,7 @@
   homebrew = {
     casks = [
       "discord"
+      "qflipper"
     ];
   };
 }
