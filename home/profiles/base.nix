@@ -6,26 +6,25 @@
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
 
-
 #    imports = [
 #        ../../../apps/darwin/raycast
 #    ];
 
 
-    programs = {
-        ssh = {
-            enable = true;
-        };
-
-        lazygit = {
-            enable = true;
-        };
-
-        bat = {
-            enable = true;
-            config.theme = "Nord";
-        };
+programs = {
+    ssh = {
+        enable = true;
     };
+
+    lazygit = {
+        enable = true;
+    };
+
+    bat = {
+        enable = true;
+        config.theme = "Nord";
+    };
+};
 
   programs.gpg.enable = true;
 
