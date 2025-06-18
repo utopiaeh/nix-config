@@ -12,6 +12,11 @@
 #    ];
 
 
+    programs = {
+        lazygit = {
+            enable = true;
+        };
+    };
 
   programs.gpg.enable = true;
 
