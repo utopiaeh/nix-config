@@ -13,8 +13,17 @@
 
 
     programs = {
+        ssh = {
+            enable = true;
+        };
+
         lazygit = {
             enable = true;
+        };
+
+        bat = {
+            enable = true;
+            config.theme = "Nord";
         };
     };
 
@@ -93,8 +102,8 @@
 
   # programs.key.enable = true;
 
-  programs.bat.enable = true;
-  programs.bat.config.theme = "Nord";
+#  programs.bat.enable = true;
+#  programs.bat.config.theme = "Nord";
   #programs.zsh.shellAliases.cat = "${pkgs.bat}/bin/bat";
 
 
