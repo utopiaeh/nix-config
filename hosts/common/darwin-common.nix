@@ -1,6 +1,6 @@
 { inputs, outputs, config, lib, hostname, system, username, pkgs, unstablePkgs, ... }:
 let
-  inherit (inputs) nixpkgs nixpkgs-unstable;
+  inherit (inputs) nixpkgs;
       setupAltTabScript = ./../../data/alt-tab/install.sh;
       setupIntelliJIdeaScript = ./../../data/idea/install.sh;
       pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
@@ -55,6 +55,12 @@ in
     enable = true;
     enableCompletion = true;
     promptInit = builtins.readFile ./../../data/mac-dot-zshrc;
+#    shellAliases = {
+#      cl = "clear";
+#      lg = "lazygit";
+#      dev = "cd ~/Developer";
+#      rebuild = "darwin-rebuild switch --flake .#flow48";
+#    };
   };
 
   homebrew = {
@@ -135,6 +141,7 @@ in
 
   # macOS configuration
   system.defaults = {
+    NSGlobalDomain.AppleInterfaceStyle = "Dark";
     NSGlobalDomain.AppleShowAllExtensions = true;
     NSGlobalDomain.AppleShowScrollBars = "Always";
     NSGlobalDomain.NSUseAnimatedFocusRing = false;
@@ -254,6 +261,10 @@ in
 
         # Install default settings for IntelliJIdea
         ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
+
+        #Make a directory for dev staff
+        mkdir -p "/Users/${username}/Developer"
+        chown ${username}:staff "/Users/${username}/Developer"
 
     '';
 

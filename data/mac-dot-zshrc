@@ -36,6 +36,8 @@ compinit
 
 alias cl="clear"
 alias lg="lazygit"
+alias dev="cd ~/Developer"
+
 
 
 , () {
