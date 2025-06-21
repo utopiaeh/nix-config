@@ -20,6 +20,5 @@ in
     fzf
 #    Secrets
     sops
-    age
   ];
 }

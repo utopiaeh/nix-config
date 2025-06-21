@@ -2,3 +2,4 @@ result
 com.googlecode.iterm2.plist
 .direnv
 .idea
+secrets/id_ed25519
