@@ -18,5 +18,8 @@ in
     zoxide
     lazygit #GIT GUI
     fzf
+#    Secrets
+    sops
+    age
   ];
 }
