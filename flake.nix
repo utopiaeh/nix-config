@@ -20,7 +20,7 @@
 
   };
 
-  outputs = { ... }@inputs:
+  outputs = { sops-nix, ... }@inputs:
     with inputs;
     let
       inherit (self) outputs;

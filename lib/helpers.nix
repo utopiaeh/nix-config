@@ -24,12 +24,13 @@
 #                 })
             ];
         }
+        inputs.sops-nix.darwinModules.default
         inputs.home-manager.darwinModules.home-manager {
             networking.hostName = hostname;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = { inherit inputs username; };
             home-manager.users.${username} = { imports = [ ./../home/profiles/${hostname}.nix ]; };
         }
         inputs.nix-homebrew.darwinModules.nix-homebrew {
