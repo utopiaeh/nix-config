@@ -7,8 +7,4 @@
     #    poetry
     ];
 
-#    services.ssh-agent = {
-#      enable = true;
-#      keys = [ "/Users/${specialArgs.username}/.ssh/id_ed25519" ];
-#    };
 }

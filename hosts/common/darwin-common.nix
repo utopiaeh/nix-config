@@ -38,29 +38,12 @@ in
   ];
 
   # pins to stable as unstable updates very often
-  nix.registry = {
-    n.to = {
-      type = "path";
-      path = inputs.nixpkgs;
-    };
-    u.to = {
-      type = "path";
-      path = inputs.nixpkgs-unstable;
-    };
-  };
-
   programs.nix-index.enable = true;
 
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     promptInit = builtins.readFile ./../../data/mac-dot-zshrc;
-#    shellAliases = {
-#      cl = "clear";
-#      lg = "lazygit";
-#      dev = "cd ~/Developer";
-#      rebuild = "darwin-rebuild switch --flake .#flow48";
-#    };
   };
 
   homebrew = {

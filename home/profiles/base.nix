@@ -93,7 +93,11 @@ programs = {
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    #initExtra = (builtins.readFile ../mac-dot-zshrc);
+    shellAliases = {
+      cl = "clear";
+      lg = "lazygit";
+      dev = "cd ~/Developer";
+    };
   };
 
   programs.home-manager.enable = true;

@@ -34,11 +34,8 @@ fi
 autoload -Uz compinit
 compinit
 
-alias cl="clear"
-alias lg="lazygit"
-alias dev="cd ~/Developer"
-
-
+# Alias
+alias rebuild="sudo darwin-rebuild switch --flake .#flow48"
 
 , () {
   nix run nixpkgs#comma -- "$@"

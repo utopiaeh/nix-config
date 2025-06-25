@@ -1,6 +1,6 @@
 { pkgs, lib, inputs, stateVersion, username, ... }:
 let
-  inherit (inputs) nixpkgs nixpkgs-unstable;
+  inherit (inputs) nixpkgs;
 in
 {
   time.timeZone = "Moldova/Chisinau";

@@ -1,6 +1,6 @@
-{ inputs, pkgs, unstablePkgs, ... }:
+{ inputs, pkgs, ... }:
 let
-  inherit (inputs) nixpkgs nixpkgs-unstable;
+  inherit (inputs) nixpkgs;
 in
 {
   nixpkgs.config.allowUnfree = true;
@@ -19,6 +19,6 @@ in
     lazygit #GIT GUI
     fzf
 #    Secrets
-    sops
+#    sops
   ];
 }
