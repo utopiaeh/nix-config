@@ -18,7 +18,7 @@
     # Secrets management.
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
+#    secrets.url = "./secrets";
   };
 
   outputs = { self, ... }@inputs:
