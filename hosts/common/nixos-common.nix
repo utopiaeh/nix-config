@@ -6,11 +6,14 @@ in
   time.timeZone = "Moldova/Chisinau";
   system.stateVersion = stateVersion;
 
-  # home-manager = {
-  #     useGlobalPkgs = true;
-  #     useUserPackages = true;
-  #     users.utopiaeh = import ../../../home/utopiaeh.nix;
-  # };
+  # Enable the OpenSSH daemon.
+#  services.openssh = {
+#    enable = true;
+#    # require public key authentication for better security
+#    settings.PasswordAuthentication = false;
+#    permitRootLogin = "no";
+#    passwordAuthentication = false;
+#  };
 
   virtualisation = {
     docker = {

@@ -12,12 +12,15 @@ sops = {
     owner = username;
     mode = "0600";
   };
+
   secrets."github_token" = {
     path = "/etc/github_token";
     owner = username;
     mode = "0400";
   };
 };
+
+
 
   homebrew = {
     casks = [

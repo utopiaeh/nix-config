@@ -40,6 +40,7 @@ in
   # pins to stable as unstable updates very often
   programs.nix-index.enable = true;
 
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
