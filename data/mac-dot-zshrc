@@ -42,3 +42,4 @@ alias rebuild="sudo darwin-rebuild switch --flake .#flow48"
 }
 
 eval "$(starship init zsh)"
+eval "$(ssh-agent -s)"
