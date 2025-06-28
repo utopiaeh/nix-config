@@ -22,8 +22,6 @@ programs = {
        # Use SSH over HTTPS for GitHub and point to your SOPS-managed key
        "github.com" = {
          hostname = "ssh.github.com";
-         port = 443;
-         user = "git";
          identityFile = "~/.ssh/id_ed25519";
          identitiesOnly = true;
        };
