@@ -13,12 +13,25 @@
 programs = {
    ssh = {
      enable = true;
+
      extraConfig = ''
-       Host github.com
-         IdentityFile ~/.ssh/id_ed25519
-         IdentitiesOnly yes
+       StrictHostKeyChecking no
      '';
-     matchBlocks."github.com".identityFile = "~/.ssh/id_ed25519";
+
+     matchBlocks = {
+       # Use SSH over HTTPS for GitHub and point to your SOPS-managed key
+       "github.com" = {
+         hostname = "ssh.github.com";
+         port = 443;
+         user = "git";
+         identityFile = "~/.ssh/id_ed25519";
+         identitiesOnly = true;
+       };
+
+       "*" = {
+         user = "root";
+       };
+     };
    };
 
     lazygit = {
