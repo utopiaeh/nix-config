@@ -12,15 +12,14 @@
 
 programs = {
     ssh = {
-        enable = true;
-        agent.enable = true;   # This enables ssh-agent
-        agent.addKeys = [
-         "~/.ssh/id_ed25519"
-        ];
-        extraConfig = ''
-         Host github.com
-           IdentityFile ~/.ssh/id_ed25519
-           IdentitiesOnly yes
+      enable = true;
+#      addKeys = [
+#        "~/.ssh/id_ed25519"
+#      ];
+      extraConfig = ''
+          Host github.com
+            IdentityFile ~/.ssh/id_ed25519
+            IdentitiesOnly yes
         '';
     };
 
