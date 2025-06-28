@@ -5,14 +5,17 @@
   ];
 
 sops = {
-    defaultSopsFile = ../../../secrets/flow48/secrets.enc.yaml;
-  secrets = {
-    "ssh/id_ed25519" = {
-    sopsFile = ../../../secrets/flow48/secrets.enc.yaml;
-      path = "/Users/utopiaeh/.ssh/id_ed25519";
-      mode = "0600";
-      owner = "utopiaeh";
-    };
+  defaultSopsFile = ../../../secrets/flow48/secrets.enc.yaml;
+  age.keyFile = "/Users/${username}/.config/sops/age/keys.txt";
+  secrets."ssh_key" = {
+    path = "/Users/${username}/.ssh/id_ed25519";
+    owner = username;
+    mode = "0600";
+  };
+  secrets."github_token" = {
+    path = "/etc/github_token";
+    owner = username;
+    mode = "0400";
   };
 };
 
