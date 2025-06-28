@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, lib, unstablePkgs, ... }:
+{ config, inputs, pkgs, lib, unstablePkgs, username,  ... }:
 {
   home.stateVersion = "23.11";
 
@@ -10,14 +10,17 @@
 #        ../../../apps/darwin/raycast
 #    ];
 
-
 programs = {
     ssh = {
         enable = true;
+        agent.enable = true;   # This enables ssh-agent
+        agent.addKeys = [
+         "~/.ssh/id_ed25519"
+        ];
         extraConfig = ''
-        Host github.com
-          IdentityFile ~/.ssh/id_ed25519
-          IdentitiesOnly yes
+         Host github.com
+           IdentityFile ~/.ssh/id_ed25519
+           IdentitiesOnly yes
         '';
     };
 
