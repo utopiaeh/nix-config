@@ -34,14 +34,9 @@
       darwinConfigurations = {
         # personal
         mac-pro = libx.mkDarwin { hostname = "mac-pro"; };
-        # nauvis = libx.mkDarwin { hostname = "nauvis"; };
-        # mac-studio = libx.mkDarwin { hostname = "mac-studio"; };
-        # mac-mini = libx.mkDarwin { hostname = "mac-mini"; };
-        # mooncake = libx.mkDarwin { hostname = "mooncake"; };
 
         # work
         flow48 = libx.mkDarwin { hostname = "flow48"; };
-        # magrathea = libx.mkDarwin { hostname = "magrathea"; };
       };
     };
 

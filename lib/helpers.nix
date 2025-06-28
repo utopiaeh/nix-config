@@ -12,6 +12,7 @@
       #extraSpecialArgs = { inherit inputs; }
       modules = [
         # ../modules/darwin
+        inputs.sops-nix.darwinModules.sops
         ../hosts/common/common-packages.nix
         ../hosts/common/darwin-common.nix
         customConf

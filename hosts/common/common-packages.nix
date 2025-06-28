@@ -19,6 +19,6 @@ in
     lazygit #GIT GUI
     fzf
 #    Secrets
-#    sops
+    sops
   ];
 }
