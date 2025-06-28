@@ -11,17 +11,15 @@
 #    ];
 
 programs = {
-    ssh = {
-      enable = true;
-#      addKeys = [
-#        "~/.ssh/id_ed25519"
-#      ];
-      extraConfig = ''
-          Host github.com
-            IdentityFile ~/.ssh/id_ed25519
-            IdentitiesOnly yes
-        '';
-    };
+   ssh = {
+     enable = true;
+     extraConfig = ''
+       Host github.com
+         IdentityFile ~/.ssh/id_ed25519
+         IdentitiesOnly yes
+     '';
+     matchBlocks."github.com".identityFile = "~/.ssh/id_ed25519";
+   };
 
     lazygit = {
         enable = true;
