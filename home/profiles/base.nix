@@ -35,9 +35,12 @@ programs = {
      };
    };
 
-    lazygit = {
-        enable = true;
-    };
+gitui = {
+    enable = true;
+};
+#    lazygit = {
+#        enable = true;
+#    };
 
     bat = {
         enable = true;

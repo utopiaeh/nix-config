@@ -17,7 +17,8 @@ in
     watch
     wget
     zoxide
-    lazygit #GIT GUI
+#    lazygit #GIT GUI
+    gitui #GIT GUI
     fzf
 #    Secrets
     sops
