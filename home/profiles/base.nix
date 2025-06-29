@@ -10,6 +10,9 @@
 #        ../../../apps/darwin/raycast
 #    ];
 
+ home.file."Library/Preferences/com.googlecode.iterm2.plist".source =
+    ../../data/iterm2/com.googlecode.iterm2.plist;
+
 programs = {
    ssh = {
      enable = true;

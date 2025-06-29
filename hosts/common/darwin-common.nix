@@ -26,6 +26,10 @@ in
     hostPlatform = lib.mkDefault "${system}";
   };
 
+  environment.variables = {
+    ITERM2_PREFS_DIR = "/Users/${username}/nix-config/data/iterm2";
+  };
+
   environment.systemPackages = with pkgs; [
     pkgs.nix
   ];
