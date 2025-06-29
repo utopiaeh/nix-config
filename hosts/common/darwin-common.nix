@@ -27,7 +27,6 @@ in
   };
 
   environment.variables = {
-    ITERM2_PREFS_DIR = "/Users/${username}/nix-config/data/iterm2";
   };
 
   environment.systemPackages = with pkgs; [
@@ -98,7 +97,6 @@ in
 #      AI
       "chatgpt"
 #
-      "iterm2"
       "zen"
       "intellij-idea"
       "sublime-text"

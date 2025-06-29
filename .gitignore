@@ -1,5 +1,4 @@
 result
-com.googlecode.iterm2.plist
 .direnv
 .idea
 secrets/**/*.yaml

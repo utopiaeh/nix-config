@@ -4,6 +4,7 @@ let
 in
 {
   nixpkgs.config.allowUnfree = true;
+#  nixpkgs.config.allowUnsupportedSystem = true;
   environment.systemPackages = with pkgs; [
     ## stable
     gh
@@ -20,5 +21,6 @@ in
     fzf
 #    Secrets
     sops
+    iterm2
   ];
 }

@@ -6,12 +6,12 @@
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
 
-#    imports = [
-#        ../../../apps/darwin/raycast
-#    ];
+    imports = [
+#        ../../apps/darwin/raycast
+    ../apps/iterm2
+    ../modules/iterm2
 
- home.file."Library/Preferences/com.googlecode.iterm2.plist".source =
-    ../../data/iterm2/com.googlecode.iterm2.plist;
+    ];
 
 programs = {
    ssh = {
