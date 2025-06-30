@@ -23,5 +23,9 @@ in
 #    Secrets
     sops
     iterm2
+
+    nodejs
+    nodePackages.npm
+    yarn
   ];
 }

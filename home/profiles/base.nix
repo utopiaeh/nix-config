@@ -10,7 +10,6 @@
 #        ../../apps/darwin/raycast
     ../apps/iterm2
     ../modules/iterm2
-
     ];
 
 programs = {
@@ -119,13 +118,6 @@ programs = {
 
   programs.home-manager.enable = true;
   programs.nix-index.enable = true;
-
-  # programs.key.enable = true;
-
-#  programs.bat.enable = true;
-#  programs.bat.config.theme = "Nord";
-  #programs.zsh.shellAliases.cat = "${pkgs.bat}/bin/bat";
-
 
   programs.zoxide.enable = true;
 
