@@ -22,12 +22,12 @@
     };
 
       window = {
-        columns = 140;
+        columns = 120;
         rows = 22;
       };
       font = {
-        normal = "MesloLGLNF-Regular 14";
-        nonAscii = "MesloLGL Nerd Font 14";
+        normal = "MesloLGLNF-Regular 16";
+        nonAscii = "MesloLGL Nerd Font 16";
         useNonAsciiFont = false;
         antiAlias = true;
         brightenBold = true;

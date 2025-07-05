@@ -21,10 +21,9 @@
 #            right_padding = 15;
 #            window_gap = 15;
           };
-          extraConfig = ''
-
-
-          '';
+        extraConfig = ''
+        
+        '';
         };
 
        services.skhd = {
@@ -140,6 +139,7 @@
                   ypos=$(( (screen_height - window_height) / 2 )); \
                   yabai -m window --move abs:$xpos:$ypos; \
                   yabai -m window --resize abs:$window_width:$window_height
+
        '';
       };
   }
