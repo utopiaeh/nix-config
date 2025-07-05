@@ -152,6 +152,9 @@ in
     finder.FXPreferredViewStyle = "Nlsv";
   };
 
+    system.defaults.universalaccess = {
+        reduceMotion = false;
+    };
 
   system.defaults.CustomUserPreferences = {
       "com.apple.finder" = {
@@ -177,7 +180,7 @@ in
         DSDontWriteUSBStores = true;
       };
       "com.apple.dock" = {
-        autohide = false;
+        autohide = true;
         launchanim = false;
         static-only = false;
         show-recents = false;

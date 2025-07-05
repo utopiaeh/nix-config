@@ -22,7 +22,7 @@
 #            window_gap = 15;
           };
         extraConfig = ''
-        
+
         '';
         };
 
