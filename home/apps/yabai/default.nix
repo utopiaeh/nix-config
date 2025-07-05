@@ -4,7 +4,7 @@
       services.yabai = {
           enable = true;
           config = {
-            external_bar = "all:39:0";
+#            external_bar = "all:39:0";
 
             layout = "float";
 #
@@ -140,6 +140,130 @@
                   yabai -m window --move abs:$xpos:$ypos; \
                   yabai -m window --resize abs:$window_width:$window_height
 
+
+                  # Resize windows (float-compatible, reliable absolute resize)
+                  ctrl + alt - h : \
+                    is_float=$(yabai -m query --windows --window | jq .floating); \
+                    if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+                    frame=$(yabai -m query --windows --window | jq .frame); \
+                    width=$(echo "$frame" | jq .w); \
+                    height=$(echo "$frame" | jq .h); \
+                    width=$((width - 50)); \
+                    yabai -m window --resize abs:$width:$height
+
+                    ctrl + alt - l : \
+                      is_float=$(yabai -m query --windows --window | jq .floating); \
+                      if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+                      frame=$(yabai -m query --windows --window | jq .frame); \
+                      x=$(echo "$frame" | jq .x); \
+                      y=$(echo "$frame" | jq .y); \
+                      width=$(echo "$frame" | jq .w); \
+                      height=$(echo "$frame" | jq .h); \
+                      new_width=$((width - 50)); \
+                      new_x=$((x + 50)); \
+                      yabai -m window --move abs:$new_x:$y; \
+                      yabai -m window --resize abs:$new_width:$height
+
+#                  ctrl + alt - j : \
+#                    is_float=$(yabai -m query --windows --window | jq .floating); \
+#                    if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+#                    frame=$(yabai -m query --windows --window | jq .frame); \
+#                    width=$(echo "$frame" | jq .w); \
+#                    height=$(echo "$frame" | jq .h); \
+#                    height=$((height + 50)); \
+#                    yabai -m window --resize abs:$width:$height
+
+#                  ctrl + alt - k : \
+#                    is_float=$(yabai -m query --windows --window | jq .floating); \
+#                    if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+#                    frame=$(yabai -m query --windows --window | jq .frame); \
+#                    width=$(echo "$frame" | jq .w); \
+#                    height=$(echo "$frame" | jq .h); \
+#                    height=$((height - 50)); \
+#                    yabai -m window --resize abs:$width:$height
+
+
+                # Enlarge window width from the left (move left by 50px and grow width by 50px)
+                ctrl + alt + shift - h : \
+                  is_float=$(yabai -m query --windows --window | jq .floating); \
+                  if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+                  frame=$(yabai -m query --windows --window | jq .frame); \
+                  x=$(echo "$frame" | jq .x); \
+                  y=$(echo "$frame" | jq .y); \
+                  width=$(echo "$frame" | jq .w); \
+                  height=$(echo "$frame" | jq .h); \
+                  new_x=$((x - 50)); \
+                  if [ "$new_x" -lt 0 ]; then new_x=0; fi; \
+                  new_width=$((width + 50)); \
+                  yabai -m window --move abs:$new_x:$y; \
+                  yabai -m window --resize abs:$new_width:$height
+
+                # Enlarge window width from the right (just increase width by 50px)
+                ctrl + alt + shift - l : \
+                  is_float=$(yabai -m query --windows --window | jq .floating); \
+                  if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+                  frame=$(yabai -m query --windows --window | jq .frame); \
+                  width=$(echo "$frame" | jq .w); \
+                  height=$(echo "$frame" | jq .h); \
+                  new_width=$((width + 50)); \
+                  yabai -m window --resize abs:$new_width:$height
+
+#                # Enlarge window height (grow height by 50px)
+#                ctrl + alt + shift - j : \
+#                  is_float=$(yabai -m query --windows --window | jq .floating); \
+#                  if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+#                  frame=$(yabai -m query --windows --window | jq .frame); \
+#                  width=$(echo "$frame" | jq .w); \
+#                  height=$(echo "$frame" | jq .h); \
+#                  new_height=$((height + 50)); \
+#                  yabai -m window --resize abs:$width:$new_height
+
+#                # Shrink window height (shrink height by 50px)
+#                ctrl + alt + shift - k : \
+#                  is_float=$(yabai -m query --windows --window | jq .floating); \
+#                  if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+#                  frame=$(yabai -m query --windows --window | jq .frame); \
+#                  width=$(echo "$frame" | jq .w); \
+#                  height=$(echo "$frame" | jq .h); \
+#                  new_height=$((height - 50)); \
+#                  yabai -m window --resize abs:$width:$new_height
+
+
+              # Increase height by 50px
+              ctrl + alt - j : \
+                is_float=$(yabai -m query --windows --window | jq .floating); \
+                if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+                frame=$(yabai -m query --windows --window | jq .frame); \
+                width=$(echo "$frame" | jq .w); \
+                height=$(echo "$frame" | jq .h); \
+                new_height=$((height + 50)); \
+                yabai -m window --resize abs:$width:$new_height
+
+              # Move window down 50px
+              ctrl + alt + shift - j : \
+                frame=$(yabai -m query --windows --window | jq .frame); \
+                x=$(echo "$frame" | jq .x); \
+                y=$(echo "$frame" | jq .y); \
+                yabai -m window --move abs:$x:$((y + 50))
+
+              # Decrease height by 50px
+              ctrl + alt - k : \
+                is_float=$(yabai -m query --windows --window | jq .floating); \
+                if [ "$is_float" = "0" ]; then yabai -m window --toggle float; fi; \
+                frame=$(yabai -m query --windows --window | jq .frame); \
+                width=$(echo "$frame" | jq .w); \
+                height=$(echo "$frame" | jq .h); \
+                new_height=$((height - 50)); \
+                yabai -m window --resize abs:$width:$new_height
+
+              # Move window up 50px
+              ctrl + alt + shift - k : \
+                frame=$(yabai -m query --windows --window | jq .frame); \
+                x=$(echo "$frame" | jq .x); \
+                y=$(echo "$frame" | jq .y); \
+                new_y=$((y - 50)); \
+                if [ "$new_y" -lt 0 ]; then new_y=0; fi; \
+                yabai -m window --move abs:$x:$new_y
        '';
       };
   }
