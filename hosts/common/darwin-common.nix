@@ -6,6 +6,11 @@ let
       pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
 in
 {
+
+  imports = [
+    ../../home/apps/yabai
+  ];
+
   users.users.${username}.home = "/Users/${username}";
 
   nix = {
@@ -251,6 +256,7 @@ in
         #Make a directory for dev staff
         mkdir -p "/Users/${username}/Developer"
         chown ${username}:staff "/Users/${username}/Developer"
+
 
     '';
 
