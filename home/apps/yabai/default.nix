@@ -4,22 +4,7 @@
       services.yabai = {
           enable = true;
           config = {
-#            external_bar = "all:39:0";
-
             layout = "float";
-#
-            mouse_modifier = "alt";
-            # set modifier + right-click drag to resize window (default: resize)
-            mouse_action2 = "resize";
-            # set modifier + left-click drag to resize window (default: move)
-            mouse_action1 = "move";
-
-#            # gaps
-#            top_padding = 15;
-#            bottom_padding = 15;
-#            left_padding = 15;
-#            right_padding = 15;
-#            window_gap = 15;
           };
         extraConfig = ''
 
@@ -29,11 +14,6 @@
        services.skhd = {
         enable = true;
         skhdConfig = ''
-
-         # focus window
-#          alt - h : yabai -m window --focus west
-#          alt - l : yabai -m window --focus east
-
 
         # Resize focused window on the left
             ctrl + alt - left : \
@@ -225,6 +205,7 @@
                 new_y=$((y - 50)); \
                 if [ "$new_y" -lt 0 ]; then new_y=0; fi; \
                 yabai -m window --move abs:$x:$new_y
+
        '';
       };
   }
