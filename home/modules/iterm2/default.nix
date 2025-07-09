@@ -419,12 +419,23 @@ let
         "Blur Radius" = if profile.blur.enable then profile.blur.value else profile.blur.default;
 
         "Keyboard Map" = {
+        
+          # Duplicate tab
           "0x44-0x120000-0x2" = {
             Version = 2;
             "Apply Mode" = 0;
             Action = 61;
             Text = "";
             Escaping = 2;
+          };
+
+          # Undo closed tab
+          "0x54-0x120000-0x11" = {
+            "Version" = 2;
+            "Apply Mode" = 0;
+            "Action" = 25;
+            "Text" = "Undo Close\nUndo Close";
+            "Escaping" = 2;
           };
         };
       };
