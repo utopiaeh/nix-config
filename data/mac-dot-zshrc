@@ -23,7 +23,7 @@ export PATH=$PATH:/Users/utopiaeh/go/bin
 #export EDITOR=vi
 export VISUAL=/etc/profiles/per-user/utopiaeh/bin/nvim
 export EDITOR=/etc/profiles/per-user/utopiaeh/bin/nvim
-# export TERM=xterm
+export PATH="$HOME/.npm-global/bin:$PATH"
 
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
@@ -36,6 +36,9 @@ compinit
 
 # Alias
 alias rebuild="sudo darwin-rebuild switch --flake .#flow48"
+idea() {
+  open -a "IntelliJ IDEA" "$@" >/dev/null 2>&1
+}
 
 , () {
   nix run nixpkgs#comma -- "$@"

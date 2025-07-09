@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, lib, unstablePkgs, username,  ... }:
+{ config, inputs, pkgs, lib, unstablePkgs, username, ... }:
 {
   home.stateVersion = "23.11";
 
@@ -6,40 +6,39 @@
   # list of programs
   # https://mipmip.github.io/home-manager-option-search
 
-    imports = [
-#        ../../apps/darwin/raycast
+  imports = [
     ../apps/iterm2
     ../modules/iterm2
-    ];
+  ];
 
-programs = {
-   ssh = {
-     enable = true;
+  programs = {
+    ssh = {
+      enable = true;
 
-     extraConfig = ''
-       StrictHostKeyChecking no
-     '';
+      extraConfig = ''
+        StrictHostKeyChecking no
+      '';
 
-     matchBlocks = {
-       # Use SSH over HTTPS for GitHub and point to your SOPS-managed key
-       "github.com" = {
-         hostname = "ssh.github.com";
-         identityFile = "~/.ssh/id_ed25519";
-         identitiesOnly = true;
-       };
+      matchBlocks = {
+        # Use SSH over HTTPS for GitHub and point to your SOPS-managed key
+        "github.com" = {
+          hostname = "ssh.github.com";
+          identityFile = "~/.ssh/id_ed25519";
+          identitiesOnly = true;
+        };
 
-       "*" = {
-         user = "root";
-       };
-     };
-   };
+        "*" = {
+          user = "root";
+        };
+      };
+    };
 
 
     bat = {
-        enable = true;
-        config.theme = "Nord";
+      enable = true;
+      config.theme = "Nord";
     };
-};
+  };
 
   programs.gpg.enable = true;
 
@@ -60,15 +59,15 @@ programs = {
     ];
   };
 
-   programs.fzf = {
-     enable = true;
-     enableBashIntegration = true;
-     enableZshIntegration = true;
-     tmux.enableShellIntegration = true;
-     defaultOptions = [
-       "--no-mouse"
-     ];
-   };
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    tmux.enableShellIntegration = true;
+    defaultOptions = [
+      "--no-mouse"
+    ];
+  };
 
   programs.git = {
     enable = true;
@@ -103,6 +102,8 @@ programs = {
   };
 
   programs.bash.enable = true;
+
+
 
   programs.zsh = {
     enable = true;

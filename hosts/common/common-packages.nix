@@ -25,7 +25,6 @@ in
     iterm2
 
     nodejs
-    nodePackages.npm
     yarn
   ];
 }

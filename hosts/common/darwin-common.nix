@@ -7,9 +7,11 @@ let
 in
 {
 
+#Services
   imports = [
-    ../../home/apps/yabai
+
   ];
+
 
   users.users.${username}.home = "/Users/${username}";
 
@@ -92,12 +94,13 @@ in
       "spotify"
       "notion"
 #   Utils
-      "logitech-options"
+      "logi-options+"
       "middleclick"
-      "hiddenbar"
+#      "hiddenbar"
       "alt-tab"
       "transmission"
       "pearcleaner"
+      "betterdisplay"
 
 #      AI
       "chatgpt"
@@ -248,7 +251,7 @@ in
         sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
         #It removes the quarantine attribute recursively from all .app folders inside /Applications.
-        sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
+#        sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
         # Install default settings for alt-tabs
         ${setupAltTabScript} ${username}
@@ -262,6 +265,5 @@ in
 
 
     '';
-
 
 }

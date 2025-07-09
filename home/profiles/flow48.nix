@@ -1,12 +1,12 @@
-{ config, inputs, pkgs, lib, unstablePkgs, specialArgs,  ... }:
+{ config, inputs, pkgs, lib, unstablePkgs, specialArgs, ... }:
 {
 
-    imports = [
-        ./base.nix
-    ];
+  imports = [
+    ./base.nix
+  ];
 
-    home.packages = with pkgs; [
+  home.packages = with pkgs; [
     #    poetry
-    ];
+  ];
 
 }

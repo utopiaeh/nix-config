@@ -4,6 +4,8 @@
     ./custom-dock.nix
   ];
 
+
+
 sops = {
   defaultSopsFile = ../../../secrets/flow48/secrets.enc.yaml;
   age.keyFile = "/Users/${username}/.config/sops/age/keys.txt";
