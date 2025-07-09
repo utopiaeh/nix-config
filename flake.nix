@@ -18,7 +18,7 @@
     # Secrets management.
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-#    secrets.url = "./secrets";
+    #    secrets.url = "./secrets";
   };
 
   outputs = { self, ... }@inputs:
@@ -29,7 +29,8 @@
       stateVersion = "24.05";
       libx = import ./lib { inherit inputs outputs stateVersion; };
 
-    in {
+    in
+    {
 
       darwinConfigurations = {
         # personal

@@ -417,6 +417,16 @@ let
         "Transparency" = if profile.transparency.enable then profile.transparency.value else profile.transparency.default;
         "Blur" = profile.blur.enable;
         "Blur Radius" = if profile.blur.enable then profile.blur.value else profile.blur.default;
+
+        "Keyboard Map" = {
+          "0x44-0x120000-0x2" = {
+            Version = 2;
+            "Apply Mode" = 0;
+            Action = 61;
+            Text = "";
+            Escaping = 2;
+          };
+        };
       };
 
       # Process all profiles
