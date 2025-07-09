@@ -8,6 +8,7 @@
 
   imports = [
     ../apps/iterm2
+    ../apps/git
     ../modules/iterm2
   ];
 
@@ -42,10 +43,15 @@
 
   programs.gpg.enable = true;
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
+  #  IMPORTANT: Use this if decide to use specific env per project
+  #  Installs and enables nix-direnv allows you to write .envrc files like this:
+  #  and it will automatically load a Nix shell environment (shell.nix or flake.nix) when entering that directory.
+  #  use nix
+
+  #  programs.direnv = {
+  #    enable = true;
+  #    nix-direnv.enable = true;
+  #  };
 
   programs.eza = {
     enable = true;
@@ -67,27 +73,6 @@
     defaultOptions = [
       "--no-mouse"
     ];
-  };
-
-  programs.git = {
-    enable = true;
-    userEmail = "utopiaeh01@gmail.com";
-    userName = "utopiaeh";
-    diff-so-fancy.enable = true;
-    ignores = [ "*~" ".DS_Store" ];
-    lfs.enable = true;
-    extraConfig = {
-      init = {
-        defaultBranch = "main";
-      };
-      merge = {
-        conflictStyle = "diff3";
-        tool = "meld";
-      };
-      pull = {
-        rebase = true;
-      };
-    };
   };
 
 

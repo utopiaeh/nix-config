@@ -6,15 +6,6 @@ in
   time.timeZone = "Moldova/Chisinau";
   system.stateVersion = stateVersion;
 
-  # Enable the OpenSSH daemon.
-#  services.openssh = {
-#    enable = true;
-#    # require public key authentication for better security
-#    settings.PasswordAuthentication = false;
-#    permitRootLogin = "no";
-#    passwordAuthentication = false;
-#  };
-
   virtualisation = {
     docker = {
       enable = true;
@@ -27,11 +18,11 @@ in
 
   nix = {
     settings = {
-        experimental-features = [ "nix-command" "flakes" ];
-        warn-dirty = false;
-        trusted-users = [ "@admin" "${username}" ];
-        substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
-        trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+      experimental-features = [ "nix-command" "flakes" ];
+      warn-dirty = false;
+      trusted-users = [ "@admin" "${username}" ];
+      substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
+      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
     };
     # Automate garbage collection
     gc = {
@@ -41,7 +32,4 @@ in
     };
   };
 
-  # environment.systemPackages = with pkgs; [
-  #   #
-  # ];
 }

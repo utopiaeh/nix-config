@@ -1,13 +1,12 @@
 { inputs, outputs, config, lib, hostname, system, username, pkgs, unstablePkgs, ... }:
 let
   inherit (inputs) nixpkgs;
-      setupAltTabScript = ./../../data/alt-tab/install.sh;
-      setupIntelliJIdeaScript = ./../../data/idea/install.sh;
-      pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
+  setupIntelliJIdeaScript = ./../../data/idea/install.sh;
+  pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
 in
 {
 
-#Services
+  #Services
   imports = [
 
   ];
@@ -33,8 +32,7 @@ in
     hostPlatform = lib.mkDefault "${system}";
   };
 
-  environment.variables = {
-  };
+  environment.variables = { };
 
   environment.systemPackages = with pkgs; [
     pkgs.nix
@@ -75,36 +73,36 @@ in
       #"FelixKratz/formulae" #sketchybar
     ];
     casks = [
-#    Fonts
+      #    Fonts
       "font-fira-code"
       "font-fira-code-nerd-font"
       "font-fira-mono-for-powerline"
       "font-hack-nerd-font"
       "font-jetbrains-mono-nerd-font"
       "font-meslo-lg-nerd-font"
-#   System
+      #   System
       "raycast"
-#   Chat
+      #   Chat
       "telegram"
 
       "google-chrome"
       "zed"
-#   Media
+      #   Media
       "iina"
       "spotify"
       "notion"
-#   Utils
+      #   Utils
       "logi-options+"
       "middleclick"
-#      "hiddenbar"
+      "hiddenbar"
       "alt-tab"
       "transmission"
       "pearcleaner"
       "betterdisplay"
 
-#      AI
+      #      AI
       "chatgpt"
-#
+      #
       "zen"
       "intellij-idea"
       "sublime-text"
@@ -155,115 +153,111 @@ in
     finder.FXPreferredViewStyle = "Nlsv";
   };
 
-    system.defaults.universalaccess = {
-        reduceMotion = false;
-    };
+  system.defaults.universalaccess = {
+    reduceMotion = false;
+  };
 
   system.defaults.CustomUserPreferences = {
-      "com.apple.finder" = {
-        ShowExternalHardDrivesOnDesktop = true;
-        ShowHardDrivesOnDesktop = false;
-        ShowMountedServersOnDesktop = false;
-        ShowRemovableMediaOnDesktop = true;
-        _FXSortFoldersFirst = true;
-        # When performing a search, search the current folder by default
-        FXDefaultSearchScope = "SCcf";
-        DisableAllAnimations = true;
-        NewWindowTarget = "PfDe";
-        NewWindowTargetPath = "file://$\{HOME\}/Desktop/";
-        AppleShowAllExtensions = true;
-        FXEnableExtensionChangeWarning = false;
-        ShowStatusBar = true;
-        ShowPathbar = true;
-        WarnOnEmptyTrash = false;
-      };
-      "com.apple.desktopservices" = {
-        # Avoid creating .DS_Store files on network or USB volumes
-        DSDontWriteNetworkStores = true;
-        DSDontWriteUSBStores = true;
-      };
-      "com.apple.dock" = {
-        autohide = true;
-        launchanim = false;
-        static-only = false;
-        show-recents = false;
-        show-process-indicators = true;
-        orientation = "bottom";
-        tilesize = 46;
-        minimize-to-application = true;
-        mineffect = "scale";
-        enable-window-tool = false;
-      };
-      "com.apple.ActivityMonitor" = {
-        OpenMainWindow = true;
-        IconType = 5;
-        SortColumn = "CPUUsage";
-        SortDirection = 0;
-      };
-      "com.apple.Safari" = {
-        # Privacy: don’t send search queries to Apple
-        # UniversalSearchEnabled = false;
-        # SuppressSearchSuggestions = true;
-      };
-      "com.apple.AdLib" = {
-        allowApplePersonalizedAdvertising = false;
-      };
-      "com.apple.SoftwareUpdate" = {
-        AutomaticCheckEnabled = true;
-        # Check for software updates daily, not just once per week
-        ScheduleFrequency = 1;
-        # Download newly available updates in background
-        AutomaticDownload = 1;
-        # Install System data files & security updates
-        CriticalUpdateInstall = 1;
-      };
-      "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
-      # Prevent Photos from opening automatically when devices are plugged in
-      "com.apple.ImageCapture".disableHotPlug = true;
-      # Turn on app auto-update
-      "com.apple.commerce".AutoUpdate = true;
-      "com.googlecode.iterm2".PromptOnQuit = false;
-      "com.google.Chrome" = {
-        AppleEnableSwipeNavigateWithScrolls = true;
-        DisablePrintPreview = true;
-        PMPrintingExpandedStateForPrint2 = true;
-      };
+    "com.apple.finder" = {
+      ShowExternalHardDrivesOnDesktop = true;
+      ShowHardDrivesOnDesktop = false;
+      ShowMountedServersOnDesktop = false;
+      ShowRemovableMediaOnDesktop = true;
+      _FXSortFoldersFirst = true;
+      # When performing a search, search the current folder by default
+      FXDefaultSearchScope = "SCcf";
+      DisableAllAnimations = true;
+      NewWindowTarget = "PfDe";
+      NewWindowTargetPath = "file://$\{HOME\}/Desktop/";
+      AppleShowAllExtensions = true;
+      FXEnableExtensionChangeWarning = false;
+      ShowStatusBar = true;
+      ShowPathbar = true;
+      WarnOnEmptyTrash = false;
+    };
+    "com.apple.desktopservices" = {
+      # Avoid creating .DS_Store files on network or USB volumes
+      DSDontWriteNetworkStores = true;
+      DSDontWriteUSBStores = true;
+    };
+    "com.apple.dock" = {
+      autohide = true;
+      launchanim = false;
+      static-only = false;
+      show-recents = false;
+      show-process-indicators = true;
+      orientation = "bottom";
+      tilesize = 46;
+      minimize-to-application = true;
+      mineffect = "scale";
+      enable-window-tool = false;
+    };
+    "com.apple.ActivityMonitor" = {
+      OpenMainWindow = true;
+      IconType = 5;
+      SortColumn = "CPUUsage";
+      SortDirection = 0;
+    };
+    "com.apple.Safari" = {
+      # Privacy: don’t send search queries to Apple
+      # UniversalSearchEnabled = false;
+      # SuppressSearchSuggestions = true;
+    };
+    "com.apple.AdLib" = {
+      allowApplePersonalizedAdvertising = false;
+    };
+    "com.apple.SoftwareUpdate" = {
+      AutomaticCheckEnabled = true;
+      # Check for software updates daily, not just once per week
+      ScheduleFrequency = 1;
+      # Download newly available updates in background
+      AutomaticDownload = 1;
+      # Install System data files & security updates
+      CriticalUpdateInstall = 1;
+    };
+    "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
+    # Prevent Photos from opening automatically when devices are plugged in
+    "com.apple.ImageCapture".disableHotPlug = true;
+    # Turn on app auto-update
+    "com.apple.commerce".AutoUpdate = true;
+    "com.googlecode.iterm2".PromptOnQuit = false;
+    "com.google.Chrome" = {
+      AppleEnableSwipeNavigateWithScrolls = true;
+      DisablePrintPreview = true;
+      PMPrintingExpandedStateForPrint2 = true;
+    };
 
-      "com.apple.symbolichotkeys" = {
-        AppleSymbolicHotKeys = {
-            "60" = { enabled = false; };  # ⌘ + Space
-            "61" = { enabled = true; };  # ⌃ + Space
-            "64" = { enabled = false; };  # Spotlight
-            "65" = { enabled = true; };  # Spotlight (secondary)
+    "com.apple.symbolichotkeys" = {
+      AppleSymbolicHotKeys = {
+        "60" = { enabled = false; }; # ⌘ + Space
+        "61" = { enabled = true; }; # ⌃ + Space
+        "64" = { enabled = false; }; # Spotlight
+        "65" = { enabled = true; }; # Spotlight (secondary)
 
-            # Screenshoots
-            "28" = { enabled = false; };
-            "29" = { enabled = false; };
-            "30" = { enabled = false; };
-            "31" = { enabled = false; };
-        };
+        # Screenshoots
+        "28" = { enabled = false; };
+        "29" = { enabled = false; };
+        "30" = { enabled = false; };
+        "31" = { enabled = false; };
       };
+    };
   };
 
 
-    system.activationScripts.postActivation.text = ''
-        # Forcing shortcuts to take effect immediately
-        sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  system.activationScripts.postActivation.text = ''
+    # Forcing shortcuts to take effect immediately
+    sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
-        #It removes the quarantine attribute recursively from all .app folders inside /Applications.
-#        sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
+    #It removes the quarantine attribute recursively from all .app folders inside /Applications.
+    sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-        # Install default settings for alt-tabs
-        ${setupAltTabScript} ${username}
+    # Install default settings for IntelliJIdea
+    ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
-        # Install default settings for IntelliJIdea
-        ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
+    #Make a directory for dev staff
+    mkdir -p "/Users/${username}/Developer"
+    chown ${username}:staff "/Users/${username}/Developer"
 
-        #Make a directory for dev staff
-        mkdir -p "/Users/${username}/Developer"
-        chown ${username}:staff "/Users/${username}/Developer"
-
-
-    '';
+  '';
 
 }
