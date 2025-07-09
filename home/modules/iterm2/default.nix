@@ -419,7 +419,7 @@ let
         "Blur Radius" = if profile.blur.enable then profile.blur.value else profile.blur.default;
 
         "Keyboard Map" = {
-        
+
           # Duplicate tab
           "0x44-0x120000-0x2" = {
             Version = 2;

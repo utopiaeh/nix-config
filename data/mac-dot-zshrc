@@ -23,7 +23,11 @@ export PATH=$PATH:/Users/utopiaeh/go/bin
 #export EDITOR=vi
 export VISUAL=/etc/profiles/per-user/utopiaeh/bin/nvim
 export EDITOR=/etc/profiles/per-user/utopiaeh/bin/nvim
+
+#NodeJS
 export PATH="$HOME/.npm-global/bin:$PATH"
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+
 
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
