@@ -109,6 +109,9 @@ in
       "docker"
       "figma"
 
+      #Disalbe connection to network
+      "lulu"
+
     ];
     masApps = {
       # these apps only available via uk apple id
