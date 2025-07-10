@@ -1,38 +1,4 @@
-# nix run nixpkgs#ssh-to-age -- -private-key -i .ssh/id_ed25519 > ~/.config/sops/age/keys.txt
-# nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
 
-
-#Setup
-#- if do not have an ssh
-#  ssh-keygen -t ed25519 -C "utopiaeh01@gmail.com"
-
-#  - make a dir if not exist
-#  mkdir -p ~/.config/sops/age
-
-#generate AGE-SECRET-KEY
-# nix run nixpkgs#ssh-to-age -- -private-key -i .ssh/id_ed25519 > ~/.config/sops/age/keys.txt
-
-#get age
-# nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
-
-#copy secrets_example with secrets.yaml and replace wit your keys
-
-#  As example use command bellow to get private key to encrypt them in secrets
-#  bat --plain id_ed25519
-
-#Encrypt your secrets with sops
-#  sops -e secrets/flow48/secrets.yaml > secrets/flow48/secrets.enc.yaml
-
-#after remove secrets.yaml do not accidentally upload to git
-
-#if you have an error as
-#Cannot read ssh key '/etc/ssh/ssh_host_rsa_key': open /etc/ssh/ssh_host_rsa_key: no such file or directory
-#Cannot read ssh key '/etc/ssh/ssh_host_ed25519_key': open /etc/ssh/ssh_host_ed25519_key: no such file or directory
-#use command bellow                                                                              14s via ❄️  impure (nix-shell-env)
-#sudo ssh-keygen -A
-
-#add pub key to github
-#  bat --plain id_ed25519.pub
 creation_rules:
   - path_regex: ^secrets/flow48/.*\.yaml$
     key_groups:

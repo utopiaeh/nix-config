@@ -39,7 +39,12 @@ autoload -Uz compinit
 compinit
 
 # Alias
-alias rebuild="sudo darwin-rebuild switch --flake .#flow48"
+
+rebuild() {
+  local host="${1:-$(hostname)}"
+  sudo darwin-rebuild switch --flake ".#${host}"
+}
+
 idea() {
   open -a "IntelliJ IDEA" "$@" >/dev/null 2>&1
 }
