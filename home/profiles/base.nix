@@ -1,4 +1,9 @@
 { config, inputs, pkgs, lib, unstablePkgs, username, ... }:
+
+let
+  cleanshotPackage = import ../apps/cleanshot { inherit pkgs; };
+in
+
 {
   home.stateVersion = "23.11";
 
@@ -106,5 +111,17 @@
   programs.nix-index.enable = true;
 
   programs.zoxide.enable = true;
+
+
+  home.activation.manageCleanshot = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    echo "Cleaning up existing CleanShot X symlink if needed..."
+    rm -f "$HOME/Applications/CleanShot X.app"
+
+    if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ]; then
+      echo "Re-linking CleanShot X.app"
+      mkdir -p "$HOME/Applications"
+      ln -s "${cleanshotPackage}/Applications/CleanShot X.app" "$HOME/Applications/CleanShot X.app"
+    fi
+  '';
 
 }

@@ -11,7 +11,6 @@ in
 
   ];
 
-
   users.users.${username}.home = "/Users/${username}";
 
   nix = {
@@ -109,6 +108,7 @@ in
       "postman"
       "docker"
       "figma"
+
     ];
     masApps = {
       # these apps only available via uk apple id
@@ -200,8 +200,8 @@ in
     };
     "com.apple.Safari" = {
       # Privacy: don’t send search queries to Apple
-      # UniversalSearchEnabled = false;
-      # SuppressSearchSuggestions = true;
+      UniversalSearchEnabled = false;
+      SuppressSearchSuggestions = true;
     };
     "com.apple.AdLib" = {
       allowApplePersonalizedAdvertising = false;
