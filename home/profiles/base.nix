@@ -15,6 +15,7 @@ in
     ../apps/iterm2
     ../apps/git
     ../modules/iterm2
+    ../apps/aerospace
   ];
 
   programs = {
