@@ -184,7 +184,7 @@ in
       DSDontWriteUSBStores = true;
     };
     "com.apple.dock" = {
-      autohide = true;
+      autohide = false;
       launchanim = false;
       static-only = false;
       show-recents = false;

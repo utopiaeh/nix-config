@@ -17,13 +17,13 @@
       # Accordion layout settings
       accordion-padding = 30
 
-      # Default root container settings
+      # Default root container settings…
       default-root-container-layout = 'tiles'
       default-root-container-orientation = 'auto'
 
       # Mouse follows focus settings
-      on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-      on-focus-changed = ['move-mouse window-lazy-center']
+#      on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+#      on-focus-changed = ['move-mouse window-lazy-center']
 
       # Automatically unhide macOS hidden apps
       automatically-unhide-macos-hidden-apps = true
@@ -34,18 +34,17 @@
 
       # Gaps settings
       [gaps]
-      inner.horizontal = 6
-      inner.vertical =   6
-      outer.left =       6
-      outer.bottom =     6
-      outer.top =        6
-      outer.right =      6
+      inner.horizontal = 3
+      inner.vertical =   3
+      outer.left =       3
+      outer.bottom =     3
+      outer.top =        3
+      outer.right =      3
 
       # Main mode bindings
       [mode.main.binding]
       # Launch applications
-      alt-shift-enter = 'exec-and-forget open -na alacritty'
-      alt-shift-b = 'exec-and-forget open -a "Brave Browser"'
+      alt-shift-b = 'exec-and-forget open -a "Zen"'
       alt-shift-t = 'exec-and-forget open -a "Telegram"'
       alt-shift-f = 'exec-and-forget open -a Finder'
 
@@ -60,7 +59,6 @@
       alt-j = 'focus down'
       alt-k = 'focus up'
       alt-l = 'focus right'
-
       # Window movement
       alt-shift-h = 'move left'
       alt-shift-j = 'move down'
@@ -122,24 +120,25 @@
 
       # Window detection rules
       [[on-window-detected]]
-      if.app-id = 'com.brave.Browser'
+      if.app-id = 'app.zen-browser.zen'
       run = 'move-node-to-workspace 1'
 
       [[on-window-detected]]
-      if.app-id = 'org.alacritty'
-      run = 'move-node-to-workspace 2'
+        if.app-id = 'com.jetbrains.intellij'
+        run = 'move-node-to-workspace 2'
 
       [[on-window-detected]]
-      if.app-id = 'com.tdesktop.Telegram'
-      run = 'move-node-to-workspace 3'
+        if.app-id = 'com.googlecode.iterm2≥≥'
+        run = 'move-node-to-workspace 4'
 
       [[on-window-detected]]
-      if.app-id = 'com.obsproject.obs-studio'
+      if.app-id = 'ru.keepcoder.Telegram'
       run = 'move-node-to-workspace 4'
 
       [[on-window-detected]]
-      if.app-id = 'us.zoom.xos'
-      run = 'move-node-to-workspace 5'
+      if.app-id = 'com.spotify.client'
+      run = 'move-node-to-workspace 4'
+
     '';
   };
 }
