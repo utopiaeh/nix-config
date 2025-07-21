@@ -64,6 +64,7 @@ in
     global.autoUpdate = true;
 
     brews = [
+
       # "bitwarden-cli"
       #"borders"
     ];
@@ -105,11 +106,11 @@ in
       "intellij-idea"
       "sublime-text"
       "postman"
-      "docker"
       "figma"
 
       #Disalbe connection to network
       "lulu"
+      "docker"
 
     ];
     masApps = {
