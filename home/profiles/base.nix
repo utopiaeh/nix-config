@@ -107,7 +107,9 @@ in
     shellAliases = {
       cl = "clear";
       lg = "lazygit";
+      tscl = "npx tsc";
       dev = "cd ~/Developer";
+
     };
   };
 
