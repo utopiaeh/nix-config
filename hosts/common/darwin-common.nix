@@ -57,6 +57,8 @@ in
     enable = true;
     onActivation = {
       cleanup = "zap";
+#      cleanup = "uninstall"; // uninstall all brews and casks but keep files
+#      cleanup = "none"; // do not cleanup anything
       autoUpdate = true;
       upgrade = true;
     };
