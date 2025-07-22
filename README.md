@@ -193,7 +193,7 @@ Settings must be imported manually from:
 
 ---
 
-## 💡 Tip
+## 💡 Tips
 
 You can define an alias in shell config  `data/mac-dot-zshrc` like this:
 
@@ -202,6 +202,13 @@ rebuild() {
   local host="${1:-$(hostname)}"
   sudo darwin-rebuild switch --flake ".#$host"
 }
+```
+
+To update your dependencies and rebuild your system, you can use the following command:
+
+```sh
+nix flake update
+rebuild
 ```
 
 ---

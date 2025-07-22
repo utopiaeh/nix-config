@@ -64,8 +64,6 @@ in
     global.autoUpdate = true;
 
     brews = [
-
-      # "bitwarden-cli"
       #"borders"
     ];
     taps = [
@@ -110,7 +108,6 @@ in
 
       #Disalbe connection to network
       "lulu"
-      "docker"
 
     ];
     masApps = {
