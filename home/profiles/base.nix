@@ -110,7 +110,7 @@ in
       lg = "lazygit";
       tscl = "npx tsc";
       dev = "cd ~/Developer";
-
+      cat = "bat --paging=always";
     };
   };
 
