@@ -2,6 +2,7 @@
 
 let
   cleanshotPackage = import ../apps/cleanshot { inherit pkgs; };
+
 in
 
 {
@@ -16,7 +17,7 @@ in
     ../apps/git
     ../modules/iterm2
     ../apps/aerospace
-#    ../apps/amethyst
+    #    ../apps/amethyst
 
   ];
 
@@ -130,4 +131,18 @@ in
     fi
   '';
 
+  home.activation.makeDirectoryDeveloper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -d "/Users/${username}/Developer" ]; then
+      echo "Creating /Users/${username}/Developer directory..."
+      mkdir -p "/Users/${username}/Developer"
+      chown ${username}:staff "/Users/${username}/Developer"
+    else
+      echo "/Users/${username}/Developer directory already exists. Skipping creation."
+    fi
+  '';
+
+  home.activation.manageShortcutsToTakeEffectImmediately = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+     # Forcing shortcuts to take effect immediately
+    /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
 }

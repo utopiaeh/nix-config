@@ -247,19 +247,11 @@ in
 
 
   system.activationScripts.postActivation.text = ''
-    # Forcing shortcuts to take effect immediately
-    sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-
     #It removes the quarantine attribute recursively from all .app folders inside /Applications.
     sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
     # Install default settings for IntelliJIdea
     ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
-
-    #Make a directory for dev staff
-    mkdir -p "/Users/${username}/Developer"
-    chown ${username}:staff "/Users/${username}/Developer"
-
   '';
 
 }
