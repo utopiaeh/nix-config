@@ -110,8 +110,12 @@ in
       lg = "lazygit";
       tscl = "npx tsc";
       dev = "cd ~/Developer";
-      cat = "bat --paging=always";
     };
+    initContent = ''
+      cat() {
+        bat --paging=always "$@"
+      }
+    '';
   };
 
   programs.home-manager.enable = true;
