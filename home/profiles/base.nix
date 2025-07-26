@@ -2,7 +2,7 @@
 
 let
   cleanshotPackage = import ../apps/cleanshot { inherit pkgs; };
-
+  wallpaper = ../../data/wallpapers/enchanted_forest_giant_by_billy_christian.jpg;
 in
 
 {
@@ -148,5 +148,20 @@ in
   home.activation.manageShortcutsToTakeEffectImmediately = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
      # Forcing shortcuts to take effect immediately
     /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
+
+  home.activation.setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    WALLPAPER_PATH=${wallpaper}
+
+    if [ -f "$WALLPAPER_PATH" ]; then
+      echo "Setting wallpaper to $WALLPAPER_PATH"
+      /usr/bin/osascript <<EOF
+      tell application "System Events"
+        set picture of every desktop to POSIX file "$WALLPAPER_PATH"
+      end tell
+  EOF
+    else
+      echo "Wallpaper file not found at: $WALLPAPER_PATH"
+    fi
   '';
 }
