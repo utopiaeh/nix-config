@@ -12,7 +12,7 @@ latest_dir=$(find "$user_home/Library/Application Support/JetBrains" -maxdepth 1
 if [ -n "$latest_dir" ]; then
   echo "✅ Found IntelliJ config: $latest_dir"
   mkdir -p "$latest_dir/options"
-  cp $layoutPath "$latest_dir/options/"
+  cp "$layoutPath" "$latest_dir/options/"
   chown "$username:staff" "$latest_dir/options/window.layouts.xml"
   echo "✅ Layout installed"
 else
