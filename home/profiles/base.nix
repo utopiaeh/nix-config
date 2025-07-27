@@ -16,7 +16,7 @@ in
     ../apps/iterm2
     ../apps/git
     ../modules/iterm2
-    ../apps/aerospace
+    #    ../apps/aerospace
     #    ../apps/amethyst
 
   ];
@@ -141,7 +141,7 @@ in
       mkdir -p "/Users/${username}/Developer"
       chown ${username}:staff "/Users/${username}/Developer"
     else
-      echo "/Users/${username}/Developer directory already exists. Skipping creation."
+      echo "Developer directory already exists. Skipping creation."
     fi
   '';
 
@@ -151,17 +151,27 @@ in
   '';
 
   home.activation.setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    WALLPAPER_PATH=${wallpaper}
+      WALLPAPER_PATH=${wallpaper}
 
-    if [ -f "$WALLPAPER_PATH" ]; then
-      echo "Setting wallpaper to $WALLPAPER_PATH"
-      /usr/bin/osascript <<EOF
-      tell application "System Events"
-        set picture of every desktop to POSIX file "$WALLPAPER_PATH"
-      end tell
-  EOF
-    else
-      echo "Wallpaper file not found at: $WALLPAPER_PATH"
-    fi
+      if [ -f "$WALLPAPER_PATH" ]; then
+        echo "Setting wallpaper to $WALLPAPER_PATH"
+        /usr/bin/osascript <<EOF
+        tell application "System Events"
+          set picture of every desktop to POSIX file "$WALLPAPER_PATH"
+        end tell
+    EOF
+      else
+        echo "Wallpaper file not found at: $WALLPAPER_PATH"
+      fi
+  '';
+
+  home.activation.exposeNixApps = lib.hm.dag.entryAfter [ "installCleanshotToNixApps" ] ''
+    echo "Linking Nix GUI apps to ~/Applications..."
+
+    mkdir -p "$HOME/Applications"
+
+    for app in "$HOME/Applications/Nix Apps/"*.app; do
+      ln -sf "$app" "$HOME/Applications/$(basename "$app")"
+    done
   '';
 }
