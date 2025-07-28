@@ -7,7 +7,7 @@ in
 {
 
   imports = [
-
+    ../../home/apps/sdhk
   ];
 
   users.users.${username}.home = "/Users/${username}";
@@ -110,6 +110,8 @@ in
 
       #Disalbe connection to network
       "lulu"
+
+      "flashspace"
 
     ];
     masApps = {

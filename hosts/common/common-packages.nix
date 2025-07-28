@@ -23,6 +23,7 @@ in
     nodejs
     yarn
 
+    skhd
 
   ];
 }

@@ -16,8 +16,7 @@ in
     ../apps/iterm2
     ../apps/git
     ../modules/iterm2
-    #    ../apps/aerospace
-    #    ../apps/amethyst
+    ../apps/flashspace
 
   ];
 
@@ -49,6 +48,7 @@ in
       enable = true;
       config.theme = "Nord";
     };
+
   };
 
   programs.gpg.enable = true;
