@@ -3,6 +3,11 @@ let
   inherit (inputs) nixpkgs;
   setupIntelliJIdeaScript = ./../../data/idea/install.sh;
   pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
+
+  profileSource = ../../../data/flashspace/profiles.yaml;
+  settingSource = ../../../data/flashspace/settings.yaml;
+  targetPathFlashspace = "/Users/${username}/.config/flashspace";
+
 in
 {
 
@@ -57,8 +62,8 @@ in
     enable = true;
     onActivation = {
       cleanup = "zap";
-#      cleanup = "uninstall"; // uninstall all brews and casks but keep files
-#      cleanup = "none"; // do not cleanup anything
+      #      cleanup = "uninstall"; // uninstall all brews and casks but keep files
+      #      cleanup = "none"; // do not cleanup anything
       autoUpdate = true;
       upgrade = true;
     };
@@ -249,11 +254,18 @@ in
 
 
   system.activationScripts.postActivation.text = ''
-    #It removes the quarantine attribute recursively from all .app folders inside /Applications.
-    sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
+     #It removes the quarantine attribute recursively from all .app folders inside /Applications.
+     sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-    # Install default settings for IntelliJIdea
-    ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
+     # Install default settings for IntelliJIdea
+     echo "Installing default settings for IntelliJIdea..."
+     ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
+
+     # Install default settings for FlashSpace
+    echo "Installing FlashSpace profile and settings..."
+    mkdir -p "${targetPathFlashspace}"
+    cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
+    cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
   '';
 
 }

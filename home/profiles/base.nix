@@ -3,6 +3,7 @@
 let
   cleanshotPackage = import ../apps/cleanshot { inherit pkgs; };
   wallpaper = ../../data/wallpapers/enchanted_forest_giant_by_billy_christian.jpg;
+
 in
 
 {
@@ -16,7 +17,6 @@ in
     ../apps/iterm2
     ../apps/git
     ../modules/iterm2
-    ../apps/flashspace
 
   ];
 
