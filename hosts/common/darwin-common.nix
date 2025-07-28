@@ -4,8 +4,8 @@ let
   setupIntelliJIdeaScript = ./../../data/idea/install.sh;
   pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
 
-  profileSource = ../../../data/flashspace/profiles.yaml;
-  settingSource = ../../../data/flashspace/settings.yaml;
+  profileSource = ./../../data/flashspace/profiles.yaml;
+  settingSource = ./../../data/flashspace/settings.yaml;
   targetPathFlashspace = "/Users/${username}/.config/flashspace";
 
 in
