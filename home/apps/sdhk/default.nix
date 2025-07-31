@@ -7,11 +7,14 @@
         skhdConfig = ''
 
         # flashspace shortcuts
-        alt - q : flashspace profile P
-        alt - e : flashspace profile W
+        alt - [ : flashspace profile P
+        alt - ] : flashspace profile W
 
-        # open chatgpt
+        # app shortcuts
         alt - c : open -a "ChatGPT.app"
+
+        alt - b : open -a "Zen.app"
+        alt - i : open -a "Idea.app"
 
        '';
       };

@@ -32,24 +32,11 @@ profiles:
       bundleIdentifier: com.googlecode.iterm2
       iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
     symbolIconName: apple.terminal
-  - id: 909691B3-53CD-4920-8327-CDC162D1A053
-    name: Chat
+  - id: 1C72F220-9EC8-4B0C-BFA3-C9D08B35CD95
+    name: Media
     display: Built-in Retina Display
     shortcut: opt+4
     assignAppShortcut: ctrl+opt+4
-    apps:
-    - name: Slack
-      bundleIdentifier: com.tinyspeck.slackmacgap
-      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
-    - name: Telegram
-      bundleIdentifier: ru.keepcoder.Telegram
-      iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
-    symbolIconName: ellipsis.message
-  - id: 1C72F220-9EC8-4B0C-BFA3-C9D08B35CD95
-    name: Spotify
-    display: Built-in Retina Display
-    shortcut: opt+5
-    assignAppShortcut: ctrl+opt+5
     apps:
     - name: Spotify
       bundleIdentifier: com.spotify.client
@@ -59,6 +46,19 @@ profiles:
       bundleIdentifier: com.spotify.client
       iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
     symbolIconName: music.note.list
+  - id: 909691B3-53CD-4920-8327-CDC162D1A053
+    name: Chat
+    display: Built-in Retina Display
+    shortcut: opt+5
+    assignAppShortcut: ctrl+opt+5
+    apps:
+    - name: Slack
+      bundleIdentifier: com.tinyspeck.slackmacgap
+      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
+    - name: Telegram
+      bundleIdentifier: ru.keepcoder.Telegram
+      iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+    symbolIconName: ellipsis.message
 - id: 134108D6-AAA3-403D-BF3E-D50E4D06C0AA
   name: W
   workspaces:
@@ -92,24 +92,11 @@ profiles:
       bundleIdentifier: com.googlecode.iterm2
       iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
     symbolIconName: apple.terminal
-  - id: 78FFB4B2-6C42-401E-881F-0C64860AA95B
-    name: Chat
+  - id: 27888B55-65A3-42E6-9A3B-D3EF7A559CAB
+    name: Media
     display: Built-in Retina Display
     shortcut: opt+4
     assignAppShortcut: ctrl+opt+4
-    apps:
-    - name: Slack
-      bundleIdentifier: com.tinyspeck.slackmacgap
-      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
-    - name: Telegram
-      bundleIdentifier: ru.keepcoder.Telegram
-      iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
-    symbolIconName: ellipsis.message
-  - id: 27888B55-65A3-42E6-9A3B-D3EF7A559CAB
-    name: Spotify
-    display: Built-in Retina Display
-    shortcut: opt+5
-    assignAppShortcut: ctrl+opt+5
     apps:
     - name: Spotify
       bundleIdentifier: com.spotify.client
@@ -119,3 +106,16 @@ profiles:
       bundleIdentifier: com.spotify.client
       iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
     symbolIconName: music.note.list
+  - id: 78FFB4B2-6C42-401E-881F-0C64860AA95B
+    name: Chat
+    display: Built-in Retina Display
+    shortcut: opt+5
+    assignAppShortcut: ctrl+opt+5
+    apps:
+    - name: Slack
+      bundleIdentifier: com.tinyspeck.slackmacgap
+      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
+    - name: Telegram
+      bundleIdentifier: ru.keepcoder.Telegram
+      iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+    symbolIconName: ellipsis.message
