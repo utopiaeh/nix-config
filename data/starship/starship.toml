@@ -47,6 +47,36 @@ base = "#24273a"
 mantle = "#1e2030"
 crust = "#181926"
 
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[directory.substitutions]
+"Documents" = "󰈙"
+"Downloads" = ""
+"Music" = "󰝚"
+"Pictures" = ""
+"Developer" = "󰲋"
+
 
 # Fill character (empty space) between the left and right prompt
 [fill]
@@ -74,6 +104,176 @@ disabled = false
 format = "via [$symbol($version )]($style)"
 style = "yellow"
 
+[buf]
+format = '(with [$symbol($version )]($style))'
+style = "yellow"
+
+[bun]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[c]
+format = '(via [$symbol($version(-$name) )]($style))'
+style = "yellow"
+
+[cpp]
+format = '(via [$symbol($version(-$name) )]($style))'
+style = "yellow"
+
+[cmake]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[cobol]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[crystal]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[daml]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[dart]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[deno]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[dotnet]
+format = '(via [$symbol($version )(🎯 $tfm )]($style))'
+style = "yellow"
+
+[elixir]
+format = '(via [$symbol($version \(OTP $otp_version\) )]($style))'
+style = "yellow"
+
+[elm]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[erlang]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[fennel]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[gleam]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[golang]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[haskell]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[helm]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[java]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[julia]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[kotlin]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[lua]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[nim]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[ocaml]
+format = '(via [$symbol($version )(\($switch_indicator$switch_name\) )]($style))'
+style = "yellow"
+
+[opa]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+
+[perl]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[php]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[purescript]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[python]
+format = '(via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style))'
+style = "yellow"
+
+[quarto]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[raku]
+format = '(via [$symbol($version-$vm_version )]($style))'
+style = "yellow"
+
+[red]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[rlang]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[ruby]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[rust]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[scala]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[swift]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[typst]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[vagrant]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[vlang]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+[zig]
+format = '(via [$symbol($version )]($style))'
+style = "yellow"
+
+
 [package]
 disabled = true                       # Enable to output the current working directory's package version
 format = "[$symbol$version]($style) "
@@ -82,7 +282,7 @@ display_private = true
 # Output the command duration if over 2 seconds
 [cmd_duration]
 min_time = 2_000
-format = "[  $duration ]($style)"
+format = "[  $duration ]($style)"
 style = "white"
 
 # Customize the battery indicator

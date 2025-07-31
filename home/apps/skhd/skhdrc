@@ -1,0 +1,6 @@
+# flashspace shortcuts
+alt - [ : flashspace profile P
+alt - ] : flashspace profile W
+
+# app shortcuts
+alt - c : open -a "ChatGPT.app"

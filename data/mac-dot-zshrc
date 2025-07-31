@@ -20,6 +20,7 @@ export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
 # path fix for homebrew
 export PATH=$PATH:/opt/homebrew/bin/
 export PATH=$PATH:/Users/utopiaeh/go/bin
+
 #export EDITOR=vi
 export VISUAL=/etc/profiles/per-user/utopiaeh/bin/nvim
 export EDITOR=/etc/profiles/per-user/utopiaeh/bin/nvim
@@ -40,6 +41,7 @@ compinit
 
 # Alias
 
+
 rebuild() {
   local host="${1:-$(hostname)}"
   sudo darwin-rebuild switch --flake ".#${host}"
@@ -52,6 +54,7 @@ idea() {
 , () {
   nix run nixpkgs#comma -- "$@"
 }
+
 
 eval "$(starship init zsh)"
 eval "$(ssh-agent -s)"

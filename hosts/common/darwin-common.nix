@@ -12,8 +12,11 @@ in
 {
 
   imports = [
-    ../../home/apps/sdhk
+    ../../home/apps/skhd
   ];
+
+
+
 
   users.users.${username}.home = "/Users/${username}";
 
@@ -190,7 +193,7 @@ in
       DSDontWriteUSBStores = true;
     };
     "com.apple.dock" = {
-      autohide = false;
+      autohide = true;
       launchanim = false;
       static-only = false;
       show-recents = false;
@@ -254,8 +257,11 @@ in
 
 
   system.activationScripts.postActivation.text = ''
+     echo "/************* PostActivation *******************/"
+
+
      #It removes the quarantine attribute recursively from all .app folders inside /Applications.
-     sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
+#     sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
      # Install default settings for IntelliJIdea
      echo "Installing default settings for IntelliJIdea..."
@@ -266,6 +272,8 @@ in
     mkdir -p "${targetPathFlashspace}"
     cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
     cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
+
+    echo "/*************** PostActivation END *************/"
   '';
 
 }
