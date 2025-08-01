@@ -1,7 +1,7 @@
 { config, inputs, pkgs, lib, unstablePkgs, username, ... }:
 
 let
-  cleanshotPackage = import ../apps/cleanshot { inherit pkgs; };
+  cleanshotPackage = import ../programs/cleanshot { inherit pkgs; };
   wallpaper = ../../data/wallpapers/enchanted_forest_giant_by_billy_christian.jpg;
 
 in
@@ -10,18 +10,13 @@ in
   home.stateVersion = "23.11";
 
 
-  # list of programs
-  # https://mipmip.github.io/home-manager-option-search
-
   imports = [
-    ../apps/iterm2
-    ../apps/git
+    ../programs/iterm2
+    ../programs/git
     ../modules/iterm2
-
   ];
 
   programs = {
-
 
     ssh = {
       enable = true;
@@ -50,9 +45,12 @@ in
       config.theme = "Nord";
     };
 
+    gpg = {
+      enable = true;
+    };
+
   };
 
-  programs.gpg.enable = true;
 
   #  IMPORTANT: Use this if decide to use specific env per project
   #  Installs and enables nix-direnv allows you to write .envrc files like this:
@@ -100,12 +98,13 @@ in
   programs.bash.enable = true;
 
 
-
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+
+
     shellAliases = {
       cl = "clear";
       lg = "lazygit";
@@ -126,53 +125,55 @@ in
 
 
   home.activation.manageCleanshot = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    echo "Cleaning up existing CleanShot X symlink if needed..."
-    rm -f "$HOME/Applications/CleanShot X.app"
+    echo "❯❯❯❯ 🔒 Installing CleanShot X into /Applications"
+#      rm -f "$HOME/Applications/CleanShot X.app"
 
-    if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ]; then
-      echo "Re-linking CleanShot X.app"
-      mkdir -p "$HOME/Applications"
-      ln -s "${cleanshotPackage}/Applications/CleanShot X.app" "$HOME/Applications/CleanShot X.app"
-    fi
+     if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ]; then
+       if [ ! -e "/Applications/CleanShot X.app" ]; then
+         echo "Linking to /Applications"
+         ln -s  "${cleanshotPackage}/Applications/CleanShot X.app" "/Applications/"
+       else
+         echo "❯❯❯❯ ⓘ Skipping — already exists in /Applications"
+       fi
+     fi
+
   '';
 
   home.activation.makeDirectoryDeveloper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    echo "❯❯❯❯ Creating Developer directory if it doesn't exist"
+
     if [ ! -d "/Users/${username}/Developer" ]; then
-      echo "Creating /Users/${username}/Developer directory..."
+      echo "❯❯❯❯ ⓘ Creating /Users/${username}/Developer directory..."
       mkdir -p "/Users/${username}/Developer"
       chown ${username}:staff "/Users/${username}/Developer"
     else
-      echo "Developer directory already exists. Skipping creation."
+      echo "❯❯❯❯ ⓘ Developer directory already exists. Skipping creation."
     fi
+
   '';
 
   home.activation.manageShortcutsToTakeEffectImmediately = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-     # Forcing shortcuts to take effect immediately
+    echo "❯❯❯❯ ✅ Managing shortcuts to take effect immediately "
+
     /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+
   '';
 
   home.activation.setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    echo "❯❯❯❯ Setting wallpaper"
+    
       WALLPAPER_PATH=${wallpaper}
 
       if [ -f "$WALLPAPER_PATH" ]; then
-        echo "Setting wallpaper to $WALLPAPER_PATH"
+        echo "❯❯❯❯ ✅ Setting wallpaper to $WALLPAPER_PATH"
         /usr/bin/osascript <<EOF
         tell application "System Events"
           set picture of every desktop to POSIX file "$WALLPAPER_PATH"
         end tell
     EOF
       else
-        echo "Wallpaper file not found at: $WALLPAPER_PATH"
+        echo "❯❯❯❯ ❌ Wallpaper file not found at: $WALLPAPER_PATH"
       fi
-  '';
 
-  home.activation.exposeNixApps = lib.hm.dag.entryAfter [ "installCleanshotToNixApps" ] ''
-    echo "Linking Nix GUI apps to ~/Applications..."
-
-    mkdir -p "$HOME/Applications"
-
-    for app in "$HOME/Applications/Nix Apps/"*.app; do
-      ln -sf "$app" "$HOME/Applications/$(basename "$app")"
-    done
   '';
 }

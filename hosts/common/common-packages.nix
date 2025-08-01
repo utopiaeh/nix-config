@@ -8,13 +8,13 @@ in
     gh
     git-crypt
     go
-    jetbrains-mono # font
+    jetbrains-mono
     tree
     unzip
     watch
     wget
     zoxide
-    lazygit #GIT GUI
+    lazygit
     fzf
     sops
     iterm2
@@ -24,6 +24,5 @@ in
     yarn
 
     skhd
-
   ];
 }
