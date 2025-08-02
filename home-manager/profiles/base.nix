@@ -9,15 +9,14 @@ in
 {
   home.stateVersion = "23.11";
 
-
   imports = [
+    ../modules/iterm2
     ../programs/iterm2
     ../programs/git
-    ../modules/iterm2
+
   ];
 
   programs = {
-
     ssh = {
       enable = true;
 
@@ -38,7 +37,6 @@ in
         };
       };
     };
-
 
     bat = {
       enable = true;
@@ -84,7 +82,6 @@ in
     ];
   };
 
-
   programs.lf.enable = true;
 
   programs.starship = {
@@ -96,7 +93,6 @@ in
   };
 
   programs.bash.enable = true;
-
 
   programs.zsh = {
     enable = true;
@@ -123,24 +119,23 @@ in
 
   programs.zoxide.enable = true;
 
-
   home.activation.manageCleanshot = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    echo "❯❯❯❯ 🔒 Installing CleanShot X into /Applications"
-#      rm -f "$HOME/Applications/CleanShot X.app"
+        echo "❯❯❯❯ 🔒 Installing CleanShot X into /Applications"
+    #      rm -f "$HOME/Applications/CleanShot X.app"
 
-     if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ]; then
-       if [ ! -e "/Applications/CleanShot X.app" ]; then
-         echo "Linking to /Applications"
-         ln -s  "${cleanshotPackage}/Applications/CleanShot X.app" "/Applications/"
-       else
-         echo "❯❯❯❯ ⓘ Skipping — already exists in /Applications"
-       fi
-     fi
+         if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ]; then
+           if [ ! -e "/Applications/CleanShot X.app" ]; then
+             echo "Linking to /Applications"
+             ln -s  "${cleanshotPackage}/Applications/CleanShot X.app" "/Applications/"
+           else
+             echo "❯❯❯❯ ⓘ Skipping — already exists in /Applications"
+           fi
+         fi
 
   '';
 
   home.activation.makeDirectoryDeveloper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    echo "❯❯❯❯ Creating Developer directory if it doesn't exist"
+    echo "❯❯❯❯ ⓘ Creating Developer directory if it doesn't exist"
 
     if [ ! -d "/Users/${username}/Developer" ]; then
       echo "❯❯❯❯ ⓘ Creating /Users/${username}/Developer directory..."
@@ -176,4 +171,5 @@ in
       fi
 
   '';
+
 }

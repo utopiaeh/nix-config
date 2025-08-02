@@ -520,17 +520,17 @@ in
       (mkIf cfg.copyApplications {
         copyITerm2ToApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
                     if [ -d "$HOME/Applications/iTerm2.app" ]; then
-                      echo "Removing existing iTerm2.app..."
+                      echo "❯❯❯❯ ⓘ  Removing existing iTerm2.app..."
                       chmod -R +w "$HOME/Applications/iTerm2.app" || true
                       $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app" || {
-                        echo "Failed to remove existing iTerm2.app, trying alternative method..."
+                        echo "❯❯❯❯ ❌Failed to remove existing iTerm2.app, trying alternative method..."
                         $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type f -exec chmod 644 {} \; || true
                         $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type d -exec chmod 755 {} \; || true
                         $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app"
                       }
                     fi
 
-          #          echo "Copying iTerm2.app to $HOME/Applications..."
+          #          echo "❯❯❯❯ ⓘ ️Copying iTerm2.app to $HOME/Applications..."
           #          $DRY_RUN_CMD mkdir -p "$HOME/Applications"
           #          $DRY_RUN_CMD cp -R "${cfg.package}/Applications/iTerm2.app" "$HOME/Applications/iTerm2.app"
         '';
@@ -548,23 +548,23 @@ in
 
           # Make sure iTerm2 is not running to avoid conflicts
           if /usr/bin/pgrep -x x "iTerm2" > /dev/null; then
-            echo "Warning: iTerm2 is currently running. Changes may not take effect until restart."
+            echo "❯❯❯❯ ⚠️ Warning: iTerm2 is currently running. Changes may not take effect until restart."
           fi
 
           # Wait for the managed file to be written
           if [ -e "$MANAGED_PREF" ]; then
-            echo "Copying iTerm2 preferences to default location..."
+            echo "❯❯❯❯ ⓘ Copying iTerm2 preferences to default location..."
             $DRY_RUN_CMD cp "$MANAGED_PREF" "$DEFAULT_PREF"
             # Ensure proper permissions
             $DRY_RUN_CMD chmod 644 "$DEFAULT_PREF"
 
             # Kill cfprefsd to force preference reload
             if command -v pkill >/dev/null 2>&1; then
-              echo "Reloading preference cache..."
+              echo "❯❯❯❯ ⓘ Reloading preference cache..."
               $DRY_RUN_CMD pkill -f cfprefsd || true
             fi
           else
-            echo "Warning: Managed iTerm2 preferences file not found at $MANAGED_PREF"
+            echo "❯❯❯❯ ⚠️ Warning: Managed iTerm2 preferences file not found at $MANAGED_PREF"
           fi
         '';
       })

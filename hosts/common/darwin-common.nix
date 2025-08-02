@@ -15,9 +15,9 @@ in
     ../../home-manager/programs/skhd
     ../../home-manager/programs/zsh
 
-    ./settings/system
-    ./settings/userPreferences
-    ./settings/disableHotkeys
+    ./darwin/settings/system
+    ./darwin/settings/userPreferences
+    ./darwin/settings/disableHotkeys
 
   ];
 
@@ -145,6 +145,8 @@ in
     cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
     cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
+    echo "❯❯❯❯ ⓘ Reloading skhd configuration"
+    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
   '';
 
 }

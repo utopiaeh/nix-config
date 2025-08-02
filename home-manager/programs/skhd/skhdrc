@@ -1,6 +1,7 @@
-# flashspace shortcuts
-alt - [ : flashspace profile P
-alt - ] : flashspace profile W
+# 0x21 -> [
+alt - 0x21 : flashspace profile P
+# 0x1E -> ]
+alt - 0x1E : flashspace profile W
 
-# app shortcuts
-alt - c : open -a "ChatGPT.app"
+alt - c : $HOME/.config/skhd/scripts/toggle-chatgpt.sh
+alt - n : open -a "Notion"
