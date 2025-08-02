@@ -49,6 +49,15 @@ in
 
   };
 
+launchd.agents.lulu-gui = {
+  enable = true;
+  config = {
+    Label = "com.objective-see.lulu.gui";
+    ProgramArguments = [ "/usr/bin/open" "-gj" "/Applications/LuLu.app" ];
+    RunAtLoad = true;
+    KeepAlive = false;
+  };
+};
 
   #  IMPORTANT: Use this if decide to use specific env per project
   #  Installs and enables nix-direnv allows you to write .envrc files like this:

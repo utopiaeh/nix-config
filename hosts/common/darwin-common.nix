@@ -8,6 +8,8 @@ let
   settingSource = ./../../data/flashspace/settings.yaml;
   targetPathFlashspace = "/Users/${username}/.config/flashspace";
 
+  luluLaunchDaemon = ./../../launchAgents/lulu/com.objective-see.lulu.plist;
+
 in
 {
 
@@ -35,7 +37,6 @@ in
     };
     channel.enable = false;
   };
-
 
   nixpkgs = {
     config.allowUnfree = true;
