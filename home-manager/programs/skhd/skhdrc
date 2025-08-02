@@ -3,5 +3,5 @@ alt - 0x21 : flashspace profile P
 # 0x1E -> ]
 alt - 0x1E : flashspace profile W
 
-alt - c : $HOME/.config/skhd/scripts/toggle-chatgpt.sh
-alt - n : open -a "Notion"
+ctrl + cmd - c  : $HOME/.config/skhd/scripts/toggle-chatgpt.sh
+ctrl + cmd - n  : open -a "Notion"
