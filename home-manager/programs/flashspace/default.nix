@@ -1,14 +1,16 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, username, pkgs, ... }:
 
-let
-  profileSource = ../../../data/flashspace/profiles.yaml;
-  settingSource = ../../../data/flashspace/settings.yaml;
-  targetPath = "${config.home.homeDirectory}/.config/flashspace";
-in {
- home.activation.flashspaceProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-   echo "Installing FlashSpace profile and settings..."
-   mkdir -p "${targetPath}"
-   cp ${profileSource} "${targetPath}/profiles.yaml"
-   cp ${settingSource} "${targetPath}/settings.yaml"
- '';
+{
+#  home-manager.users.${username} = {
+    home = {
+      file.".config/scripts/backup_flashspace.sh" = {
+        source = ./backup_flashspace.sh;
+        executable = true;
+      };
+
+      file.".config/flashspace/profiles.yaml".source = ./profiles.yaml;
+      file.".config/flashspace/settings.yaml".source = ./settings.yaml;
+    };
+#  };
 }
+

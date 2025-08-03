@@ -1,0 +1,121 @@
+profiles:
+- id: 72F2CFBC-B146-4313-9ED7-338F8C6FF583
+  name: P
+  workspaces:
+  - id: F175B76E-62C3-430D-9CBA-CF5C38BEB6BA
+    name: Base
+    display: Built-in Retina Display
+    shortcut: opt+1
+    assignAppShortcut: ctrl+opt+1
+    apps:
+    - name: Zen
+      bundleIdentifier: app.zen-browser.zen
+      iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+    symbolIconName: mail
+  - id: 6B69980E-D950-464C-A089-D0812896C683
+    name: Code
+    display: LC32G5xT
+    shortcut: opt+2
+    assignAppShortcut: ctrl+opt+2
+    apps:
+    - name: IntelliJ IDEA
+      bundleIdentifier: com.jetbrains.intellij
+      iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
+    symbolIconName: chevron.left.forwardslash.chevron.right
+  - id: 7BE6E7A9-7FEE-4A83-9345-C2D5B2EC4389
+    name: Terminal
+    display: BenQ GW2470
+    shortcut: opt+3
+    assignAppShortcut: ctrl+opt+3
+    apps:
+    - name: iTerm2
+      bundleIdentifier: com.googlecode.iterm2
+      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    symbolIconName: apple.terminal
+  - id: 909691B3-53CD-4920-8327-CDC162D1A053
+    name: Chat
+    display: Built-in Retina Display
+    shortcut: opt+4
+    assignAppShortcut: ctrl+opt+4
+    apps:
+    - name: Slack
+      bundleIdentifier: com.tinyspeck.slackmacgap
+      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
+    - name: Telegram
+      bundleIdentifier: ru.keepcoder.Telegram
+      iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+    symbolIconName: ellipsis.message
+  - id: 1C72F220-9EC8-4B0C-BFA3-C9D08B35CD95
+    name: Spotify
+    display: Built-in Retina Display
+    shortcut: opt+5
+    assignAppShortcut: ctrl+opt+5
+    apps:
+    - name: Spotify
+      bundleIdentifier: com.spotify.client
+      iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
+    appToFocus:
+      name: Spotify
+      bundleIdentifier: com.spotify.client
+      iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
+    symbolIconName: music.note.list
+- id: 134108D6-AAA3-403D-BF3E-D50E4D06C0AA
+  name: W
+  workspaces:
+  - id: F3677540-16E7-4D3E-BD75-63D34C55A1A3
+    name: Base
+    display: Built-in Retina Display
+    shortcut: opt+1
+    assignAppShortcut: ctrl+opt+1
+    apps: []
+    symbolIconName: mail
+  - id: 0DBB69E8-687A-4E99-813A-28F602000197
+    name: Code
+    display: LC32G5xT
+    shortcut: opt+2
+    assignAppShortcut: ctrl+opt+2
+    apps:
+    - name: Zen
+      bundleIdentifier: app.zen-browser.zen
+      iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+    - name: IntelliJ IDEA
+      bundleIdentifier: com.jetbrains.intellij
+      iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
+    symbolIconName: chevron.left.forwardslash.chevron.right
+  - id: 8AE89212-9434-4C74-B29A-9E707AE82E8E
+    name: Terminal
+    display: BenQ GW2470
+    shortcut: opt+3
+    assignAppShortcut: ctrl+opt+3
+    apps:
+    - name: iTerm2
+      bundleIdentifier: com.googlecode.iterm2
+      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    symbolIconName: apple.terminal
+  - id: 78FFB4B2-6C42-401E-881F-0C64860AA95B
+    name: Chat
+    display: Built-in Retina Display
+    shortcut: opt+4
+    assignAppShortcut: ctrl+opt+4
+    apps:
+    - name: Slack
+      bundleIdentifier: com.tinyspeck.slackmacgap
+      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
+    - name: Telegram
+      bundleIdentifier: ru.keepcoder.Telegram
+      iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+    symbolIconName: ellipsis.message
+  - id: 27888B55-65A3-42E6-9A3B-D3EF7A559CAB
+    name: Spotify
+    display: Built-in Retina Display
+    shortcut: opt+5
+    assignAppShortcut: ctrl+opt+5
+    apps:
+    - name: Spotify
+      bundleIdentifier: com.spotify.client
+      iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
+    appToFocus:
+      name: Spotify
+      bundleIdentifier: com.spotify.client
+      iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
+    symbolIconName: music.note.list

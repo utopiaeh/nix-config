@@ -3,7 +3,6 @@
 let
   cleanshotPackage = import ../programs/cleanshot { inherit pkgs; };
   wallpaper = ../../data/wallpapers/enchanted_forest_giant_by_billy_christian.jpg;
-
 in
 
 {
@@ -13,6 +12,7 @@ in
     ../modules/iterm2
     ../programs/iterm2
     ../programs/git
+    ../programs/flashspace
 
   ];
 
@@ -49,15 +49,54 @@ in
 
   };
 
-launchd.agents.lulu-gui = {
-  enable = true;
-  config = {
-    Label = "com.objective-see.lulu.gui";
-    ProgramArguments = [ "/usr/bin/open" "-gj" "/Applications/LuLu.app" ];
-    RunAtLoad = true;
-    KeepAlive = false;
+  launchd.agents = {
+    lulu-gui = {
+      enable = true;
+      config = {
+        Label = "com.objective-see.lulu.gui";
+        ProgramArguments = [ "/usr/bin/open" "-gj" "/Applications/LuLu.app" ];
+        RunAtLoad = true;
+        KeepAlive = false;
+      };
+    };
+
+#    rsync-zen-profiles = {
+#      enable = true;
+#      config = {
+#        Label = "com.user.rsync-zen-profiles";
+#        ProgramArguments = [ "${config.home.homeDirectory}/.config/scripts/rsync-zen-browser.sh" ];
+#        StartCalendarInterval = {
+#          Hour = 12;
+#          Minute = 10;
+#        };
+#        RunAtLoad = false;
+#        StandardOutPath = "/tmp/rsync-zen.out";
+#        StandardErrorPath = "/tmp/rsync-zen.err";
+#      };
+#    };
+
+    rsync-flashspace-profiles = {
+      enable = true;
+      config = {
+        Label = "com.user.rsync-flashspace";
+        ProgramArguments = [ "${config.home.homeDirectory}/.config/scripts/backup_flashspace.sh" ];
+        StartCalendarInterval = {
+          Hour = 19;
+          Minute = 59;
+        };
+        RunAtLoad = false;
+        StandardOutPath = "/tmp/rsync-flashspace.out";
+        StandardErrorPath = "/tmp/rsync-flashspace.err";
+      };
+    };
+
   };
-};
+
+#  home.file.".config/scripts/rsync-zen-browser.sh" = {
+#    source = ../../scripts/rsync-zen-browser.sh;
+#    executable = true;
+#  };
+
 
   #  IMPORTANT: Use this if decide to use specific env per project
   #  Installs and enables nix-direnv allows you to write .envrc files like this:
@@ -165,7 +204,7 @@ launchd.agents.lulu-gui = {
 
   home.activation.setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     echo "❯❯❯❯ Setting wallpaper"
-    
+
       WALLPAPER_PATH=${wallpaper}
 
       if [ -f "$WALLPAPER_PATH" ]; then
@@ -180,5 +219,8 @@ launchd.agents.lulu-gui = {
       fi
 
   '';
+
+
+
 
 }
