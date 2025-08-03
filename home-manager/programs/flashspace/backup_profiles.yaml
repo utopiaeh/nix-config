@@ -3,7 +3,7 @@ profiles:
   name: P
   workspaces:
   - id: F175B76E-62C3-430D-9CBA-CF5C38BEB6BA
-    name: Base
+    name: Main
     display: Built-in Retina Display
     shortcut: opt+1
     assignAppShortcut: ctrl+opt+1
@@ -11,6 +11,12 @@ profiles:
     - name: Zen
       bundleIdentifier: app.zen-browser.zen
       iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+    - name: Safari
+      bundleIdentifier: com.apple.Safari
+      iconPath: /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/AppIcon.icns
+    - name: Google Chrome
+      bundleIdentifier: com.google.Chrome
+      iconPath: /Applications/Google Chrome.app/Contents/Resources/app.icns
     symbolIconName: mail
   - id: 6B69980E-D950-464C-A089-D0812896C683
     name: Code
@@ -21,6 +27,9 @@ profiles:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
       iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
+    - name: Zed
+      bundleIdentifier: dev.zed.Zed
+      iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
   - id: 7BE6E7A9-7FEE-4A83-9345-C2D5B2EC4389
     name: Terminal
@@ -63,11 +72,17 @@ profiles:
   name: W
   workspaces:
   - id: F3677540-16E7-4D3E-BD75-63D34C55A1A3
-    name: Base
+    name: Main
     display: Built-in Retina Display
     shortcut: opt+1
     assignAppShortcut: ctrl+opt+1
-    apps: []
+    apps:
+    - name: Google Chrome
+      bundleIdentifier: com.google.Chrome
+      iconPath: /Applications/Google Chrome.app/Contents/Resources/app.icns
+    - name: Safari
+      bundleIdentifier: com.apple.Safari
+      iconPath: /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/AppIcon.icns
     symbolIconName: mail
   - id: 0DBB69E8-687A-4E99-813A-28F602000197
     name: Code
@@ -81,6 +96,9 @@ profiles:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
       iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
+    - name: Zed
+      bundleIdentifier: dev.zed.Zed
+      iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
   - id: 8AE89212-9434-4C74-B29A-9E707AE82E8E
     name: Terminal

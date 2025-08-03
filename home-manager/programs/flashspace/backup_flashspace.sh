@@ -50,3 +50,10 @@ for file in "${FILES[@]}"; do
     echo "Warning: Source file '$src_file' not found. Skipping."
   fi
 done
+
+cd "$DEST_PATH"
+if [ -n "$(git status --porcelain)" ]; then
+  git add .
+  git commit -m "Backup FlashSpace profiles: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+  git push origin main
+fi
