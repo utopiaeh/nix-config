@@ -4,6 +4,10 @@ let
   setupIntelliJIdeaScript = ./../../data/idea/install.sh;
   pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
 
+  profileSource = ./../../home-manager/programs/flashspace/profiles.yaml;
+  settingSource = ./../../home-manager/programs/flashspace/settings.yaml;
+  targetPathFlashspace = "/Users/${username}/.config/flashspace";
+
 in
 {
 
@@ -134,6 +138,11 @@ in
 
     echo "❯❯❯❯ ✅ Installing default settings for IntelliJIdea..."
     ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
+
+    echo "❯❯❯❯ ✅ Installing FlashSpace profile and settings..."
+    mkdir -p "${targetPathFlashspace}"
+    cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
+    cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
     echo "❯❯❯❯ ⓘ Reloading skhd configuration"
     su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"

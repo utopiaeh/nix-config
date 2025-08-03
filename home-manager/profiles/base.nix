@@ -81,8 +81,9 @@ in
         Label = "com.user.rsync-flashspace";
         ProgramArguments = [ "${config.home.homeDirectory}/.config/scripts/backup_flashspace.sh" ];
         StartCalendarInterval = {
-          Hour = 19;
-          Minute = 59;
+          Hour = 11;
+          Minute = 00;
+          Weekday = 6; # Saturday
         };
         RunAtLoad = false;
         StandardOutPath = "/tmp/rsync-flashspace.out";
@@ -219,8 +220,6 @@ in
       fi
 
   '';
-
-
 
 
 }
