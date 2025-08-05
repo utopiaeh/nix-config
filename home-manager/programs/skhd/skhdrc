@@ -4,7 +4,10 @@ alt - 0x21 : flashspace profile P
 alt - 0x1E : flashspace profile W
 
 
-ctrl + cmd - t  : $HOME/.config/skhd/scripts/openIterm2.sh
+# 0x1E -> return
+cmd - return : $HOME/.config/skhd/scripts/openIterm2.sh
+
+ctrl + cmd - t  : open -a "Telegram"
 ctrl + cmd - i  : open -a "IntelliJ IDEA"
 
 ctrl + cmd - c  : open -a "ChatGPT"
@@ -13,8 +16,6 @@ ctrl + cmd - b  : open -a "Zen"
 ctrl + cmd - m  : open -a "Mail"
 ctrl + cmd - n  : open -a "Notion"
 
-ctrl + cmd - s  : open -a "Slack"
-ctrl + cmd - g  : open -a "Telegram"
 
 
 

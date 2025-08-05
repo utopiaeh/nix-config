@@ -4,6 +4,7 @@
   services.skhd = {
     enable = true;
     skhdConfig = builtins.readFile ./skhdrc;
+
   };
 
   home-manager.users.${username} = {
