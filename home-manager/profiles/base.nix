@@ -60,20 +60,20 @@ in
       };
     };
 
-#    rsync-zen-profiles = {
-#      enable = true;
-#      config = {
-#        Label = "com.user.rsync-zen-profiles";
-#        ProgramArguments = [ "${config.home.homeDirectory}/.config/scripts/rsync-zen-browser.sh" ];
-#        StartCalendarInterval = {
-#          Hour = 12;
-#          Minute = 10;
-#        };
-#        RunAtLoad = false;
-#        StandardOutPath = "/tmp/rsync-zen.out";
-#        StandardErrorPath = "/tmp/rsync-zen.err";
-#      };
-#    };
+    #    rsync-zen-profiles = {
+    #      enable = true;
+    #      config = {
+    #        Label = "com.user.rsync-zen-profiles";
+    #        ProgramArguments = [ "${config.home.homeDirectory}/.config/scripts/rsync-zen-browser.sh" ];
+    #        StartCalendarInterval = {
+    #          Hour = 12;
+    #          Minute = 10;
+    #        };
+    #        RunAtLoad = false;
+    #        StandardOutPath = "/tmp/rsync-zen.out";
+    #        StandardErrorPath = "/tmp/rsync-zen.err";
+    #      };
+    #    };
 
     rsync-flashspace-profiles = {
       enable = true;
@@ -93,10 +93,10 @@ in
 
   };
 
-#  home.file.".config/scripts/rsync-zen-browser.sh" = {
-#    source = ../../scripts/rsync-zen-browser.sh;
-#    executable = true;
-#  };
+  #  home.file.".config/scripts/rsync-zen-browser.sh" = {
+  #    source = ../../scripts/rsync-zen-browser.sh;
+  #    executable = true;
+  #  };
 
 
   #  IMPORTANT: Use this if decide to use specific env per project
@@ -220,6 +220,28 @@ in
       fi
 
   '';
+
+
+  home.packages = [
+    (pkgs.writeShellScriptBin "dismiss-notifications" ''
+      #!/usr/bin/env bash
+      osascript -e '
+      tell application "System Events"
+        tell process "NotificationCenter"
+          if not (window "Notification Center" exists) then return
+          set alertGroups to groups of first UI element of first scroll area of first group of window "Notification Center"
+          repeat with aGroup in alertGroups
+            try
+              perform (first action of aGroup whose name contains "Close" or name contains "Clear")
+            on error errMsg
+              log errMsg
+            end try
+          end repeat
+          return ""
+        end tell
+      end tell'
+    '')
+  ];
 
 
 }
