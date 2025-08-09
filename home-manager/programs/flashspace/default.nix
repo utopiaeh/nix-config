@@ -13,8 +13,8 @@
       executable = true;
     };
 
-#    file.".config/flashspace/profiles.yaml".text = builtins.readFile ./profiles.yaml;
-#    file.".config/flashspace/settings.yaml".text = builtins.readFile ./settings.yaml;
+    #    file.".config/flashspace/profiles.yaml".text = builtins.readFile ./profiles.yaml;
+    #    file.".config/flashspace/settings.yaml".text = builtins.readFile ./settings.yaml;
 
     #    activation.flashspaceProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     #      echo "❯❯❯❯ ✅ Installing FlashSpace profile and settings..."
