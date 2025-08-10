@@ -16,7 +16,6 @@ ctrl + cmd - b  : open -a "Zen"
 ctrl + cmd - m  : open -a "Mail"
 ctrl + cmd - n  : open -a "Notion"
 
-alt - c : dismiss-notifications
 
 
 
