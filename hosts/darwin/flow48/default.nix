@@ -1,4 +1,4 @@
-{ config, username, ... }:
+{ config, username, pkgs, ... }:
 {
   imports = [
     ./custom-dock.nix
@@ -23,7 +23,9 @@
     };
   };
 
-
+  environment.systemPackages = with pkgs; [
+    pkgs.ngrok
+  ];
 
   homebrew = {
     casks = [

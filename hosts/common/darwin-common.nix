@@ -121,6 +121,7 @@ in
       "lulu" #Disalbe connection to network
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
 
+
     ];
 
     masApps = {
@@ -144,8 +145,8 @@ in
     cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
     cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
-    echo "❯❯❯❯ ⓘ Reloading skhd configuration"
-    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
+#    echo "❯❯❯❯ ⓘ Reloading skhd configuration"
+#    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
   '';
 
 }
