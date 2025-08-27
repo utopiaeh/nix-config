@@ -146,7 +146,7 @@ in
     cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
 #    echo "❯❯❯❯ ⓘ Reloading skhd configuration"
-    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
+#    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
   '';
 
 }
