@@ -12,10 +12,10 @@
 #        text = builtins.readFile ./scripts/toggle-chatgpt.sh;
 #        executable = true;
 #      };
-      file.".config/skhd/scripts/openIterm2.sh" = {
-        text = builtins.readFile ./scripts/openIterm2.sh;
-        executable = true;
-      };
+#      file.".config/skhd/scripts/openIterm2.sh" = {
+#        text = builtins.readFile ./scripts/openIterm2.sh;
+#        executable = true;
+#      };
     };
   };
 }

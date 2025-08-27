@@ -5,7 +5,7 @@ alt - 0x1E : flashspace profile W
 
 
 # 0x1E -> return
-cmd - return : $HOME/.config/skhd/scripts/openIterm2.sh
+#cmd - return : $HOME/.config/skhd/scripts/openIterm2.sh
 
 ctrl + cmd - t  : open -a "Telegram"
 ctrl + cmd - i  : open -a "IntelliJ IDEA"
