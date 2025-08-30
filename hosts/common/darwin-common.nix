@@ -122,6 +122,7 @@ in
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
 
 
+      "jiggler"
     ];
 
     masApps = {
@@ -134,19 +135,19 @@ in
 
 
   system.activationScripts.postActivation.text = ''
-    echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
-    sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
+        echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
+        sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-    echo "❯❯❯❯ ✅ Installing default settings for IntelliJIdea..."
-    ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
+        echo "❯❯❯❯ ✅ Installing default settings for IntelliJIdea..."
+        ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
-    echo "❯❯❯❯ ✅ Installing FlashSpace profile and settings..."
-    mkdir -p "${targetPathFlashspace}"
-    cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
-    cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
+        echo "❯❯❯❯ ✅ Installing FlashSpace profile and settings..."
+        mkdir -p "${targetPathFlashspace}"
+        cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
+        cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
-#    echo "❯❯❯❯ ⓘ Reloading skhd configuration"
-#    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
+    #    echo "❯❯❯❯ ⓘ Reloading skhd configuration"
+    #    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
   '';
 
 }
