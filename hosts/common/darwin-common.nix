@@ -122,11 +122,10 @@ in
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
 
 
-      "jiggler"
     ];
 
     masApps = {
-      # "Numbers" = 409203825;
+       "Amphetamine" = 937984704;
     };
   };
 
