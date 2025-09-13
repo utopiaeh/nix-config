@@ -1,7 +1,7 @@
 # 0x21 -> [
-alt - 0x21 : flashspace profile P
+#alt - 0x21 : flashspace profile P
 # 0x1E -> ]
-alt - 0x1E : flashspace profile W
+#alt - 0x1E : flashspace profile W
 
 
 # 0x1E -> return

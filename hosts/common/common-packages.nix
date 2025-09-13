@@ -17,7 +17,6 @@ in
     lazygit
     fzf
     sops
-    iterm2
     neovim
 
     nodejs

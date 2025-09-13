@@ -121,6 +121,8 @@ in
       "lulu" #Disalbe connection to network
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
 
+      "iterm2"
+
 
     ];
 
@@ -128,6 +130,8 @@ in
        "Amphetamine" = 937984704;
     };
   };
+
+  environment.pathsToLink = [ "/Applications" ];
 
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
