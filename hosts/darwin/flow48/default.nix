@@ -34,8 +34,9 @@
 
   homebrew = {
     casks = [
-      "slack"
-      "tunnelblick"
+        "slack"
+        "tunnelblick"
+        "discord"
     ];
   };
 }
