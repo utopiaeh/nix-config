@@ -61,43 +61,7 @@ in
       };
     };
 
-    #    rsync-zen-profiles = {
-    #      enable = true;
-    #      config = {
-    #        Label = "com.user.rsync-zen-profiles";
-    #        ProgramArguments = [ "${config.home.homeDirectory}/.config/scripts/rsync-zen-browser.sh" ];
-    #        StartCalendarInterval = {
-    #          Hour = 12;
-    #          Minute = 10;
-    #        };
-    #        RunAtLoad = false;
-    #        StandardOutPath = "/tmp/rsync-zen.out";
-    #        StandardErrorPath = "/tmp/rsync-zen.err";
-    #      };
-    #    };
-
-#    rsync-flashspace-profiles = {
-#      enable = true;
-#      config = {
-#        Label = "com.user.rsync-flashspace";
-#        ProgramArguments = [ "${config.home.homeDirectory}/.config/scripts/backup_flashspace.sh" ];
-#        StartCalendarInterval = {
-#          Hour = 11;
-#          Minute = 00;
-#          Weekday = 6; # Saturday
-#        };
-#        RunAtLoad = false;
-#        StandardOutPath = "/tmp/rsync-flashspace.out";
-#        StandardErrorPath = "/tmp/rsync-flashspace.err";
-#      };
-#    };
-
   };
-
-  #  home.file.".config/scripts/rsync-zen-browser.sh" = {
-  #    source = ../../scripts/rsync-zen-browser.sh;
-  #    executable = true;
-  #  };
 
 
   #  IMPORTANT: Use this if decide to use specific env per project
