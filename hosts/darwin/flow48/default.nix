@@ -30,6 +30,7 @@
 
   environment.systemPackages = with pkgs; [
     pkgs.ngrok
+    pkgs.tinygo
   ];
 
   homebrew = {
