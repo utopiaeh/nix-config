@@ -1,22 +1,24 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs.follows = "nixpkgs-darwin";
+    # Base nixpkgs for macOS
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs = { follows = "nixpkgs-darwin"; };  # do NOT give a url here
 
-    nix-darwin.url = "github:lnl7/nix-darwin";
+    # nix-darwin
+    nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
 
+    # home-manager
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-darwin";
+
+    # homebrew integration
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
     homebrew-core = { url = "github:homebrew/homebrew-core"; flake = false; };
     homebrew-cask = { url = "github:homebrew/homebrew-cask"; flake = false; };
     homebrew-bundle = { url = "github:homebrew/homebrew-bundle"; flake = false; };
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-darwin";
-
-    # Secrets management.
+    # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
