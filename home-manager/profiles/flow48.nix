@@ -7,7 +7,7 @@
 
    home.packages = with pkgs; [
       poetry
-      python3
+      python3Full
     ];
 
 

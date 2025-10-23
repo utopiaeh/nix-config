@@ -131,7 +131,11 @@ in
   programs.home-manager.enable = true;
   programs.nix-index.enable = true;
 
-  programs.zoxide.enable = true;
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
 
   home.activation.manageCleanshot = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         echo "❯❯❯❯ 🔒 Installing CleanShot X into /Applications"
