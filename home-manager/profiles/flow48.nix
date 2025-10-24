@@ -5,10 +5,13 @@
     ./base.nix
   ];
 
-   home.packages = with pkgs; [
-      poetry
-      python3Full
-    ];
+  home.packages = with pkgs; [
+    poetry
+    python3
+    python3.pkgs.pip
+    python3.pkgs.setuptools
+    python3.pkgs.wheel
+  ];
 
 
   #To remove package
