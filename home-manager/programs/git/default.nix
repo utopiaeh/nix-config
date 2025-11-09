@@ -1,25 +1,34 @@
 { config, pkgs, ... }:
 
 {
-  programs.git = {
-    enable = true;
-    userEmail = "utopiaeh01@gmail.com";
-    userName = "utopiaeh";
-    diff-so-fancy.enable = true;
-    ignores = [ "*~" ".DS_Store" ];
-    lfs.enable = true;
-    extraConfig = {
-      init = {
-        defaultBranch = "main";
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        user = {
+          email = "utopiaeh01@gmail.com";
+          name = "utopiaeh";
+        };
+        init = {
+          defaultBranch = "main";
+        };
+        merge = {
+          conflictStyle = "diff3";
+          tool = "meld";
+        };
+        pull = {
+          rebase = true;
+        };
+        core.editor = "nvim";
+
       };
-      merge = {
-        conflictStyle = "diff3";
-        tool = "meld";
-      };
-      pull = {
-        rebase = true;
-      };
-      core.editor = "nvim";
+      ignores = [ "*~" ".DS_Store" ];
+      lfs.enable = true;
+    };
+
+    diff-so-fancy = {
+      enableGitIntegration = true;
     };
   };
+
 }

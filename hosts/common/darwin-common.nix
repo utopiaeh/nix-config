@@ -123,11 +123,12 @@ in
 
       "iterm2"
 
+      "visual-studio-code"
 
     ];
 
     masApps = {
-       "Amphetamine" = 937984704;
+      "Amphetamine" = 937984704;
     };
   };
 
