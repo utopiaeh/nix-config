@@ -3,7 +3,6 @@
   system = {
     keyboard = {
       enableKeyMapping = true;
-      remapCapsLockToEscape = true; # remap CapsLock to Escape
     };
 
     defaults = {

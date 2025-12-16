@@ -150,8 +150,8 @@ in
         cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
         cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
-    #    echo "❯❯❯❯ ⓘ Reloading skhd configuration"
-    #    su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
+        echo "❯❯❯❯ ⓘ Reloading skhd configuration"
+        su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
   '';
 
 }
