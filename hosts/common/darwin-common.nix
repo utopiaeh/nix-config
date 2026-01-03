@@ -154,4 +154,12 @@ in
         su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
   '';
 
+  system.activationScripts.signSkhd = {
+    text = ''
+      #!/bin/bash
+      codesign --sign - ${skhdWrapper}
+    '';
+    deps = [ skhdWrapper ];
+  };
+
 }

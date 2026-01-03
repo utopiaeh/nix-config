@@ -4,11 +4,11 @@ let
 in
 {
   nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     gh
     git-crypt
     go
-    rust
     jetbrains-mono
     tree
     unzip
@@ -24,5 +24,9 @@ in
     yarn
 
     skhd
+
+    # Rust tools
+    rustc
+    cargo
   ];
 }
