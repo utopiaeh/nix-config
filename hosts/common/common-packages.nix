@@ -8,6 +8,7 @@ in
     gh
     git-crypt
     go
+    rust
     jetbrains-mono
     tree
     unzip
