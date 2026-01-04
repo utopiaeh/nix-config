@@ -12,7 +12,6 @@ in
 {
 
   imports = [
-    ../../home-manager/programs/skhd
     ../../home-manager/programs/zsh
 
     ./darwin/settings/system
@@ -132,15 +131,15 @@ in
     };
   };
 
-  environment.pathsToLink = [ "/Applications" ];
+  # environment.pathsToLink = [ "/Applications" ];
 
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
 
   system.activationScripts.postActivation.text = ''
-        echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
-        sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
+        # echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
+        # sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
         echo "❯❯❯❯ ✅ Installing default settings for IntelliJIdea..."
         ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
@@ -150,16 +149,6 @@ in
         cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
         cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
-        echo "❯❯❯❯ ⓘ Reloading skhd configuration"
-        su - "$(logname)" -c "${pkgs.skhd}/bin/skhd -r"
   '';
-
-  system.activationScripts.signSkhd = {
-    text = ''
-      #!/bin/bash
-      codesign --sign - ${skhdWrapper}
-    '';
-    deps = [ skhdWrapper ];
-  };
 
 }

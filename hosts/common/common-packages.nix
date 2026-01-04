@@ -23,10 +23,10 @@ in
     nodejs
     yarn
 
-    skhd
-
     # Rust tools
-    rustc
-    cargo
+    (pkgs.rust-bin.stable.latest.default)  # includes rustc, cargo, rustfmt, clippy, rust-src
+    pkgs.rust-analyzer
+
+
   ];
 }
