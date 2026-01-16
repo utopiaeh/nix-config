@@ -24,9 +24,19 @@ in
     yarn
 
     # Rust tools
-    (pkgs.rust-bin.stable.latest.default)  # includes rustc, cargo, rustfmt, clippy, rust-src
-    pkgs.rust-analyzer
+    rustc
+    cargo
+    rustfmt
+    clippy
+    rustPlatform.rustLibSrc  # provides the standard library for rust-analyzer
+    rust-analyzer
 
+    # Nix tools
+    nixd
+
+    # Minikube and kubectl for Kubernetes development
+    minikube
+    kubectl
 
   ];
 }

@@ -20,7 +20,6 @@
         {
           nixpkgs.overlays = [
             (import ../overlays/node.nix)
-            (import ../overlays/rust.nix)
           ];
         }
         inputs.home-manager.darwinModules.home-manager
