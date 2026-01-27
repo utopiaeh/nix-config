@@ -30,6 +30,9 @@ in
     clippy
     rustPlatform.rustLibSrc  # provides the standard library for rust-analyzer
     rust-analyzer
+    #
+    cargo-llvm-cov
+    llvm-tools-preview
 
     # Nix tools
     nixd
