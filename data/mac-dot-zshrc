@@ -29,6 +29,8 @@ export EDITOR=/etc/profiles/per-user/utopiaeh/bin/nvim
 export PATH="$HOME/.npm-global/bin:$PATH"
 export NPM_CONFIG_PREFIX="$HOME/.npm-global"
 
+#Rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then

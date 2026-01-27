@@ -42,9 +42,7 @@ in
 
   environment.variables = { };
 
-  environment.systemPackages = with pkgs; [
-    pkgs.nix
-  ];
+  environment.systemPackages = with pkgs; [];
 
   fonts.packages = [
     pkgs.nerd-fonts.fira-code

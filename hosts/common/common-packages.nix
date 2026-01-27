@@ -1,22 +1,12 @@
 { inputs, pkgs, ... }:
 let
   inherit (inputs) nixpkgs;
-  # Add the rust-overlay to get `withComponents`
-  rustOverlay = import (builtins.fetchTarball {
-    url = "https://github.com/oxalica/rust-overlay/archive/master.tar.gz";
-  }) { };
 
-  pkgsWithRust = import nixpkgs {
-    overlays = [ rustOverlay.overlays.default ];
-  };
-
-  rustWithComponents = pkgsWithRust.rust-bin.stable.latest.withComponents [
-     "rustc"
-     "cargo"
-     "rustfmt"
-     "clippy"
-     "llvm-tools-preview"
-   ];
+  cargoLlvmCovWrapped = pkgs.writeShellScriptBin "cargo-llvm-cov" ''
+    export LLVM_COV=${pkgs.rustc.llvmPackages.llvm}/bin/llvm-cov
+    export LLVM_PROFDATA=${pkgs.rustc.llvmPackages.llvm}/bin/llvm-profdata
+    exec ${pkgs.cargo-llvm-cov}/bin/cargo-llvm-cov "$@"
+  '';
 in
 {
   nixpkgs.config.allowUnfree = true;
@@ -40,10 +30,16 @@ in
     yarn
 
     # Rust tools
-    rustWithComponents
-    rustPlatform.rustLibSrc
+    rustc
+    cargo
+    rustfmt
+    clippy
+    rustPlatform.rustLibSrc  # provides the standard library for rust-analyzer
     rust-analyzer
-    cargo-llvm-cov
+    #
+
+    cargoLlvmCovWrapped
+    rustc.llvmPackages.llvm
 
     # Nix tools
     nixd

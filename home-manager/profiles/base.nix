@@ -34,7 +34,7 @@ in
         };
 
         "*" = {
-          user = "root";
+          user = "${username}";
         };
       };
     };
