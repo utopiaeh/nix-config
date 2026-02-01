@@ -17,7 +17,7 @@ in
     ./darwin/settings/system
     ./darwin/settings/userPreferences
     ./darwin/settings/disableHotkeys
-
+    ./darwin/rust
   ];
 
   system.stateVersion = 5;
@@ -40,7 +40,7 @@ in
     hostPlatform = lib.mkDefault "${system}";
   };
 
-  environment.variables = { };
+  environment.variables = {};
 
   environment.systemPackages = with pkgs; [];
 
@@ -136,6 +136,24 @@ in
 
 
   system.activationScripts.postActivation.text = ''
+        # ------------------------------
+        # Rust toolchain via rustup
+        # ------------------------------
+        if ! command -v rustc >/dev/null 2>&1; then
+            echo "❯ Installing Rust via rustup..."
+            rustup-init -y
+        fi
+
+        # Make stable default and install essential components
+        rustup default stable
+        rustup component add rust-src rustfmt clippy rust-analyzer
+
+        # Ensure ~/.cargo/bin is in PATH for all shells
+        if ! grep -q 'cargo/bin' ~/.zshrc; then
+            echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
+        fi
+
+
         # echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
         # sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
