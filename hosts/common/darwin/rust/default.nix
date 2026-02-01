@@ -15,7 +15,12 @@ in
   environment.variables = {
     CARGO_HOME = "$HOME/.cargo";
     RUSTUP_HOME = "$HOME/.rustup";
-    PATH = "$HOME/.cargo/bin:$PATH";  # ensures cargo & rustc are available globally
+    PATH = "$HOME/.cargo/bin:$PATH";
+    RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}/lib/rustlib/src/rust/library";
+
+    # Rust Analyzer flags for deep analysis
+    RA_LAUNCHER_CARGO_ALL_FEATURES = "true";
+    RA_LAUNCHER_PROC_MACRO_ENABLE = "true";
   };
 
   # Rust tooling installed via nix
@@ -25,18 +30,15 @@ in
     rustfmt
     clippy
     rust-analyzer
+    rustPlatform.rustLibSrc
     cargoLlvmCovWrapped
   ];
 
-  # Post-activation: install rustup and essential components
+  # Post-activation: confirm Rust installation without rustup
   system.activationScripts.postActivation.text = ''
-    if ! command -v rustc >/dev/null 2>&1; then
-      echo "❯ Installing Rust via rustup..."
-      rustup-init -y
-    fi
-
-    # Use stable and add components for rust-analyzer
-    rustup default stable
-    rustup component add rust-src rustfmt clippy rust-analyzer
+    echo "❯ Rust toolchain is managed via Nix."
+    rustc --version
+    cargo --version
+    rust-analyzer --version
   '';
 }

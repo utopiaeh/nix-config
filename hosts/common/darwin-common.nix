@@ -40,9 +40,9 @@ in
     hostPlatform = lib.mkDefault "${system}";
   };
 
-  environment.variables = {};
+  environment.variables = { };
 
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [ ];
 
   fonts.packages = [
     pkgs.nerd-fonts.fira-code
@@ -136,34 +136,16 @@ in
 
 
   system.activationScripts.postActivation.text = ''
-        # ------------------------------
-        # Rust toolchain via rustup
-        # ------------------------------
-        if ! command -v rustc >/dev/null 2>&1; then
-            echo "❯ Installing Rust via rustup..."
-            rustup-init -y
-        fi
+    # echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
+    # sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-        # Make stable default and install essential components
-        rustup default stable
-        rustup component add rust-src rustfmt clippy rust-analyzer
+    echo "❯❯❯❯ ✅ Installing default settings for IntelliJIdea..."
+    ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
-        # Ensure ~/.cargo/bin is in PATH for all shells
-        if ! grep -q 'cargo/bin' ~/.zshrc; then
-            echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
-        fi
-
-
-        # echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
-        # sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
-
-        echo "❯❯❯❯ ✅ Installing default settings for IntelliJIdea..."
-        ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
-
-        echo "❯❯❯❯ ✅ Installing FlashSpace profile and settings..."
-        mkdir -p "${targetPathFlashspace}"
-        cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
-        cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
+    echo "❯❯❯❯ ✅ Installing FlashSpace profile and settings..."
+    mkdir -p "${targetPathFlashspace}"
+    cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
+    cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
   '';
 
