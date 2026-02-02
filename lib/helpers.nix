@@ -5,6 +5,7 @@
       inherit (inputs.nixpkgs) lib;
       customConfPath = ./../hosts/darwin/${hostname};
       customConf = if builtins.pathExists (customConfPath) then (customConfPath + "/default.nix") else ./../hosts/common/darwin-common-dock.nix;
+      rustOverlay = builtins.getAttr "default" (builtins.getAttr "overlays" (builtins.getAttr "rust-overlay" inputs));
     in
 
     inputs.nix-darwin.lib.darwinSystem {
@@ -19,7 +20,7 @@
         # Add nodejs overlay to fix build issues (https://github.com/NixOS/nixpkgs/issues/402079)
         {
           nixpkgs.overlays = [
-             inputs.rust-overlay.overlays.default
+            rustOverlay
             (import ../overlays/node.nix)
           ];
         }
