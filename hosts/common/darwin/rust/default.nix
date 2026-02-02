@@ -1,9 +1,20 @@
-let
-  # Pinned nixpkgs, deterministic. Last updated: 2/12/21.
-  pkgs = import (fetchTarball("https://github.com/NixOS/nixpkgs/archive/a58a0b5098f0c2a389ee70eb69422a052982d990.tar.gz")) {};
+{ pkgs, ... }:
 
-  # Rolling updates, not deterministic.
-  # pkgs = import (fetchTarball("channel:nixpkgs-unstable")) {};
-in pkgs.mkShell {
-  buildInputs = [ pkgs.cargo pkgs.rustc ];
+{
+  # Rust toolchain (stable, latest)
+  environment.systemPackages = [
+    (pkgs.rust-bin.stable.latest.default.override {
+      extensions = [ "rustfmt" "clippy" "rust-src" ];
+    })
+
+    pkgs.rust-analyzer
+    pkgs.pkg-config
+    pkgs.openssl
+  ];
+
+  # Ensure Cargo binaries are on PATH (usually already true)
+  environment.variables = {
+    CARGO_HOME = "$HOME/.cargo";
+  };
+
 }

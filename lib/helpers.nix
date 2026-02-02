@@ -19,6 +19,7 @@
         # Add nodejs overlay to fix build issues (https://github.com/NixOS/nixpkgs/issues/402079)
         {
           nixpkgs.overlays = [
+             inputs.rust-overlay.overlays.default
             (import ../overlays/node.nix)
           ];
         }

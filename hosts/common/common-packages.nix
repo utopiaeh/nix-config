@@ -28,6 +28,5 @@
     minikube
     kubectl
 
-
   ];
 }
