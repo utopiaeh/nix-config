@@ -5,7 +5,7 @@
       inherit (inputs.nixpkgs) lib;
       customConfPath = ./../hosts/darwin/${hostname};
       customConf = if builtins.pathExists (customConfPath) then (customConfPath + "/default.nix") else ./../hosts/common/darwin-common-dock.nix;
-      rustOverlay = builtins.getAttr "default" (builtins.getAttr "overlays" (builtins.getAttr "rust-overlay" inputs));
+      rustOverlay = inputs."rust-overlay".overlays.default;
     in
 
     inputs.nix-darwin.lib.darwinSystem {

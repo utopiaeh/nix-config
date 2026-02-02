@@ -21,6 +21,10 @@
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Rust overlay
+    "rust-overlay".url = "github:oxalica/rust-overlay";
+    "rust-overlay".inputs.nixpkgs.follows = "nixpkgs-darwin";
   };
 
   outputs = { self, ... }@inputs:
