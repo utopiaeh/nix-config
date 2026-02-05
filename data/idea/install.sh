@@ -16,6 +16,6 @@ if [ -n "$latest_dir" ]; then
   chown "$username:staff" "$latest_dir/options/window.layouts.xml"
   echo "❯❯❯❯ ✅ Layout installed"
 else
-  echo "❯❯❯❯ ❌ No IntelliJ IDEA config folder found for user $username"
+  echo "❯❯❯❯ ⓧ No IntelliJ IDEA config folder found for user $username"
   exit 1
 fi

@@ -1,4 +1,9 @@
-{ config, inputs, pkgs, lib, unstablePkgs, username, ... }:
+{
+  pkgs,
+  lib,
+  username,
+  ...
+}:
 
 let
   cleanshotPackage = import ../programs/cleanshot { inherit pkgs; };
@@ -55,7 +60,11 @@ in
       enable = true;
       config = {
         Label = "com.objective-see.lulu.gui";
-        ProgramArguments = [ "/usr/bin/open" "-gj" "/Applications/LuLu.app" ];
+        ProgramArguments = [
+          "/usr/bin/open"
+          "-gj"
+          "/Applications/LuLu.app"
+        ];
         RunAtLoad = true;
         KeepAlive = false;
       };
@@ -63,16 +72,15 @@ in
 
   };
 
-
   #  IMPORTANT: Use this if decide to use specific env per project
   #  Installs and enables nix-direnv allows you to write .envrc files like this:
   #  and it will automatically load a Nix shell environment (shell.nix or flake.nix) when entering that directory.
   #  use nix
 
-  #  programs.direnv = {
-  #    enable = true;
-  #    nix-direnv.enable = true;
-  #  };
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   programs.eza = {
     enable = true;
@@ -114,7 +122,6 @@ in
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-
     shellAliases = {
       cl = "clear";
       lg = "lazygit";
@@ -138,7 +145,7 @@ in
   };
 
   home.activation.manageCleanshot = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        echo "❯❯❯❯ 🔒 Installing CleanShot X into /Applications"
+        echo "❯❯❯❯ ⓘ Installing CleanShot X into /Applications"
     #      rm -f "$HOME/Applications/CleanShot X.app"
 
          if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ]; then
@@ -165,12 +172,13 @@ in
 
   '';
 
-  home.activation.manageShortcutsToTakeEffectImmediately = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    echo "❯❯❯❯ ✅ Managing shortcuts to take effect immediately "
+  home.activation.manageShortcutsToTakeEffectImmediately =
+    lib.hm.dag.entryAfter [ "writeBoundary" ]
+      ''
+        echo "❯❯❯❯ ✓⃝ Managing shortcuts to take effect immediately "
+        /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
-    /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-
-  '';
+      '';
 
   home.activation.setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     echo "❯❯❯❯ Setting wallpaper"
@@ -178,39 +186,15 @@ in
       WALLPAPER_PATH=${wallpaper}
 
       if [ -f "$WALLPAPER_PATH" ]; then
-        echo "❯❯❯❯ ✅ Setting wallpaper to $WALLPAPER_PATH"
+        echo "❯❯❯❯ ✓⃝ Setting wallpaper to $WALLPAPER_PATH"
         /usr/bin/osascript <<EOF
         tell application "System Events"
           set picture of every desktop to POSIX file "$WALLPAPER_PATH"
         end tell
     EOF
       else
-        echo "❯❯❯❯ ❌ Wallpaper file not found at: $WALLPAPER_PATH"
+        echo "❯❯❯❯ ⓧ Wallpaper file not found at: $WALLPAPER_PATH"
       fi
 
   '';
-
-
-#  home.packages = [
-#    (pkgs.writeShellScriptBin "dismiss-notifications" ''
-#      #!/usr/bin/env bash
-#      osascript -e '
-#      tell application "System Events"
-#        tell process "NotificationCenter"
-#          if not (window "Notification Center" exists) then return
-#          set alertGroups to groups of first UI element of first scroll area of first group of window "Notification Center"
-#          repeat with aGroup in alertGroups
-#            try
-#              perform (first action of aGroup whose name contains "Close" or name contains "Clear")
-#            on error errMsg
-#              log errMsg
-#            end try
-#          end repeat
-#          return ""
-#        end tell
-#      end tell'
-#    '')
-#  ];
-
-
 }

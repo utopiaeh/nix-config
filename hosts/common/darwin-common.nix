@@ -1,6 +1,11 @@
-{ inputs, outputs, config, lib, hostname, system, username, pkgs, unstablePkgs, ... }:
+{
+  lib,
+  system,
+  username,
+  pkgs,
+  ...
+}:
 let
-  inherit (inputs) nixpkgs;
   setupIntelliJIdeaScript = ./../../data/idea/install.sh;
   pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
 
@@ -26,13 +31,19 @@ in
 
   users.users.${username}.home = "/Users/${username}";
 
+  time.timeZone = "Europe/Chisinau";
+
   nix = {
     enable = false;
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       warn-dirty = false;
     };
     channel.enable = false;
+
   };
 
   nixpkgs = {
@@ -42,33 +53,31 @@ in
 
   environment.variables = { };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [ ];
 
-  ];
-
-  fonts.packages = [
-    pkgs.nerd-fonts.fira-code
-    pkgs.nerd-fonts.fira-mono
-    pkgs.nerd-fonts.hack
-    pkgs.nerd-fonts.jetbrains-mono
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.hack
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.meslo-lg
   ];
 
   # pins to stable as unstable updates very often
   programs.nix-index.enable = true;
 
-
   homebrew = {
     enable = true;
 
     global = {
-      autoUpdate = true;
+      autoUpdate = false;
     };
 
     onActivation = {
       cleanup = "zap";
       #cleanup = "uninstall"; // uninstall all brews and casks but keep files
       #cleanup = "none"; // do not cleanup anything
-      autoUpdate = true;
+      autoUpdate = false;
       upgrade = true;
     };
 
@@ -81,14 +90,6 @@ in
     ];
 
     casks = [
-      # Fonts
-      "font-fira-code"
-      "font-fira-code-nerd-font"
-      "font-fira-mono-for-powerline"
-      "font-hack-nerd-font"
-      "font-jetbrains-mono-nerd-font"
-      "font-meslo-lg-nerd-font"
-
       "raycast"
 
       "telegram"
@@ -114,16 +115,14 @@ in
       "zed"
       "intellij-idea"
       "sublime-text"
+      "visual-studio-code"
       "postman"
-      "figma"
-
-      "lulu" #Disalbe connection to network
-      "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
-
       "iterm2"
 
-      "visual-studio-code"
+      "figma"
 
+      "lulu" # Disalbe connection to network
+      "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
     ];
 
     masApps = {
@@ -136,15 +135,13 @@ in
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
-
   system.activationScripts.postActivation.text = ''
-    # echo "❯❯❯❯ ✅ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
-    # sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-    echo "❯❯❯❯ ✅ Installing default settings for IntelliJIdea..."
+
+    echo "❯❯❯❯ ✓⃝ Installing default settings for IntelliJIdea..."
     ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
-    echo "❯❯❯❯ ✅ Installing FlashSpace profile and settings..."
+    echo "❯❯❯❯ ✓⃝ Installing FlashSpace profile and settings..."
     mkdir -p "${targetPathFlashspace}"
     cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
     cp ${settingSource} "${targetPathFlashspace}/settings.yaml"

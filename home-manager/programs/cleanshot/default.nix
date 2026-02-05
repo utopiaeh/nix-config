@@ -28,6 +28,6 @@ pkgs.stdenvNoCC.mkDerivation rec {
 
   meta = with pkgs.lib; {
     description = "CleanShot X screen capture utility";
-    platforms = pkgs.lib.platforms.darwin;
+    platforms = platforms.darwin;
   };
 }

@@ -1,5 +1,5 @@
 # Example iTerm2 configuration based on the provided plist
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   programs.iterm2 = {
@@ -8,85 +8,87 @@
 
     settings.appearance.theme = "minimal";
 
-    profiles = [{
-      name = "nix managed";
-      default = true;
+    profiles = [
+      {
+        name = "nix managed";
+        default = true;
 
-    transparency = {
-        enable = true;
-        value = 0.066155133928571433;
-    };
-    blur = {
-       enable = true;
-       value = 2.5972795758928573;
-    };
-
-      window = {
-        columns = 120;
-        rows = 22;
-      };
-      font = {
-        normal = "MesloLGLNF-Regular 16";
-        nonAscii = "MesloLGL Nerd Font 16";
-        useNonAsciiFont = false;
-        antiAlias = true;
-        brightenBold = true;
-      };
-
-      cursor.type = "box";
-
-      terminal = {
-        mouseReporting = true;
-        showBellIcon = true;
-        visualBell = true;
-        closeSessionsOnEnd = true;
-        warnShortLivedSessions = false;
-      };
-
-      colors = {
-        background = "#15191e";
-        foreground = "#dbdbdb";
-
-        black = {
-          normal = "#000000";
-          bright = "#606060";
+        transparency = {
+          enable = true;
+          value = 0.066155133928571433;
+        };
+        blur = {
+          enable = true;
+          value = 2.5972795758928573;
         };
 
-        red = {
-          normal = "#ed7482";
-          bright = "#ef766d";
+        window = {
+          columns = 120;
+          rows = 22;
+        };
+        font = {
+          normal = "MesloLGLNF-Regular 16";
+          nonAscii = "MesloLGL Nerd Font 16";
+          useNonAsciiFont = false;
+          antiAlias = true;
+          brightenBold = true;
         };
 
-        green = {
-          normal = "#57bf37";
-          bright = "#8cf67a";
+        cursor.type = "box";
+
+        terminal = {
+          mouseReporting = true;
+          showBellIcon = true;
+          visualBell = true;
+          closeSessionsOnEnd = true;
+          warnShortLivedSessions = false;
         };
 
-        yellow = {
-          normal = "#f2a96f";
-          bright = "#fefb7e";
-        };
+        colors = {
+          background = "#15191e";
+          foreground = "#dbdbdb";
 
-        blue = {
-          normal = "#7cb4f7";
-          bright = "#6a71f6";
-        };
+          black = {
+            normal = "#000000";
+            bright = "#606060";
+          };
 
-        magenta = {
-          normal = "#b93ec1";
-          bright = "#f07ef8";
-        };
+          red = {
+            normal = "#ed7482";
+            bright = "#ef766d";
+          };
 
-        cyan = {
-          normal = "#9dcbfa";
-          bright = "#55ffff";
-        };
+          green = {
+            normal = "#57bf37";
+            bright = "#8cf67a";
+          };
 
-        white = {
-          normal = "#c7c7c7";
-          bright = "#feffff";
+          yellow = {
+            normal = "#f2a96f";
+            bright = "#fefb7e";
+          };
+
+          blue = {
+            normal = "#7cb4f7";
+            bright = "#6a71f6";
+          };
+
+          magenta = {
+            normal = "#b93ec1";
+            bright = "#f07ef8";
+          };
+
+          cyan = {
+            normal = "#9dcbfa";
+            bright = "#55ffff";
+          };
+
+          white = {
+            normal = "#c7c7c7";
+            bright = "#feffff";
+          };
         };
-      };
-    }];
+      }
+    ];
   };
 }

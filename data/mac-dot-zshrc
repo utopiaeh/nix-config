@@ -46,12 +46,37 @@ compinit
 
 rebuild() {
   local host="${1:-$(hostname)}"
-  sudo darwin-rebuild switch --flake ".#${host}"
+  if [[ $# -gt 0 ]]; then
+    shift
+  fi
+  sudo darwin-rebuild switch --flake ".#${host}" "$@"
 }
+
 
 idea() {
   open -a "IntelliJ IDEA" "$@" >/dev/null 2>&1
 }
+
+cleanup() {
+    echo ">>> Store size before cleanup:"
+    sudo du -sh /nix/store
+
+    echo ">>> Deleting system generations older than 14 days..."
+    sudo nix-env -p /nix/var/nix/profiles/system --delete-generations 14d
+
+    echo ">>> Deleting user generations older than 14 days..."
+    nix-env --delete-generations 14d
+
+    echo ">>> Running nix-collect-garbage (system)..."
+    sudo nix-collect-garbage -d
+
+    echo ">>> Running nix-collect-garbage (user)..."
+    nix-collect-garbage -d
+
+    echo ">>> Store size after cleanup:"
+    sudo du -sh /nix/store
+}
+
 
 , () {
   nix run nixpkgs#comma -- "$@"

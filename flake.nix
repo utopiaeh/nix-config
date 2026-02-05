@@ -2,7 +2,9 @@
   inputs = {
     # Base nixpkgs for macOS
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs = { follows = "nixpkgs-darwin"; };  # do NOT give a url here
+    nixpkgs = {
+      follows = "nixpkgs-darwin";
+    }; # do NOT give a url here
 
     # nix-darwin
     nix-darwin.url = "github:LnL7/nix-darwin";
@@ -14,9 +16,18 @@
 
     # homebrew integration
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    homebrew-core = { url = "github:homebrew/homebrew-core"; flake = false; };
-    homebrew-cask = { url = "github:homebrew/homebrew-cask"; flake = false; };
-    homebrew-bundle = { url = "github:homebrew/homebrew-bundle"; flake = false; };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
 
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
@@ -25,10 +36,11 @@
     # Rust overlay
     "rust-overlay".url = "github:oxalica/rust-overlay";
     "rust-overlay".inputs.nixpkgs.follows = "nixpkgs-darwin";
+
   };
 
-  outputs = { self, ... }@inputs:
-    with inputs;
+  outputs =
+    { self, ... }@inputs:
     let
       inherit (self) outputs;
 

@@ -1,18 +1,16 @@
-{ config, inputs, pkgs, lib, unstablePkgs, specialArgs, ... }:
 {
-
+  pkgs,
+  lib,
+  ...
+}:
+{
   imports = [
     ./base.nix
   ];
 
-  home.packages = with pkgs; [
-    poetry
-    python3
-    python3.pkgs.pip
-    python3.pkgs.setuptools
-    python3.pkgs.wheel
-  ];
+  # home.packages = with pkgs; [
 
+  # ];
 
   #To remove package
   #npm uninstall -g @aws-amplify/cli
@@ -22,7 +20,7 @@
     export PATH="$HOME/.npm-global/bin:$PATH"
     export NPM_CONFIG_PREFIX="$HOME/.npm-global"
       if ! command -v amplify >/dev/null 2>&1; then
-        echo "❯❯❯❯ ✅ Installing Amplify CLI globally via npm..."
+        echo "❯❯❯❯ ✓⃝ Installing Amplify CLI globally via npm..."
         ${pkgs.nodejs}/bin/npm install -g @aws-amplify/cli
       else
         echo "❯❯❯❯ ⓘ Amplify CLI already installed, skipping..."

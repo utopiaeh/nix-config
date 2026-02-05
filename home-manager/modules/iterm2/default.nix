@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -6,7 +11,8 @@ let
   cfg = config.programs.iterm2;
 
   # Convert hex color to iTerm2 color format
-  hexToITermColor = hex:
+  hexToITermColor =
+    hex:
     let
       # Remove the leading '#' if present
       hexColor = lib.strings.removePrefix "#" hex;
@@ -38,7 +44,8 @@ let
       };
 
       # Convert two hex digits to decimal
-      hexPairToDecimal = hexPair:
+      hexPairToDecimal =
+        hexPair:
         let
           upperDigit = hexDigits.${lib.strings.substring 0 1 hexPair};
           lowerDigit = hexDigits.${lib.strings.substring 1 1 hexPair};
@@ -75,8 +82,7 @@ let
       guid = mkOption {
         type = types.str;
         default = "";
-        description =
-          "GUID for the profile. If empty, a fixed one will be assigned based on the profile name.";
+        description = "GUID for the profile. If empty, a fixed one will be assigned based on the profile name.";
       };
 
       command = mkOption {
@@ -227,28 +233,29 @@ let
         useNonAsciiFont = mkOption {
           type = types.bool;
           default = false;
-          description =
-            "Whether to use a separate font for non-ASCII characters.";
+          description = "Whether to use a separate font for non-ASCII characters.";
         };
 
         antiAlias = mkOption {
           type = types.bool;
           default = true;
-          description =
-            "Whether to use anti-aliasing for the font. Improves readability.";
+          description = "Whether to use anti-aliasing for the font. Improves readability.";
         };
 
         brightenBold = mkOption {
           type = types.bool;
           default = false;
-          description =
-            "Whether to brighten bold text. Makes bold text more visible.";
+          description = "Whether to brighten bold text. Makes bold text more visible.";
         };
       };
 
       cursor = {
         type = mkOption {
-          type = types.enum [ "box" "underline" "vertical-bar" ];
+          type = types.enum [
+            "box"
+            "underline"
+            "vertical-bar"
+          ];
           default = "box";
           description = ''
             The cursor shape:
@@ -263,8 +270,7 @@ let
         showBellIcon = mkOption {
           type = types.bool;
           default = false;
-          description =
-            "Whether to show a bell icon in the tab when a bell is rung.";
+          description = "Whether to show a bell icon in the tab when a bell is rung.";
         };
 
         visualBell = mkOption {
@@ -276,22 +282,19 @@ let
         closeSessionsOnEnd = mkOption {
           type = types.bool;
           default = true;
-          description =
-            "Whether to close the session when the terminal process exits.";
+          description = "Whether to close the session when the terminal process exits.";
         };
 
         warnShortLivedSessions = mkOption {
           type = types.bool;
           default = false;
-          description =
-            "Whether to warn when closing a session that has lasted a short time.";
+          description = "Whether to warn when closing a session that has lasted a short time.";
         };
 
         mouseReporting = mkOption {
           type = types.bool;
           default = true;
-          description =
-            "Whether to enable mouse reporting, allowing terminal applications to receive mouse events.";
+          description = "Whether to enable mouse reporting, allowing terminal applications to receive mouse events.";
         };
       };
 
@@ -299,8 +302,7 @@ let
         columns = mkOption {
           type = types.int;
           default = 80;
-          description =
-            "Number of columns (characters) in the terminal window.";
+          description = "Number of columns (characters) in the terminal window.";
         };
 
         rows = mkOption {
@@ -314,8 +316,7 @@ let
         enable = mkOption {
           type = types.bool;
           default = false;
-          description =
-            "Enable transparency ";
+          description = "Enable transparency ";
         };
 
         value = mkOption {
@@ -329,8 +330,7 @@ let
         enable = mkOption {
           type = types.bool;
           default = false;
-          description =
-            "Enable blur ";
+          description = "Enable blur ";
         };
 
         value = mkOption {
@@ -343,7 +343,8 @@ let
   };
 
   # Generate a deterministic GUID from a string
-  mkGuid = str:
+  mkGuid =
+    str:
     let
       # Generate a deterministic hash from the string
       hash = builtins.hashString "sha256" str;
@@ -389,8 +390,7 @@ let
         "Ansi 14 Color" = hexToITermColor profile.colors.cyan.bright;
         "Ansi 7 Color" = hexToITermColor profile.colors.white.normal;
         "Ansi 15 Color" = hexToITermColor profile.colors.white.bright;
-        "Command" =
-          if profile.command != "" then profile.command else "/bin/bash";
+        "Command" = if profile.command != "" then profile.command else "/bin/bash";
         # Cursor type: 0 = underline, 1 = vertical bar, 2 = box
         "Cursor Type" =
           if profile.cursor.type == "box" then
@@ -404,17 +404,16 @@ let
         # Terminal settings
         "BM Growl" = if profile.terminal.showBellIcon then 1 else 0;
         "Visual Bell" = if profile.terminal.visualBell then 1 else 0;
-        "Close Sessions On End" =
-          if profile.terminal.closeSessionsOnEnd then 1 else 0;
-        "Prompt Before Closing 2" =
-          if profile.terminal.warnShortLivedSessions then 1 else 0;
+        "Close Sessions On End" = if profile.terminal.closeSessionsOnEnd then 1 else 0;
+        "Prompt Before Closing 2" = if profile.terminal.warnShortLivedSessions then 1 else 0;
         "Mouse Reporting" = if profile.terminal.mouseReporting then 1 else 0;
 
         # Window size
         "Columns" = profile.window.columns;
         "Rows" = profile.window.rows;
 
-        "Transparency" = if profile.transparency.enable then profile.transparency.value else profile.transparency.default;
+        "Transparency" =
+          if profile.transparency.enable then profile.transparency.value else profile.transparency.default;
         "Blur" = profile.blur.enable;
         "Blur Radius" = if profile.blur.enable then profile.blur.value else profile.blur.default;
 
@@ -444,14 +443,12 @@ let
       profilesData = map processProfile cfg.profiles;
 
       # Find the default profile GUID
-      getProfileGuid = profile:
-        if profile.guid != "" then profile.guid else mkGuid profile.name;
+      getProfileGuid = profile: if profile.guid != "" then profile.guid else mkGuid profile.name;
       defaultProfileGuid =
-        let defaultProfiles = filter (p: p.default) cfg.profiles;
-        in if length defaultProfiles > 0 then
-          getProfileGuid (head defaultProfiles)
-        else
-          "";
+        let
+          defaultProfiles = filter (p: p.default) cfg.profiles;
+        in
+        if length defaultProfiles > 0 then getProfileGuid (head defaultProfiles) else "";
 
       # Theme value mapping
       themeValue =
@@ -492,14 +489,17 @@ in
     copyPrefs = mkOption {
       type = types.bool;
       default = true;
-      description =
-        "Whether to copy the config to the default iTerm2 preferences location.";
+      description = "Whether to copy the config to the default iTerm2 preferences location.";
     };
 
     settings = {
       appearance = {
         theme = mkOption {
-          type = types.enum [ "regular" "minimal" "compact" ];
+          type = types.enum [
+            "regular"
+            "minimal"
+            "compact"
+          ];
           default = "regular";
           description = "Window theme style.";
         };
@@ -523,7 +523,7 @@ in
                       echo "❯❯❯❯ ⓘ  Removing existing iTerm2.app..."
                       chmod -R +w "$HOME/Applications/iTerm2.app" || true
                       $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app" || {
-                        echo "❯❯❯❯ ❌Failed to remove existing iTerm2.app, trying alternative method..."
+                        echo "❯❯❯❯ ⓧ Failed to remove existing iTerm2.app, trying alternative method..."
                         $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type f -exec chmod 644 {} \; || true
                         $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type d -exec chmod 755 {} \; || true
                         $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app"
@@ -573,7 +573,8 @@ in
     xdg.configFile."iTerm2/com.googlecode.iterm2.plist".text =
       let
         # Convert a Nix value to XML plist representation
-        plistValue = v:
+        plistValue =
+          v:
           if builtins.isString v then
             "<string>${lib.strings.escape [ "<" ">" "&" ] v}</string>"
           else if builtins.isInt v then
@@ -587,16 +588,18 @@ in
           else if builtins.isAttrs v then
             ''
               <dict>
-            '' + lib.strings.concatStrings (lib.attrsets.mapAttrsToList
-              (k: val:
-                "  <key>${lib.strings.escape [ "<" ">" "&" ] k}</key>\n  ${
-                plistValue val
-              }\n")
-              v) + "</dict>"
+            ''
+            + lib.strings.concatStrings (
+              lib.attrsets.mapAttrsToList (
+                k: val: "  <key>${lib.strings.escape [ "<" ">" "&" ] k}</key>\n  ${plistValue val}\n"
+              ) v
+            )
+            + "</dict>"
           else if builtins.isList v then
             ''
               <array>
-            '' + lib.strings.concatMapStrings (item: "  ${plistValue item}\n") v
+            ''
+            + lib.strings.concatMapStrings (item: "  ${plistValue item}\n") v
             + "</array>"
           else
             throw "Unsupported type for plist conversion";

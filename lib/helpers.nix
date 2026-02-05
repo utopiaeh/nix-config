@@ -1,11 +1,20 @@
-{ inputs, outputs, stateVersion, ... }:
+{ inputs, ... }:
 {
-  mkDarwin = { hostname, username ? "utopiaeh", system ? "aarch64-darwin", }:
+  mkDarwin =
+    {
+      hostname,
+      username ? "utopiaeh",
+      system ? "aarch64-darwin",
+    }:
     let
-      inherit (inputs.nixpkgs) lib;
       customConfPath = ./../hosts/darwin/${hostname};
-      customConf = if builtins.pathExists (customConfPath) then (customConfPath + "/default.nix") else ./../hosts/common/darwin-common-dock.nix;
+      customConf =
+        if builtins.pathExists customConfPath then
+          customConfPath + "/default.nix"
+        else
+          ./../hosts/common/darwin-common-dock.nix;
       rustOverlay = inputs."rust-overlay".overlays.default;
+
     in
 
     inputs.nix-darwin.lib.darwinSystem {

@@ -1,5 +1,4 @@
-# common-packages.nix
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -7,7 +6,6 @@
     gh
     git-crypt
     go
-    jetbrains-mono
     tree
     unzip
     watch
@@ -18,11 +16,16 @@
     sops
     neovim
 
+    # A benchmarking tool for HTTP services, useful for testing and optimizing web applications
+    wrk
+
+    # Node envirement and package manager
     nodejs
     yarn
 
-    # Nix tools
+    # Nix development tools
     nixd
+    nil
 
     # Minikube and kubectl for Kubernetes development
     minikube
@@ -31,5 +34,6 @@
     # Handy way to save and run project-specific commands
     just
     just-lsp
+
   ];
 }

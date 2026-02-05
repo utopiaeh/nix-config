@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   programs = {
@@ -22,7 +22,10 @@
         core.editor = "nvim";
 
       };
-      ignores = [ "*~" ".DS_Store" ];
+      ignores = [
+        "*~"
+        ".DS_Store"
+      ];
       lfs.enable = true;
     };
 
