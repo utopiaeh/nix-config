@@ -28,5 +28,8 @@
     minikube
     kubectl
 
+    # Handy way to save and run project-specific commands
+    just
+    just-lsp
   ];
 }
