@@ -9,8 +9,6 @@
         "rustfmt"
         "clippy"
         "llvm-tools"
-        "espflash"
-        "ldproxy"
       ];
     })
 
