@@ -379,11 +379,11 @@ With this setup, `direnv` will automatically load your project’s Nix dev envir
 The flake in this repo exposes templates under `templates`:
 
 - `node-lts`  
-  Path: `./data/templates/note-lts`  
+  Path: `./templates/note-lts`  
   Description: Node.js project starter (flake devShell + `.envrc` for direnv)
 
 - `esp32-rust`  
-  Path: `./data/templates/esp32-rust-project`  
+  Path: `./templates/esp32-rust-project`  
   Description: ESP32‑S3 Rust project starter (devShell + `.envrc` for direnv)
 
 The default template is `node`.

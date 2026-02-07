@@ -60,12 +60,12 @@
 
       templates = {
         node-lts = {
-          path = ./data/templates/node-lts;
+          path = ./templates/node-lts;
           description = "Node.js project starter (flake devShell + .envrc for direnv)";
         };
 
         esp32-rust = {
-          path = ./data/templates/esp32-rust-project;
+          path = ./templates/esp32-rust-project;
           description = "ESP32-S3 Rust project starter (devShell + .envrc for direnv)";
         };
       };

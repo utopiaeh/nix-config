@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    # esp-rs-nix.url = "github:leighleighleigh/esp-rs-nix";
+    esp-rs-nix.url = "github:leighleighleigh/esp-rs-nix";
   };
 
   outputs =
@@ -12,19 +12,19 @@
       self,
       nixpkgs,
       flake-utils,
-      # esp-rs-nix,
+      esp-rs-nix,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs { inherit system; };
-        # espToolchain = esp-rs-nix.packages.${system}.esp-rs;
+        espToolchain = esp-rs-nix.packages.${system}.esp-rs;
       in
       {
         devShells.default = pkgs.mkShell {
           packages = [
-            # espToolchain
+            espToolchain
             pkgs.rust-analyzer
             pkgs.espflash
             pkgs.ldproxy
