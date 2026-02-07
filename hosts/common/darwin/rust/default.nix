@@ -4,7 +4,14 @@
   # Rust toolchain (stable, latest)
   environment.systemPackages = [
     (pkgs.rust-bin.stable.latest.default.override {
-      extensions = [ "rust-src" "rustfmt" "clippy" "llvm-tools" ];
+      extensions = [
+        "rust-src"
+        "rustfmt"
+        "clippy"
+        "llvm-tools"
+        "espflash"
+        "ldproxy"
+      ];
     })
 
     pkgs.rust-analyzer

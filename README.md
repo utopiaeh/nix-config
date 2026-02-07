@@ -66,6 +66,7 @@ nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurat
   - [4. Node.js package notes](#4-nodejs-package-notes)
   - [5. Manual app configuration](#5-manual-app-configuration)
 - [💡 Tips](#-tips)
+- [📦 Project Templates & direnv](#-project-templates--direnv)
 
 ---
 
@@ -350,3 +351,124 @@ To clean the Nix store and remove old generations:
 ```sh
 cleanup
 ```
+
+---
+
+## 📦 Project Templates & direnv
+
+This repo also exposes **flake templates** to quickly bootstrap new projects that integrate nicely with your global Zsh + Home Manager setup and `direnv`.
+
+### ⚙️ Requirements
+
+These are already enabled in this config:
+
+- Nix with flakes and `nix-command`
+- `direnv` + `nix-direnv` via Home Manager:
+
+  ```nix
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+  ```
+
+With this setup, `direnv` will automatically load your project’s Nix dev environment into your existing Zsh shell (so you keep autosuggestions, syntax highlighting, aliases, etc.).
+
+### 🧩 Available templates
+
+The flake in this repo exposes templates under `templates`:
+
+- `node-lts`  
+  Path: `./data/templates/note-lts`  
+  Description: Node.js project starter (flake devShell + `.envrc` for direnv)
+
+- `esp32-rust`  
+  Path: `./data/templates/esp32-rust-project`  
+  Description: ESP32‑S3 Rust project starter (devShell + `.envrc` for direnv)
+
+The default template is `node`.
+
+### 🧪 Using the Node.js project template
+
+To create a new Node‑based project that uses the Node devShell and direnv:
+
+```sh
+mkdir -p ~/Developer/my-node-app
+cd ~/Developer/my-node-app
+
+# Initialize from this repo's Node template
+nix flake init -t "path:/Users/utopiaeh/nix-config#node"
+
+# Trust direnv for this directory
+direnv allow
+```
+
+This will create:
+
+- `flake.nix` – with a devShell that includes:
+  - `nodejs_20`
+  - `pnpm`
+  - `yarn`
+  - `typescript`
+- `.envrc` – containing:
+
+  ```sh
+  use flake
+  ```
+
+After `direnv allow`, whenever you `cd` into this project:
+
+- `direnv` will call Nix to load the devShell environment,
+- Your existing Home Manager Zsh session stays active,
+- You keep autosuggestions + syntax highlighting from `programs.zsh` in `home-manager/profiles/base.nix`.
+
+### 🧪 Using the ESP32‑S3 Rust project template
+
+To create a new ESP32‑S3 Rust project:
+
+```sh
+mkdir -p ~/Developer/mcu/my-esp32-project
+cd ~/Developer/mcu/my-esp32-project
+
+# Initialize from this repo's ESP32 Rust template
+nix flake init -t "path:/Users/utopiaeh/nix-config#esp32-rust"
+
+# Trust direnv for this directory
+direnv allow
+```
+
+This will create:
+
+- `flake.nix` – with a devShell that includes:
+  - `rust-analyzer`
+  - `espflash`
+  - `ldproxy`
+  - `esp-generate`
+  - sensible defaults:
+    - `CARGO_BUILD_TARGET = "xtensa-esp32s3-none-elf"`
+    - `RUST_BACKTRACE = 1`
+- `.envrc` – containing:
+
+  ```sh
+  use flake
+  ```
+
+Again, entering this directory will automatically load the ESP32 dev environment via `direnv` while preserving your global Zsh configuration from Home Manager.
+
+### 💻 Day‑to‑day workflow with templates + direnv
+
+For any project created from these templates:
+
+1. `cd` into the project directory.
+2. On the first time: `direnv allow`.
+3. Afterwards, simply `cd` in/out:
+   - Zsh (with Home Manager config) stays the same.
+   - The project’s flake devShell is layered on top by `direnv`.
+
+You rarely need to run `nix develop` manually. If you edit `flake.nix` in a project, just run:
+
+```sh
+direnv reload
+```
+
+to pick up the changes in your current shell.

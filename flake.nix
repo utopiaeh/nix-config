@@ -57,6 +57,19 @@
         # work
         flow48 = libx.mkDarwin { hostname = "flow48"; };
       };
+
+      templates = {
+        node-lts = {
+          path = ./data/templates/node-lts;
+          description = "Node.js project starter (flake devShell + .envrc for direnv)";
+        };
+
+        esp32-rust = {
+          path = ./data/templates/esp32-rust-project;
+          description = "ESP32-S3 Rust project starter (devShell + .envrc for direnv)";
+        };
+      };
+
     };
 
 }
