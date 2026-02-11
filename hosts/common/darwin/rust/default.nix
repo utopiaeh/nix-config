@@ -16,6 +16,8 @@
     pkgs.pkg-config
     pkgs.openssl
     pkgs.cargo-llvm-cov
+
+    pkgs.rustup
   ];
 
   # Ensure Cargo binaries are on PATH (usually already true)
