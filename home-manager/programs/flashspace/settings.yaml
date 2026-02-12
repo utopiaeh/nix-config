@@ -26,16 +26,24 @@ displayMode: static
 centerCursorOnWorkspaceChange: true
 changeWorkspaceOnAppAssign: true
 activeWorkspaceOnFocusChange: true
+autoAssignAppsToWorkspaces: false
 skipEmptyWorkspacesOnSwitch: false
 keepUnassignedAppsOnSwitch: false
 restoreHiddenAppsOnSwitch: true
+enableWorkspaceTransitions: false
+showRecentWorkspaceWhenActivatedTwice: false
+workspaceTransitionDuration: 3e-1
+workspaceTransitionDimming: 2e-1
 loopWorkspaces: true
+loopWorkspacesOnAllDisplays: false
+switchWorkspaceOnCursorScreen: false
 alternativeDisplays: 'LC32G5xT=Built-in Retina Display;Benq GW2470=Built-in Retina
   Display  '
 enablePictureInPictureSupport: true
 switchWorkspaceWhenPipCloses: true
 pipApps: []
 pipScreenCornerOffset: 15
+cornerHiddenApps: []
 floatingApps:
 - name: ChatGPT
   bundleIdentifier: com.openai.chat
@@ -43,13 +51,14 @@ floatingApps:
 toggleTheFocusedAppFloating: ctrl+opt+f
 enableSpaceControl: false
 enableSpaceControlAnimations: true
+enableSpaceControlTilesAnimations: true
 spaceControlCurrentDisplayWorkspaces: false
-spaceControlMaxColumns: 6
-enableWorkspaceTransitions: false
-workspaceTransitionDuration: 3e-1
-workspaceTransitionDimming: 2e-1
+spaceControlHideEmptyWorkspaces: false
+spaceControlUpdateScreenshotsOnOpen: false
+spaceControlNumberOfColumns: 0
 enableIntegrations: false
 runScriptOnLaunch: ''
 runScriptOnWorkspaceChange: sketchybar --trigger flashspace_workspace_change WORKSPACE="$WORKSPACE"
   DISPLAY="$DISPLAY"
+runScriptAfterWorkspaceChange: ''
 runScriptOnProfileChange: sketchybar --reload

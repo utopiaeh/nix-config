@@ -30,6 +30,15 @@ profiles:
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
+    - name: Sublime Text
+      bundleIdentifier: com.sublimetext.4
+      iconPath: /Applications/Sublime Text.app/Contents/Resources/Sublime Text.icns
+    - name: Code
+      bundleIdentifier: com.microsoft.VSCode
+      iconPath: /Applications/Visual Studio Code.app/Contents/Resources/Code.icns
+    - name: Thonny
+      bundleIdentifier: org.thonny.Thonny
+      iconPath: /Applications/Thonny.app/Contents/Resources/Thonny.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
   - id: 7BE6E7A9-7FEE-4A83-9345-C2D5B2EC4389
     name: Terminal
@@ -42,19 +51,15 @@ profiles:
       iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
     symbolIconName: apple.terminal
     openAppsOnActivation: true
-  - id: 909691B3-53CD-4920-8327-CDC162D1A053
+  - id: 109F235F-CE46-4BA2-9BB1-2F027F0D440B
     name: Chat
     display: Built-in Retina Display
     shortcut: opt+4
     assignAppShortcut: ctrl+opt+4
     apps:
-    - name: Slack
-      bundleIdentifier: com.tinyspeck.slackmacgap
-      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
     - name: Telegram
       bundleIdentifier: ru.keepcoder.Telegram
       iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
-    symbolIconName: ellipsis.message
     openAppsOnActivation: true
   - id: 1C72F220-9EC8-4B0C-BFA3-C9D08B35CD95
     name: Spotify
@@ -97,30 +102,44 @@ profiles:
     - name: Safari
       bundleIdentifier: com.apple.Safari
       iconPath: /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/AppIcon.icns
-    symbolIconName: mail
-  - id: 0DBB69E8-687A-4E99-813A-28F602000197
-    name: Code
-    display: LC32G5xT
-    shortcut: opt+2
-    assignAppShortcut: ctrl+opt+2
-    apps:
     - name: Zen
       bundleIdentifier: app.zen-browser.zen
       iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+    symbolIconName: mail
+  - id: 0DBB69E8-687A-4E99-813A-28F602000197
+    name: Code
+    display: Built-in Retina Display
+    shortcut: opt+2
+    assignAppShortcut: ctrl+opt+2
+    apps:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
       iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
+    - name: Thonny
+      bundleIdentifier: org.thonny.Thonny
+      iconPath: /Applications/Thonny.app/Contents/Resources/Thonny.icns
+    - name: Sublime Text
+      bundleIdentifier: com.sublimetext.4
+      iconPath: /Applications/Sublime Text.app/Contents/Resources/Sublime Text.icns
+    - name: Code
+      bundleIdentifier: com.microsoft.VSCode
+      iconPath: /Applications/Visual Studio Code.app/Contents/Resources/Code.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
+    openAppsOnActivation: false
   - id: 8AE89212-9434-4C74-B29A-9E707AE82E8E
     name: Terminal
-    display: BenQ GW2470
+    display: Built-in Retina Display
     shortcut: opt+3
     assignAppShortcut: ctrl+opt+3
     apps:
     - name: iTerm2
+      bundleIdentifier: com.googlecode.iterm2
+      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    appToFocus:
+      name: iTerm2
       bundleIdentifier: com.googlecode.iterm2
       iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
     symbolIconName: apple.terminal
@@ -155,3 +174,85 @@ profiles:
     symbolIconName: music.note.list
     openAppsOnActivation: true
   shortcut: opt+[
+- id: DBC8F7F3-FE59-4027-A7D5-E6D8287019FD
+  name: W*
+  workspaces:
+  - id: C2EB3DF1-3CF9-4E82-BBA0-A1EB8F86184C
+    name: Main
+    display: Built-in Retina Display
+    shortcut: opt+1
+    assignAppShortcut: ctrl+opt+1
+    apps:
+    - name: Google Chrome
+      bundleIdentifier: com.google.Chrome
+      iconPath: /Applications/Google Chrome.app/Contents/Resources/app.icns
+    - name: Safari
+      bundleIdentifier: com.apple.Safari
+      iconPath: /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/AppIcon.icns
+    symbolIconName: mail
+    openAppsOnActivation: false
+  - id: B04FB069-6674-4A12-B2AE-B72E760F8E6D
+    name: Code
+    display: LC32G5xT
+    shortcut: opt+2
+    assignAppShortcut: ctrl+opt+2
+    apps:
+    - name: Zen
+      bundleIdentifier: app.zen-browser.zen
+      iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+    - name: IntelliJ IDEA
+      bundleIdentifier: com.jetbrains.intellij
+      iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
+    - name: Zed
+      bundleIdentifier: dev.zed.Zed
+      iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
+    symbolIconName: chevron.left.forwardslash.chevron.right
+  - id: CEAA55F8-B782-4477-957B-95F3FA38A02F
+    name: Terminal
+    display: BenQ GW2470
+    shortcut: opt+3
+    assignAppShortcut: ctrl+opt+3
+    apps:
+    - name: iTerm2
+      bundleIdentifier: com.googlecode.iterm2
+      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    appToFocus:
+      name: iTerm2
+      bundleIdentifier: com.googlecode.iterm2
+      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    symbolIconName: apple.terminal
+    openAppsOnActivation: true
+  - id: 81CC1CCB-AFB3-461F-87F8-3C3BA4F5D79D
+    name: Chat
+    display: Built-in Retina Display
+    shortcut: opt+4
+    assignAppShortcut: ctrl+opt+4
+    apps:
+    - name: Slack
+      bundleIdentifier: com.tinyspeck.slackmacgap
+      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
+    - name: Telegram
+      bundleIdentifier: ru.keepcoder.Telegram
+      iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+    appToFocus:
+      name: Slack
+      bundleIdentifier: com.tinyspeck.slackmacgap
+      iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
+    symbolIconName: ellipsis.message
+    openAppsOnActivation: true
+  - id: B449F4D1-4117-4668-B34F-0B78B846214D
+    name: Spotify
+    display: Built-in Retina Display
+    shortcut: opt+5
+    assignAppShortcut: ctrl+opt+5
+    apps:
+    - name: Spotify
+      bundleIdentifier: com.spotify.client
+      iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
+    appToFocus:
+      name: Spotify
+      bundleIdentifier: com.spotify.client
+      iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
+    symbolIconName: music.note.list
+    openAppsOnActivation: true
+  shortcut: opt+]
