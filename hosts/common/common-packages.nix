@@ -16,6 +16,8 @@
     sops
     neovim
 
+    nightlight
+
     # A benchmarking tool for HTTP services, useful for testing and optimizing web applications
     wrk
 

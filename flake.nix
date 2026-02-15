@@ -34,8 +34,10 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     # Rust overlay
-    "rust-overlay".url = "github:oxalica/rust-overlay";
-    "rust-overlay".inputs.nixpkgs.follows = "nixpkgs-darwin";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
