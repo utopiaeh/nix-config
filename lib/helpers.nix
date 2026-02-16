@@ -13,7 +13,7 @@
           customConfPath + "/default.nix"
         else
           ./../hosts/common/darwin-common-dock.nix;
-      rustOverlay = inputs."rust-overlay".overlays.default;
+      rustOverlay = inputs.rust-overlay.overlays.default;
 
     in
 
