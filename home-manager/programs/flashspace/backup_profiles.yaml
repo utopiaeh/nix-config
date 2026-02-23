@@ -22,7 +22,6 @@ profiles:
     name: Code
     display: LC32G5xT
     shortcut: opt+2
-    assignAppShortcut: ctrl+opt+2
     apps:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
@@ -36,15 +35,12 @@ profiles:
     - name: Code
       bundleIdentifier: com.microsoft.VSCode
       iconPath: /Applications/Visual Studio Code.app/Contents/Resources/Code.icns
-    - name: Thonny
-      bundleIdentifier: org.thonny.Thonny
-      iconPath: /Applications/Thonny.app/Contents/Resources/Thonny.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
+    openAppsOnActivation: false
   - id: 7BE6E7A9-7FEE-4A83-9345-C2D5B2EC4389
     name: Terminal
     display: BenQ GW2470
     shortcut: opt+3
-    assignAppShortcut: ctrl+opt+3
     apps:
     - name: iTerm2
       bundleIdentifier: com.googlecode.iterm2
@@ -55,17 +51,16 @@ profiles:
     name: Chat
     display: Built-in Retina Display
     shortcut: opt+4
-    assignAppShortcut: ctrl+opt+4
     apps:
     - name: Telegram
       bundleIdentifier: ru.keepcoder.Telegram
       iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+    symbolIconName: ellipsis.message
     openAppsOnActivation: true
   - id: 1C72F220-9EC8-4B0C-BFA3-C9D08B35CD95
     name: Spotify
     display: Built-in Retina Display
     shortcut: opt+5
-    assignAppShortcut: ctrl+opt+5
     apps:
     - name: Spotify
       bundleIdentifier: com.spotify.client
@@ -79,12 +74,16 @@ profiles:
   - id: 62B76FE4-B41C-42C8-8A77-B449CD04129D
     name: Figma
     display: Built-in Retina Display
-    shortcut: opt+6
-    assignAppShortcut: ctrl+opt+6
+    shortcut: opt+f
     apps:
     - name: Figma
       bundleIdentifier: com.figma.Desktop
       iconPath: /Applications/Figma.app/Contents/Resources/electron.icns
+    appToFocus:
+      name: Figma
+      bundleIdentifier: com.figma.Desktop
+      iconPath: /Applications/Figma.app/Contents/Resources/electron.icns
+    symbolIconName: theatermask.and.paintbrush
     openAppsOnActivation: true
   shortcut: opt+p
 - id: 134108D6-AAA3-403D-BF3E-D50E4D06C0AA
@@ -94,7 +93,6 @@ profiles:
     name: Main
     display: Built-in Retina Display
     shortcut: opt+1
-    assignAppShortcut: ctrl+opt+1
     apps:
     - name: Google Chrome
       bundleIdentifier: com.google.Chrome
@@ -106,11 +104,11 @@ profiles:
       bundleIdentifier: app.zen-browser.zen
       iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
     symbolIconName: mail
+    openAppsOnActivation: false
   - id: 0DBB69E8-687A-4E99-813A-28F602000197
     name: Code
     display: Built-in Retina Display
     shortcut: opt+2
-    assignAppShortcut: ctrl+opt+2
     apps:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
@@ -118,9 +116,6 @@ profiles:
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
-    - name: Thonny
-      bundleIdentifier: org.thonny.Thonny
-      iconPath: /Applications/Thonny.app/Contents/Resources/Thonny.icns
     - name: Sublime Text
       bundleIdentifier: com.sublimetext.4
       iconPath: /Applications/Sublime Text.app/Contents/Resources/Sublime Text.icns
@@ -133,7 +128,6 @@ profiles:
     name: Terminal
     display: Built-in Retina Display
     shortcut: opt+3
-    assignAppShortcut: ctrl+opt+3
     apps:
     - name: iTerm2
       bundleIdentifier: com.googlecode.iterm2
@@ -148,7 +142,6 @@ profiles:
     name: Chat
     display: Built-in Retina Display
     shortcut: opt+4
-    assignAppShortcut: ctrl+opt+4
     apps:
     - name: Slack
       bundleIdentifier: com.tinyspeck.slackmacgap
@@ -162,7 +155,6 @@ profiles:
     name: Spotify
     display: Built-in Retina Display
     shortcut: opt+5
-    assignAppShortcut: ctrl+opt+5
     apps:
     - name: Spotify
       bundleIdentifier: com.spotify.client
@@ -172,6 +164,20 @@ profiles:
       bundleIdentifier: com.spotify.client
       iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
     symbolIconName: music.note.list
+    openAppsOnActivation: true
+  - id: 63FF09F4-16FA-4A8B-AA75-BC2409C8E827
+    name: Figma
+    display: Built-in Retina Display
+    shortcut: opt+f
+    apps:
+    - name: Figma
+      bundleIdentifier: com.figma.Desktop
+      iconPath: /Applications/Figma.app/Contents/Resources/electron.icns
+    appToFocus:
+      name: Figma
+      bundleIdentifier: com.figma.Desktop
+      iconPath: /Applications/Figma.app/Contents/Resources/electron.icns
+    symbolIconName: theatermask.and.paintbrush
     openAppsOnActivation: true
   shortcut: opt+[
 - id: DBC8F7F3-FE59-4027-A7D5-E6D8287019FD
@@ -255,4 +261,18 @@ profiles:
       iconPath: /Applications/Spotify.app/Contents/Resources/Icon.icns
     symbolIconName: music.note.list
     openAppsOnActivation: true
+  - id: 7BF258E1-0601-4A6C-94A6-263AD161A3C7
+    name: Figma
+    display: Built-in Retina Display
+    shortcut: opt+f
+    apps:
+    - name: Figma
+      bundleIdentifier: com.figma.Desktop
+      iconPath: /Applications/Figma.app/Contents/Resources/electron.icns
+    appToFocus:
+      name: Figma
+      bundleIdentifier: com.figma.Desktop
+      iconPath: /Applications/Figma.app/Contents/Resources/electron.icns
+    symbolIconName: theatermask.and.paintbrush
+    openAppsOnActivation: false
   shortcut: opt+]
