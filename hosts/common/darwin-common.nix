@@ -104,7 +104,8 @@ in
       # Utils
       "logi-options+"
       "middleclick"
-      "hiddenbar"
+      # "hiddenbar"
+      "thaw"
       "alt-tab"
       "transmission"
       "pearcleaner"
@@ -118,11 +119,13 @@ in
       "visual-studio-code"
       "postman"
       "iterm2"
+      "claude-code"
 
       "figma"
 
       "lulu" # Disalbe connection to network
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
+
     ];
 
     masApps = {
