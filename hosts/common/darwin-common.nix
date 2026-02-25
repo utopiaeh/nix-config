@@ -18,11 +18,12 @@ in
 
   imports = [
     ../../home-manager/programs/zsh
+    ../../home-manager/programs/cloud-code
+    ../../home-manager/programs/rust
 
     ./darwin/settings/system
     ./darwin/settings/userPreferences
     ./darwin/settings/disableHotkeys
-    ./darwin/rust
   ];
 
   system.stateVersion = 5;
@@ -119,7 +120,6 @@ in
       "visual-studio-code"
       "postman"
       "iterm2"
-      "claude-code"
 
       "figma"
 
@@ -139,6 +139,8 @@ in
   security.pam.services.sudo_local.touchIdAuth = true;
 
   system.activationScripts.postActivation.text = ''
+    echo "❯❯❯❯ ✓⃝ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
+    sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
 
     echo "❯❯❯❯ ✓⃝ Installing default settings for IntelliJIdea..."

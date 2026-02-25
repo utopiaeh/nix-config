@@ -14,6 +14,7 @@
         else
           ./../hosts/common/darwin-common-dock.nix;
       rustOverlay = inputs.rust-overlay.overlays.default;
+      claudeCode = inputs.claude-code.overlays.default;
 
     in
 
@@ -30,6 +31,7 @@
         {
           nixpkgs.overlays = [
             rustOverlay
+            claudeCode
             (import ../overlays/node.nix)
           ];
         }
