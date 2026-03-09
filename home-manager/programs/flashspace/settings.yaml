@@ -57,7 +57,7 @@ spaceControlCurrentDisplayWorkspaces: false
 spaceControlHideEmptyWorkspaces: false
 spaceControlUpdateScreenshotsOnOpen: false
 spaceControlNumberOfColumns: 0
-enableWorkspaceSwitcher: true
+enableWorkspaceSwitcher: false
 workspaceSwitcherShowScreenshots: true
 workspaceSwitcherVisibleWorkspaces: 5
 workspaceSwitcherSortByLastActivation: false
