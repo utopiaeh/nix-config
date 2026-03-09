@@ -11,6 +11,7 @@ profiles:
     - name: Zen
       bundleIdentifier: app.zen-browser.zen
       iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+      autoOpen: true
     - name: Safari
       bundleIdentifier: com.apple.Safari
       iconPath: /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Resources/AppIcon.icns
@@ -18,6 +19,7 @@ profiles:
       bundleIdentifier: com.google.Chrome
       iconPath: /Applications/Google Chrome.app/Contents/Resources/app.icns
     symbolIconName: mail
+    openAppsOnActivation: true
   - id: 6B69980E-D950-464C-A089-D0812896C683
     name: Code
     display: LC32G5xT
@@ -103,8 +105,9 @@ profiles:
     - name: Zen
       bundleIdentifier: app.zen-browser.zen
       iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+      autoOpen: true
     symbolIconName: mail
-    openAppsOnActivation: false
+    openAppsOnActivation: true
   - id: 0DBB69E8-687A-4E99-813A-28F602000197
     name: Code
     display: Built-in Retina Display
@@ -113,6 +116,7 @@ profiles:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
       iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
+      autoOpen: true
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
@@ -123,7 +127,7 @@ profiles:
       bundleIdentifier: com.microsoft.VSCode
       iconPath: /Applications/Visual Studio Code.app/Contents/Resources/Code.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
-    openAppsOnActivation: false
+    openAppsOnActivation: true
   - id: 8AE89212-9434-4C74-B29A-9E707AE82E8E
     name: Terminal
     display: Built-in Retina Display
@@ -146,9 +150,11 @@ profiles:
     - name: Slack
       bundleIdentifier: com.tinyspeck.slackmacgap
       iconPath: /Applications/Slack.app/Contents/Resources/electron.icns
+      autoOpen: true
     - name: Telegram
       bundleIdentifier: ru.keepcoder.Telegram
       iconPath: /Applications/Telegram.app/Contents/Resources/AppIcon.icns
+      autoOpen: true
     symbolIconName: ellipsis.message
     openAppsOnActivation: true
   - id: 27888B55-65A3-42E6-9A3B-D3EF7A559CAB
@@ -206,13 +212,16 @@ profiles:
     - name: Zen
       bundleIdentifier: app.zen-browser.zen
       iconPath: /Applications/Zen.app/Contents/Resources/firefox.icns
+      autoOpen: true
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
       iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
+      autoOpen: true
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
+    openAppsOnActivation: true
   - id: CEAA55F8-B782-4477-957B-95F3FA38A02F
     name: Terminal
     display: BenQ GW2470

@@ -116,7 +116,6 @@ profiles:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
       iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
-      autoOpen: true
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
@@ -136,6 +135,7 @@ profiles:
     - name: iTerm2
       bundleIdentifier: com.googlecode.iterm2
       iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+      autoOpen: true
     appToFocus:
       name: iTerm2
       bundleIdentifier: com.googlecode.iterm2
@@ -216,7 +216,6 @@ profiles:
     - name: IntelliJ IDEA
       bundleIdentifier: com.jetbrains.intellij
       iconPath: /Applications/IntelliJ IDEA.app/Contents/Resources/idea.icns
-      autoOpen: true
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns

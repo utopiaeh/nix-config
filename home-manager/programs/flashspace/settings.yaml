@@ -13,13 +13,13 @@ focusDown: opt+k
 focusFrontmostWindow: false
 enableSwipeGestures: false
 swipeThreshold: 2e-1
-restartAppOnWakeUp: false
-swipeLeft3FingerAction: previousWorkspace
-swipeRight3FingerAction: nextWorkspace
+restartAppOnWakeUp: true
+swipeLeft3FingerAction: none
+swipeRight3FingerAction: none
 swipeUp3FingerAction: none
 swipeDown3FingerAction: none
-swipeLeft4FingerAction: none
-swipeRight4FingerAction: none
+swipeLeft4FingerAction: previousWorkspace
+swipeRight4FingerAction: nextWorkspace
 swipeUp4FingerAction: none
 swipeDown4FingerAction: none
 displayMode: static
@@ -27,6 +27,7 @@ centerCursorOnWorkspaceChange: true
 changeWorkspaceOnAppAssign: true
 activeWorkspaceOnFocusChange: true
 autoAssignAppsToWorkspaces: false
+autoAssignAlreadyAssignedApps: false
 skipEmptyWorkspacesOnSwitch: false
 keepUnassignedAppsOnSwitch: false
 restoreHiddenAppsOnSwitch: true
@@ -56,6 +57,11 @@ spaceControlCurrentDisplayWorkspaces: false
 spaceControlHideEmptyWorkspaces: false
 spaceControlUpdateScreenshotsOnOpen: false
 spaceControlNumberOfColumns: 0
+enableWorkspaceSwitcher: true
+workspaceSwitcherShowScreenshots: true
+workspaceSwitcherVisibleWorkspaces: 5
+workspaceSwitcherSortByLastActivation: false
+workspaceSwitcherCurrentDisplayWorkspaces: true
 enableIntegrations: false
 runScriptOnLaunch: ''
 runScriptOnWorkspaceChange: sketchybar --trigger flashspace_workspace_change WORKSPACE="$WORKSPACE"
