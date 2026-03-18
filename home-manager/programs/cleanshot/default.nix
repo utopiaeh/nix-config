@@ -1,22 +1,14 @@
 { pkgs }:
 
-pkgs.stdenvNoCC.mkDerivation rec {
+pkgs.stdenvNoCC.mkDerivation {
   pname = "cleanshot";
-  version = "4.7.6";
+  version = "4.7.7";
 
-  src = pkgs.fetchurl {
-    url = "https://updates.getcleanshot.com/v3/CleanShot-X-${version}.dmg";
-    sha256 = "677178b8060c5e3d579d5a534792c2b9649c835b1d07aa307f18a28a73307b55";
-  };
-
-  # Remove nativeBuildInputs since hdiutil is a system tool, not a nix package
-  nativeBuildInputs = [ ];
+  src = ../../../data/cleanshot/CleanShot-X-4.7.7.dmg;
 
   phases = [ "installPhase" ];
 
   installPhase = ''
-    set -e
-
     MOUNTPOINT=$(mktemp -d)
     /usr/bin/hdiutil attach $src -mountpoint $MOUNTPOINT -nobrowse -quiet
 

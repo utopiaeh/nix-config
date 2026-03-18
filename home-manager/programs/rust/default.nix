@@ -1,13 +1,10 @@
 { pkgs, ... }:
 
 {
-  # Rust toolchain (stable, latest)
-  environment.systemPackages = [
+  home.packages = [
     (pkgs.rust-bin.stable.latest.default.override {
       extensions = [
         "rust-src"
-        "rustfmt"
-        "clippy"
         "llvm-tools"
       ];
     })
@@ -17,12 +14,7 @@
     pkgs.openssl
     pkgs.cargo-llvm-cov
 
-    pkgs.rustup
   ];
 
-  # Ensure Cargo binaries are on PATH (usually already true)
-  environment.variables = {
-    CARGO_HOME = "$HOME/.cargo";
-  };
-
+  home.sessionVariables.CARGO_HOME = "$HOME/.cargo";
 }

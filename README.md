@@ -1,85 +1,103 @@
 # nix-config
 
-Declarative Nix configuration for macOS (Apple Silicon supported), using `nix-darwin`, `home-manager`, and `sops` for secrets and dotfiles.
+Declarative macOS configuration using `nix-darwin`, `home-manager`, and `sops-nix` for secrets. Supports Apple Silicon.
+
+Everything — shell, tools, editor, fonts, apps, system settings — is managed from this repo. A single command rebuilds the entire system.
 
 ---
 
-## ⚡ Quick Start
+## Table of Contents
 
-**In this section:**
+- [How it works](#how-it-works)
+- [Project structure](#project-structure)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Secrets setup](#secrets-setup-sops--age)
+- [Build & Rebuild](#build--rebuild)
+- [Built-in shell commands](#built-in-shell-commands)
+- [Post-rebuild steps](#post-rebuild-steps)
+- [Day-to-day tips](#day-to-day-tips)
+- [Project templates & direnv](#project-templates--direnv)
 
-- Minimal command sequence to bootstrap a new machine  
-- Install Xcode CLI tools and Nix  
-- Ensure hostname matches `flake.nix`  
-- Set up secrets (SSH + age + sops)  
-- Build and switch to your configuration using `nix` or `rebuild`
+---
 
-If you just want to get a machine up and running, follow these steps in order:
+## How it works
+
+| Layer | Tool | What it manages |
+|---|---|---|
+| System | `nix-darwin` | macOS settings, fonts, Homebrew apps, system packages |
+| User | `home-manager` | Shell, dev tools, git, SSH, editor config |
+| Secrets | `sops-nix` | SSH keys, API tokens, encrypted at rest |
+| Apps | `homebrew` | GUI apps (casks) and Mac App Store apps |
+
+When you run `rebuild`, Nix reads the config, computes what changed, and applies it atomically. If something breaks, you can roll back to the previous generation.
+
+---
+
+## Project structure
+
+```
+nix-config/
+├── flake.nix                   # Entry point — defines all machines
+├── flake.lock                  # Pinned dependency versions
+├── hosts/
+│   ├── common/
+│   │   ├── darwin-common.nix   # Shared macOS settings, Homebrew apps, fonts
+│   │   └── common-packages.nix # System-wide CLI tools (kubectl, gh, sops...)
+│   └── darwin/
+│       ├── flow48/             # MacBook Pro config (overrides common)
+│       └── mac-pro/            # Mac Pro config (overrides common)
+├── home-manager/
+│   ├── profiles/
+│   │   ├── base.nix            # User environment (shell, git, SSH, aliases...)
+│   │   ├── flow48.nix          # MacBook Pro home config
+│   │   └── mac-pro.nix         # Mac Pro home config
+│   └── programs/
+│       ├── rust/               # Rust toolchain + rust-analyzer
+│       ├── nix/                # Nix LSP (nixd) + formatter (nixfmt)
+│       ├── node/               # Node.js environment
+│       ├── git/                # Git config
+│       └── iterm2/             # iTerm2 preferences (declarative)
+├── data/
+│   ├── starship/               # Prompt config
+│   ├── idea/                   # IntelliJ layout
+│   ├── raycast/                # Raycast settings (import manually)
+│   └── wallpapers/
+├── secrets/                    # Encrypted secrets (sops)
+└── templates/                  # Flake templates for new projects
+    ├── node-lts/
+    └── esp32-rust-project/
+```
+
+---
+
+## Quick Start
+
+If you just want to get a machine running fast:
 
 ```sh
 # 1. Install Xcode command line tools
 xcode-select --install
 
-# 2. Install Nix (Determinate Systems installer)
+# 2. Install Nix (answer No to "Determinate Nix" prompt)
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
-# 3. Open a new terminal so `nix` is on your PATH
+# 3. Open a new terminal so nix is on your PATH
 
-# 4. Make sure your hostname matches the one used in flake.nix
+# 4. Set up secrets (see Secrets setup section below)
 
-# 5. Set up secrets (SSH + age + sops)
-#    - Generate SSH key (if needed)
-#    - Generate age key
-#    - Create and encrypt secrets.yaml
+# 5. Make sure your hostname matches the one in flake.nix
 
-# 6. Build and switch to your configuration
+# 6. Build and apply
 nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurations.$(hostname).system"
-# or simply use the rebuild helper once configured:
-# rebuild
+./result/sw/bin/darwin-rebuild switch --flake ".#$(hostname)"
 ```
 
----
-
-## 📚 Table of Contents
-
-- [⚡ Quick Start](#-quick-start)
-- [✅ Installation (macOS)](#-installation-macos)
-  - [1. Install Xcode command line tools](#1-install-xcode-command-line-tools)
-  - [2. Install Nix](#2-install-nix)
-  - [3. Set your hostname](#3-set-your-hostname)
-- [🔐 Secrets Setup (sops + age)](#-secrets-setup-sops--age)
-  - [1. If you do not have an SSH key](#1-if-you-do-not-have-an-ssh-key)
-  - [2. Create the directory for sops](#2-create-the-directory-for-sops-if-it-doesnt-exist)
-  - [3. Generate an AGE-SECRET-KEY](#3-generate-an-age-secret-key)
-  - [4. Get the age public key](#4-get-the-age-public-key)
-  - [5. Create secrets.yaml from secrets_example](#5-create-secretsyaml-from-secrets_example)
-  - [6. Encrypt your secrets with sops](#6-encrypt-your-secrets-with-sops)
-  - [7. Fix missing SSH host key errors](#7-fix-missing-ssh-host-key-errors-if-needed)
-  - [8. Add your public SSH key to GitHub](#8-add-your-public-ssh-key-to-github)
-  - [9. Add a rule in .sops.yaml](#9-add-a-rule-in-sopsyaml)
-- [🏗️ Build](#-build)
-- [🔁 Rebuild](#-rebuild)
-- [⚙️ Post-Rebuild Configuration & Tweaks](#-post-rebuild-configuration--tweaks)
-  - [1. Dock configuration](#1-dock-configuration)
-  - [2. iTerm2](#2-iterm2)
-  - [3. CleanShot X](#3-cleanshot-x)
-  - [4. Node.js package notes](#4-nodejs-package-notes)
-  - [5. Manual app configuration](#5-manual-app-configuration)
-- [💡 Tips](#-tips)
-- [📦 Project Templates & direnv](#-project-templates--direnv)
+After the first build, use the `rebuild` command for all future updates.
 
 ---
 
-## ✅ Installation (macOS)
-
-**In this section:**
-
-- Install Xcode command line tools  
-- Install Nix using Determinate Systems installer  
-- Ensure `nix` is on your `PATH`  
-- Align your macOS hostname with `flake.nix`
-
-This configuration supports Apple Silicon Macs.
+## Installation
 
 ### 1. Install Xcode command line tools
 
@@ -89,386 +107,279 @@ xcode-select --install
 
 ### 2. Install Nix
 
-Thanks to the [installer](https://zero-to-nix.com/concepts/nix-installer) by [Determinate Systems](https://determinate.systems/)!
-
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
-After installation, open a new terminal session to make the `nix` executable available in your `$PATH`.
+> **Important:** The installer will ask if you want "Determinate Nix". Answer **No** — use plain Nix.
 
-> ⚠️ **IMPORTANT**  
-> The installer will ask if you want to install Determinate Nix. Answer *No*.
-
----
+Open a new terminal after installation so `nix` is on your PATH.
 
 ### 3. Set your hostname
 
-The hostname should match the one set in `flake.nix`.
+Your hostname must match the name used in `flake.nix`. Either:
 
-You can either:
+- Change your macOS hostname to match `flake.nix`, **or**
+- Edit `flake.nix` to use your actual hostname
 
-- Change your macOS hostname to match the one in `flake.nix`, or  
-- Change the hostname in `flake.nix` to match your machine’s actual hostname.
+To check your current hostname:
+```sh
+hostname
+```
+
+To change it:
+```sh
+sudo scutil --set HostName your-hostname
+sudo scutil --set LocalHostName your-hostname
+```
 
 ---
 
-## 🔐 Secrets Setup (sops + age)
+## Secrets setup (sops + age)
 
-**In this section:**
+Secrets (SSH keys, tokens) are encrypted with `sops` and `age`. They are decrypted automatically during rebuild using your SSH key.
 
-- Generate an SSH key (if needed)  
-- Set up age keys for `sops`  
-- Create and encrypt `secrets.yaml`  
-- Fix SSH host key errors  
-- Add SSH keys to GitHub  
-- Configure `.sops.yaml` rules
-
-### 1. If you do not have an SSH key
+### 1. Generate an SSH key (if you don't have one)
 
 ```sh
 ssh-keygen -t ed25519 -C "utopiaeh01@gmail.com"
 ```
 
-### 2. Create the directory for sops (if it doesn’t exist)
+### 2. Create the sops directory
 
 ```sh
 mkdir -p ~/.config/sops/age
 ```
 
-### 3. Generate an `AGE-SECRET-KEY`
+### 3. Derive an age key from your SSH key
 
 ```sh
 nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
 ```
 
-### 4. Get the age public key
+### 4. Get your age public key
 
 ```sh
 nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
 ```
 
-### 5. Create `secrets.yaml` from `secrets_example`
+Copy this value — you'll need it in step 7.
 
-Copy the example:
+### 5. Create your secrets file
 
 ```sh
 cp secrets/flow48/secrets_example.yaml secrets/flow48/secrets.yaml
 ```
 
-Then replace the placeholders with your own keys.
-
-Example: to show your private key from `~/.ssh`:
+Open the file and replace the placeholder values with your actual keys. To view your private SSH key:
 
 ```sh
-bat --plain ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519
 ```
 
-### 6. Encrypt your secrets with sops
+### 6. Encrypt your secrets
 
 ```sh
 sops -e secrets/flow48/secrets.yaml > secrets/flow48/secrets.enc.yaml
 ```
 
-> ⚠️ **IMPORTANT**  
-> After encrypting, remove `secrets.yaml` to avoid accidentally committing it to Git.
+> **Important:** Delete `secrets.yaml` after encrypting — never commit the unencrypted file.
 
-### 7. Fix missing SSH host key errors (if needed)
+### 7. Register your age key in `.sops.yaml`
 
-If you see errors like:
+Open `.sops.yaml` and add a rule with your age public key (from step 4) so sops knows how to encrypt/decrypt files for your machine.
 
-```text
-Cannot read ssh key '/etc/ssh/ssh_host_rsa_key': no such file or directory
-Cannot read ssh key '/etc/ssh/ssh_host_ed25519_key': no such file or directory
-```
+### 8. Fix missing SSH host key errors (if needed)
 
-Run:
+If you see errors like `Cannot read ssh key '/etc/ssh/ssh_host_rsa_key'`, run:
 
 ```sh
 sudo ssh-keygen -A
 ```
 
-### 8. Add your public SSH key to GitHub
-
-To display your public key from `~/.ssh`:
+### 9. Add your SSH public key to GitHub
 
 ```sh
-bat --plain ~/.ssh/id_ed25519.pub
+cat ~/.ssh/id_ed25519.pub
 ```
 
-Add that key to GitHub under **Settings → SSH and GPG keys**.
-
-### 9. Add a rule in `.sops.yaml`
-
-Create or update `.sops.yaml` to include a rule with your age public key so that future `sops` edits use it automatically.
+Add this at **GitHub → Settings → SSH and GPG keys**.
 
 ---
 
-## 🏗️ Build
+## Build & Rebuild
 
-**In this section:**
-
-- Build your `nix-darwin` configuration using `nix`  
-- Understand the `darwinConfigurations.<<hostname/profile>>.system` target
-
-You can build the darwin system directly with `nix` (what your `rebuild` alias wraps).
-
-By default, it should use your hostname. Replace `<<hostname/profile>>` with your hostname:
+### First build
 
 ```sh
-nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurations.<<hostname/profile>>.system"
+nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurations.$(hostname).system"
+./result/sw/bin/darwin-rebuild switch --flake ".#$(hostname)"
 ```
 
----
+### All subsequent rebuilds
 
-## 🔁 Rebuild
-
-**In this section:**
-
-- Use the `rebuild` alias for day-to-day updates  
-- Target specific profiles (e.g. `mac-pro`)
-
-Use the `rebuild` alias (defined below in [💡 Tips](#-tips)).
-
-- By default, it uses your current `hostname`
-- You can also pass a specific profile:
+Once configured, use the built-in `rebuild` command from any terminal:
 
 ```sh
-rebuild mac-pro
+rebuild           # uses current hostname automatically
+rebuild mac-pro   # target a specific machine profile
 ```
 
----
-
-## ⚙️ Post-Rebuild Configuration & Tweaks
-
-**In this section:**
-
-- Configure Dock layout  
-- Use the pre-configured iTerm2 setup  
-- Configure CleanShot X with LuLu  
-- Handle global Node.js packages  
-- Manually configure a few GUI apps
-
-### 1. Dock configuration
-
-Check the `custom-dock` file in `hosts/darwin` — it defines the default Dock apps.
-
-### 2. iTerm2
-
-iTerm2 is pre-configured with:
-
-- custom theme
-- Starship prompt
-- keybindings
-
-#### 2.1 macOS Terminal
-
-If you prefer macOS Terminal, set the font manually to:
-
-```text
-MesloLGLNF
-```
-
----
-
-### 3. CleanShot X
-
-- Should be activated with your license.
-- After activation, launch the **LuLu** app and block CleanShot’s network access to prevent license checks (useful if reusing a license across machines).
-
-> ⚠️ **IMPORTANT**  
-> This also disables CleanShot’s cloud functionality.
-
----
-
-### 4. Node.js package notes
-
-While `nodejs` and tools like `@aws-amplify/cli` can be installed declaratively via Home Manager, **global NPM packages can’t be uninstalled via Nix**.
-
-#### 4.1 Remove a global package
-
-```sh
-npm uninstall -g @aws-amplify/cli
-```
-
-#### 4.2 Fully remove references
-
-```sh
-rm -rf ~/.npm-global/lib/node_modules/@aws-amplify
-rm ~/.npm-global/bin/amplify
-```
-
----
-
-### 5. Manual app configuration
-
-Some apps are installed but require manual configuration after first launch:
-
-- MiddleClick
-- HiddenBar
-- AltTab
-- BetterDisplay
-
-#### 5.1 Raycast
-
-Raycast settings must be imported manually from:
-
-```text
-data/raycast/*
-```
-
----
-
-## 💡 Tips
-
-**In this section:**
-
-- Define a `rebuild` helper function  
-- Update flake inputs and rebuild  
-- Clean the Nix store and remove old generations
-
-You can define a `rebuild` alias in your shell config (`data/mac-dot-zshrc`) like this:
-
-```sh
-rebuild() {
-  local host="${1:-$(hostname)}"
-  if [[ $# -gt 0 ]]; then
-    shift
-  fi
-  sudo darwin-rebuild switch --flake ".#${host}" "$@"
-}
-```
-
-To update your dependencies and rebuild your system:
+To update all dependencies and rebuild:
 
 ```sh
 nix flake update
 rebuild
 ```
 
-To clean the Nix store and remove old generations:
+To update only one dependency (e.g. rust toolchain):
+
+```sh
+nix flake update rust-overlay
+rebuild
+```
+
+---
+
+## Built-in shell commands
+
+These are defined in your shell config and available in every terminal:
+
+| Command | What it does |
+|---|---|
+| `rebuild [host]` | Runs `darwin-rebuild switch` for the current or specified host |
+| `cleanup` | Removes Nix generations older than 14 days and garbage collects the store |
+| `fix-sound` | Restarts the macOS audio daemon (fixes audio glitches) |
+| `idea [path]` | Opens a project in IntelliJ IDEA |
+| `, package-name` | Runs a Nix package without installing it (via `nix run`) |
+| `lg` | Opens lazygit |
+| `dev` | `cd ~/Developer` |
+
+---
+
+## Post-rebuild steps
+
+Most things are configured automatically. A few require manual steps after the first install.
+
+### Dock
+
+The Dock layout is defined in `hosts/darwin/flow48/` — it is applied on rebuild.
+
+### iTerm2
+
+iTerm2 preferences are managed declaratively and copied automatically on each rebuild. If the theme or font looks wrong, quit and reopen iTerm2.
+
+Font for macOS Terminal (if you prefer it over iTerm2):
+```
+MesloLGL Nerd Font
+```
+
+### CleanShot X
+
+1. After rebuild, open CleanShot X and enter your license key
+2. Run `cleanshot-activate` in the terminal
+3. Run `rebuild` — license servers are now blocked permanently via `/etc/hosts`
+
+License server blocking is kernel-level and applies from boot, so there is no race condition.
+
+### Raycast
+
+Import your settings manually from:
+```
+data/raycast/
+```
+
+### AWS Amplify CLI
+
+The Amplify CLI has no Nix package and is installed automatically via npm on the first rebuild of the `flow48` profile. This only runs if `amplify` is not already on your PATH.
+
+To remove it manually:
+```sh
+npm uninstall -g @aws-amplify/cli
+rm -rf ~/.npm-global/lib/node_modules/@aws-amplify
+rm ~/.npm-global/bin/amplify
+```
+
+### Apps that need manual setup after first launch
+
+- **MiddleClick** — enable in Accessibility settings
+- **AltTab** — grant Screen Recording permission
+- **BetterDisplay** — grant Screen Recording permission
+
+---
+
+## Day-to-day tips
+
+### Where to add things
+
+| What | Where |
+|---|---|
+| New GUI app | `homebrew.casks` in `darwin-common.nix` |
+| New CLI tool (system-wide) | `environment.systemPackages` in `common-packages.nix` |
+| New CLI tool (personal) | `home.packages` in `base.nix` |
+| Shell alias | `programs.zsh.shellAliases` in `base.nix` |
+| Environment variable | `home.sessionVariables` in `base.nix` |
+| Machine-specific package | `flow48.nix` or `mac-pro.nix` |
+
+### Rust toolchain
+
+The stable Rust toolchain is managed via `rust-overlay` in `home-manager/programs/rust/default.nix`. It includes `rust-analyzer`, `rust-src`, and `llvm-tools`. After a `nix flake update rust-overlay && rebuild`, the toolchain updates automatically.
+
+### Nix LSP in Zed
+
+`nixd` is the Nix language server and is configured in `home-manager/programs/nix/default.nix`. Zed is pointed to it via `~/.config/zed/settings.json`. No manual installation needed.
+
+### Roll back a bad rebuild
+
+```sh
+# List generations
+darwin-rebuild --list-generations
+
+# Roll back to previous
+darwin-rebuild switch --rollback
+```
+
+### Clean up disk space
 
 ```sh
 cleanup
 ```
 
+This removes system and user generations older than 14 days and runs `nix-collect-garbage`.
+
 ---
 
-## 📦 Project Templates & direnv
+## Project templates & direnv
 
-This repo also exposes **flake templates** to quickly bootstrap new projects that integrate nicely with your global Zsh + Home Manager setup and `direnv`.
+This repo exposes flake templates to bootstrap new projects that automatically integrate with your shell and dev environment via `direnv`.
 
-### ⚙️ Requirements
+Both `direnv` and `nix-direnv` are already enabled in this config. When you `cd` into a project directory, the project's Nix dev environment is loaded automatically — without losing your shell aliases, prompt, or completions.
 
-These are already enabled in this config:
+### Available templates
 
-- Nix with flakes and `nix-command`
-- `direnv` + `nix-direnv` via Home Manager:
+| Template | Description |
+|---|---|
+| `node` | Node.js project with devShell (nodejs, pnpm, yarn, typescript) |
+| `esp32-rust` | ESP32-S3 Rust project with devShell (rust-analyzer, espflash, ldproxy) |
 
-  ```nix
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-  ```
-
-With this setup, `direnv` will automatically load your project’s Nix dev environment into your existing Zsh shell (so you keep autosuggestions, syntax highlighting, aliases, etc.).
-
-### 🧩 Available templates
-
-The flake in this repo exposes templates under `templates`:
-
-- `node-lts`  
-  Path: `./templates/note-lts`  
-  Description: Node.js project starter (flake devShell + `.envrc` for direnv)
-
-- `esp32-rust`  
-  Path: `./templates/esp32-rust-project`  
-  Description: ESP32‑S3 Rust project starter (devShell + `.envrc` for direnv)
-
-The default template is `node`.
-
-### 🧪 Using the Node.js project template
-
-To create a new Node‑based project that uses the Node devShell and direnv:
+### Node.js project
 
 ```sh
-mkdir -p ~/Developer/my-node-app
-cd ~/Developer/my-node-app
-
-# Initialize from this repo's Node template
+mkdir -p ~/Developer/my-app && cd ~/Developer/my-app
 nix flake init -t "path:/Users/utopiaeh/nix-config#node"
-
-# Trust direnv for this directory
 direnv allow
 ```
 
-This will create:
-
-- `flake.nix` – with a devShell that includes:
-  - `nodejs_20`
-  - `pnpm`
-  - `yarn`
-  - `typescript`
-- `.envrc` – containing:
-
-  ```sh
-  use flake
-  ```
-
-After `direnv allow`, whenever you `cd` into this project:
-
-- `direnv` will call Nix to load the devShell environment,
-- Your existing Home Manager Zsh session stays active,
-- You keep autosuggestions + syntax highlighting from `programs.zsh` in `home-manager/profiles/base.nix`.
-
-### 🧪 Using the ESP32‑S3 Rust project template
-
-To create a new ESP32‑S3 Rust project:
+### ESP32-S3 Rust project
 
 ```sh
-mkdir -p ~/Developer/mcu/my-esp32-project
-cd ~/Developer/mcu/my-esp32-project
-
-# Initialize from this repo's ESP32 Rust template
+mkdir -p ~/Developer/mcu/my-esp32 && cd ~/Developer/mcu/my-esp32
 nix flake init -t "path:/Users/utopiaeh/nix-config#esp32-rust"
-
-# Trust direnv for this directory
 direnv allow
 ```
 
-This will create:
-
-- `flake.nix` – with a devShell that includes:
-  - `rust-analyzer`
-  - `espflash`
-  - `ldproxy`
-  - `esp-generate`
-  - sensible defaults:
-    - `CARGO_BUILD_TARGET = "xtensa-esp32s3-none-elf"`
-    - `RUST_BACKTRACE = 1`
-- `.envrc` – containing:
-
-  ```sh
-  use flake
-  ```
-
-Again, entering this directory will automatically load the ESP32 dev environment via `direnv` while preserving your global Zsh configuration from Home Manager.
-
-### 💻 Day‑to‑day workflow with templates + direnv
-
-For any project created from these templates:
-
-1. `cd` into the project directory.
-2. On the first time: `direnv allow`.
-3. Afterwards, simply `cd` in/out:
-   - Zsh (with Home Manager config) stays the same.
-   - The project’s flake devShell is layered on top by `direnv`.
-
-You rarely need to run `nix develop` manually. If you edit `flake.nix` in a project, just run:
+After `direnv allow`, entering the directory automatically loads the dev environment. If you edit `flake.nix`, reload with:
 
 ```sh
 direnv reload
 ```
-
-to pick up the changes in your current shell.

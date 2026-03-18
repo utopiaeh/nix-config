@@ -1,6 +1,5 @@
 { ... }:
 {
-
   homebrew = {
     casks = [
       "discord"

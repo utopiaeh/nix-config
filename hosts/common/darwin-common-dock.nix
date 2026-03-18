@@ -8,6 +8,8 @@
 
       "/Applications/Telegram.app"
       "/Applications/Discord.app"
+
+      "/Applications/Claude.app"
       "/Applications/ChatGPT.app"
 
       "/Applications/Spotify.app"

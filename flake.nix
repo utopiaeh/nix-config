@@ -64,6 +64,18 @@
         flow48 = libx.mkDarwin { hostname = "flow48"; };
       };
 
+      templates = {
+        node = {
+          path = ./templates/node-lts;
+          description = "Node.js 22 project (nodejs, pnpm, yarn, typescript)";
+        };
+        esp32-rust = {
+          path = ./templates/esp32-rust;
+          description = "ESP32-S3 Rust project (espflash, ldproxy, esp-generate)";
+        };
+        default = self.templates.node;
+      };
+
     };
 
 }

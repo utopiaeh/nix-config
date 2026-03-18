@@ -17,14 +17,18 @@ in
 {
 
   imports = [
-    ../../home-manager/programs/zsh
-    ../../home-manager/programs/cloud-code
-    ../../home-manager/programs/rust
-
     ./darwin/settings/system
     ./darwin/settings/userPreferences
     ./darwin/settings/disableHotkeys
+    ./darwin/cleanshot.nix
   ];
+
+  sops.secrets."cleanshot_license" = {
+    sopsFile = ../../secrets/shared/secrets.enc.yaml;
+    owner = username;
+    mode = "0400";
+  };
+
 
   system.stateVersion = 5;
   # Set primary user for system-wide activation
@@ -56,6 +60,7 @@ in
 
   environment.systemPackages = [ ];
 
+
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.fira-mono
@@ -63,9 +68,6 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
-
-  # pins to stable as unstable updates very often
-  programs.nix-index.enable = true;
 
   homebrew = {
     enable = true;
@@ -123,7 +125,6 @@ in
 
       "figma"
 
-      "lulu" # Disalbe connection to network
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
 
     ];
@@ -139,14 +140,13 @@ in
   security.pam.services.sudo_local.touchIdAuth = true;
 
   system.activationScripts.postActivation.text = ''
-    echo "❯❯❯❯ ✓⃝ Remove the quarantine attribute recursively from all .app folders inside /Applications..."
+    echo "❯❯❯❯ · Removing quarantine attribute from /Applications..."
     sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
 
-
-    echo "❯❯❯❯ ✓⃝ Installing default settings for IntelliJIdea..."
+    echo "❯❯❯❯ · Installing IntelliJ IDEA layout..."
     ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
-    echo "❯❯❯❯ ✓⃝ Installing FlashSpace profile and settings..."
+    echo "❯❯❯❯ · Installing FlashSpace profile and settings..."
     mkdir -p "${targetPathFlashspace}"
     cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
     cp ${settingSource} "${targetPathFlashspace}/settings.yaml"

@@ -1,41 +1,35 @@
 { pkgs, ... }:
+
 {
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    # Version control
     gh
     git-crypt
-    go
+
+    # General utilities
     tree
     unzip
     watch
     wget
-    zoxide
-    lazygit
-    fzf
-    sops
-    neovim
-
-    nightlight
-
-    # A benchmarking tool for HTTP services, useful for testing and optimizing web applications
     wrk
 
-    # Node envirement and package manager
-    nodejs
-    yarn
+    # Secrets management
+    sops
 
-    # Nix development tools
-    nixd
-    nil
+    # macOS utilities
+    nightlight
 
-    # Minikube and kubectl for Kubernetes development
+    # Go runtime
+    go
+
+    # Kubernetes
     minikube
     kubectl
 
-    # Handy way to save and run project-specific commands
+    # Task runner
     just
     just-lsp
-
   ];
 }

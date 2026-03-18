@@ -18,8 +18,24 @@ in
     ../programs/iterm2
     ../programs/git
     ../programs/flashspace
-
+    ../programs/rust
+    ../programs/nix
+    ../programs/node
   ];
+
+  home.packages = with pkgs; [
+    neovim
+    claude-code
+  ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    CLICOLOR = "1";
+    LSCOLORS = "gxfxcxdxbxgggdabagacad";
+    SOPS_AGE_KEY_FILE = "$HOME/.config/sops/age/keys.txt";
+    NPM_CONFIG_PREFIX = "$HOME/.npm-global";
+  };
 
   programs = {
     ssh = {
@@ -31,7 +47,6 @@ in
       '';
 
       matchBlocks = {
-        # Use SSH over HTTPS for GitHub and point to your SOPS-managed key
         "github.com" = {
           hostname = "ssh.github.com";
           identityFile = "~/.ssh/id_ed25519";
@@ -40,6 +55,8 @@ in
 
         "*" = {
           user = "${username}";
+          addKeysToAgent = "yes";
+          extraOptions.UseKeychain = "yes";
         };
       };
     };
@@ -49,153 +66,151 @@ in
       config.theme = "Nord";
     };
 
-    gpg = {
+    gpg.enable = true;
+
+    lazygit.enable = true;
+
+    direnv = {
       enable = true;
+      nix-direnv.enable = true;
+      enableZshIntegration = true;
     };
 
-  };
-
-  launchd.agents = {
-    lulu-gui = {
+    eza = {
       enable = true;
-      config = {
-        Label = "com.objective-see.lulu.gui";
-        ProgramArguments = [
-          "/usr/bin/open"
-          "-gj"
-          "/Applications/LuLu.app"
-        ];
-        RunAtLoad = true;
-        KeepAlive = false;
+      enableZshIntegration = true;
+      icons = "auto";
+      git = true;
+      extraOptions = [
+        "--group-directories-first"
+        "--header"
+        "--color=auto"
+      ];
+    };
+
+    fzf = {
+      enable = true;
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      tmux.enableShellIntegration = true;
+      defaultOptions = [ "--no-mouse" ];
+    };
+
+    lf.enable = true;
+
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+      settings = pkgs.lib.importTOML ../../data/starship/starship.toml;
+    };
+
+    bash.enable = true;
+
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+
+      shellAliases = {
+        cl = "clear";
+        lg = "lazygit";
+        tscl = "npx tsc";
+        dev = "cd ~/Developer";
+        fix-sound = "sudo killall coreaudiod";
+        cleanshot-activate = "touch ~/.config/cleanshot-activated && echo 'Marker created. Run rebuild to apply blocking.'";
       };
+
+      initContent = ''
+        # Keybindings
+        [[ -n ''${key[Delete]} ]] && bindkey "''${key[Delete]}" delete-char
+        [[ -n ''${key[Home]} ]] && bindkey "''${key[Home]}" beginning-of-line
+        [[ -n ''${key[End]} ]] && bindkey "''${key[End]}" end-of-line
+        [[ -n ''${key[Up]} ]] && bindkey "''${key[Up]}" up-line-or-search
+        [[ -n ''${key[Down]} ]] && bindkey "''${key[Down]}" down-line-or-search
+
+        # PATH (appended after Nix paths so Nix-managed tools take precedence)
+        export PATH="$PATH:$HOME/go/bin"
+        export PATH="$PATH:$HOME/.npm-global/bin"
+        export PATH="$PATH:$HOME/.cargo/bin"
+
+        # bat as cat
+        cat() {
+          bat --paging=always "$@"
+        }
+
+        # darwin-rebuild with optional host argument
+        rebuild() {
+          local host="''${1:-$(hostname)}"
+          if [[ $# -gt 0 ]]; then
+            shift
+          fi
+          sudo darwin-rebuild switch --flake ".#''${host}" "$@"
+        }
+
+        # Open project in IntelliJ IDEA
+        idea() {
+          open -a "IntelliJ IDEA" "$@" >/dev/null 2>&1
+        }
+
+        # Nix store garbage collection
+        cleanup() {
+          echo "❯❯❯❯ · Store size before cleanup: $(sudo du -sh /nix/store | cut -f1)"
+
+          echo "❯❯❯❯ · Deleting generations older than 14 days..."
+          sudo nix-env -p /nix/var/nix/profiles/system --delete-generations 14d
+          nix-env --delete-generations 14d
+
+          echo "❯❯❯❯ · Running garbage collection..."
+          sudo nix-collect-garbage -d
+          nix-collect-garbage -d
+
+          echo "❯❯❯❯ ✓ Done. Store size after: $(sudo du -sh /nix/store | cut -f1)"
+        }
+
+        # Run packages without installing via nix
+        , () {
+          nix run nixpkgs#comma -- "$@"
+        }
+      '';
     };
 
-  };
+    home-manager.enable = true;
+    nix-index.enable = true;
 
-  #  IMPORTANT: Use this if decide to use specific env per project
-  #  Installs and enables nix-direnv allows you to write .envrc files like this:
-  #  and it will automatically load a Nix shell environment (shell.nix or flake.nix) when entering that directory.
-  #  use nix
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.eza = {
-    enable = true;
-    enableZshIntegration = true;
-    icons = "auto";
-    git = true;
-    extraOptions = [
-      "--group-directories-first"
-      "--header"
-      "--color=auto"
-    ];
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    tmux.enableShellIntegration = true;
-    defaultOptions = [
-      "--no-mouse"
-    ];
-  };
-
-  programs.lf.enable = true;
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-
-    settings = pkgs.lib.importTOML ../../data/starship/starship.toml;
-  };
-
-  programs.bash.enable = true;
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    shellAliases = {
-      cl = "clear";
-      lg = "lazygit";
-      tscl = "npx tsc";
-      dev = "cd ~/Developer";
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
     };
-    initContent = ''
-      cat() {
-        bat --paging=always "$@"
-      }
-    '';
   };
 
-  programs.home-manager.enable = true;
-  programs.nix-index.enable = true;
-
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-  };
-
-  home.activation.manageCleanshot = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        echo "❯❯❯❯ ⓘ Installing CleanShot X into /Applications"
-    #      rm -f "$HOME/Applications/CleanShot X.app"
-
-         if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ]; then
-           if [ ! -e "/Applications/CleanShot X.app" ]; then
-             echo "Linking to /Applications"
-             ln -s  "${cleanshotPackage}/Applications/CleanShot X.app" "/Applications/"
-           else
-             echo "❯❯❯❯ ⓘ Skipping — already exists in /Applications"
-           fi
-         fi
-
+  home.activation.linkCleanshotToApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ] && [ ! -e "/Applications/CleanShot X.app" ]; then
+      ln -s "${cleanshotPackage}/Applications/CleanShot X.app" "/Applications/"
+    fi
   '';
 
-  home.activation.makeDirectoryDeveloper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    echo "❯❯❯❯ ⓘ Creating Developer directory if it doesn't exist"
-
+  home.activation.createDeveloperDirectory = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if [ ! -d "/Users/${username}/Developer" ]; then
-      echo "❯❯❯❯ ⓘ Creating /Users/${username}/Developer directory..."
       mkdir -p "/Users/${username}/Developer"
       chown ${username}:staff "/Users/${username}/Developer"
-    else
-      echo "❯❯❯❯ ⓘ Developer directory already exists. Skipping creation."
     fi
-
   '';
 
-  home.activation.manageShortcutsToTakeEffectImmediately =
-    lib.hm.dag.entryAfter [ "writeBoundary" ]
-      ''
-        echo "❯❯❯❯ ✓⃝ Managing shortcuts to take effect immediately "
-        /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  home.activation.applyKeyboardShortcuts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
 
-      '';
-
-  home.activation.setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    echo "❯❯❯❯ Setting wallpaper"
-
+  home.activation.setDesktopWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       WALLPAPER_PATH=${wallpaper}
-
       if [ -f "$WALLPAPER_PATH" ]; then
-        echo "❯❯❯❯ ✓⃝ Setting wallpaper to $WALLPAPER_PATH"
         /usr/bin/osascript <<EOF
         tell application "System Events"
           set picture of every desktop to POSIX file "$WALLPAPER_PATH"
         end tell
     EOF
-      else
-        echo "❯❯❯❯ ⓧ Wallpaper file not found at: $WALLPAPER_PATH"
       fi
-
   '';
 }
