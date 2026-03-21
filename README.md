@@ -277,8 +277,13 @@ MesloLGL Nerd Font
 ### CleanShot X
 
 1. After rebuild, open CleanShot X and enter your license key
-2. Run `cleanshot-activate` in the terminal
+2. In a **new terminal** (or run `source ~/.zshrc`), run `cleanshot-activate`
 3. Run `rebuild` — license servers are now blocked permanently via `/etc/hosts`
+
+To re-activate on a new machine or after a license reset:
+```sh
+rm ~/.config/cleanshot-activated && rebuild
+```
 
 License server blocking is kernel-level and applies from boot, so there is no race condition.
 
@@ -366,7 +371,7 @@ Both `direnv` and `nix-direnv` are already enabled in this config. When you `cd`
 
 ```sh
 mkdir -p ~/Developer/my-app && cd ~/Developer/my-app
-nix flake init -t "path:/Users/utopiaeh/nix-config#node"
+tpl-node
 direnv allow
 ```
 
@@ -374,7 +379,7 @@ direnv allow
 
 ```sh
 mkdir -p ~/Developer/mcu/my-esp32 && cd ~/Developer/mcu/my-esp32
-nix flake init -t "path:/Users/utopiaeh/nix-config#esp32-rust"
+tpl-esp32
 direnv allow
 ```
 
