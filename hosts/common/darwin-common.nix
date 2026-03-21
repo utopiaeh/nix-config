@@ -121,7 +121,6 @@ in
       "sublime-text"
       "visual-studio-code"
       "postman"
-      "iterm2"
 
       "figma"
 
