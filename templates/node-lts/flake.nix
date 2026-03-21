@@ -12,18 +12,14 @@
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        # Change to nodejs_18, nodejs_20, nodejs_22, nodejs_23, etc.
-        nodejs = pkgs.nodejs_22;
-        # Bind pnpm/yarn to the selected Node version
-        pnpm = pkgs.nodePackages.pnpm.override { inherit nodejs; };
       in
       {
         devShells.default = pkgs.mkShell {
-          packages = [
-            nodejs
+          packages = with pkgs; [
+            nodejs_22
             pnpm
-            pkgs.yarn
-            pkgs.typescript
+            yarn
+            typescript
           ];
 
           shellHook = ''
