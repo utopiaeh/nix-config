@@ -12,7 +12,7 @@
   home.activation.installAmplifyCli = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if ! command -v amplify >/dev/null 2>&1; then
       export NPM_CONFIG_PREFIX="$HOME/.npm-global"
-      ${pkgs.nodejs}/bin/npm install -g @aws-amplify/cli
+      ${pkgs.nodejs}/bin/npm install -g --fund=false @aws-amplify/cli
     fi
   '';
 }
