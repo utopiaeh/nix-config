@@ -7,7 +7,7 @@
 
 let
   cleanshotPackage = import ../programs/cleanshot { inherit pkgs; };
-  wallpaper = ../../data/wallpapers/enchanted_forest_giant_by_billy_christian.jpg;
+  wallpaper = ../../assets/wallpapers/enchanted_forest_giant_by_billy_christian.jpg;
 in
 
 {
@@ -102,7 +102,7 @@ in
       enable = true;
       enableZshIntegration = true;
       enableBashIntegration = true;
-      settings = pkgs.lib.importTOML ../../data/starship/starship.toml;
+      settings = pkgs.lib.importTOML ../../assets/starship/starship.toml;
     };
 
     bash.enable = true;

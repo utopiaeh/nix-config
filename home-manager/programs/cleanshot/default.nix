@@ -4,7 +4,7 @@ pkgs.stdenvNoCC.mkDerivation {
   pname = "cleanshot";
   version = "4.7.7";
 
-  src = ../../../data/cleanshot/CleanShot-X-4.7.7.dmg;
+  src = ../../../assets/cleanshot/CleanShot-X-4.7.7.dmg;
 
   phases = [ "installPhase" ];
 

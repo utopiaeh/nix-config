@@ -58,7 +58,7 @@ nix-config/
 │       ├── node/               # Node.js environment
 │       ├── git/                # Git config
 │       └── iterm2/             # iTerm2 preferences (declarative)
-├── data/
+├── assets/
 │   ├── starship/               # Prompt config
 │   ├── idea/                   # IntelliJ layout
 │   ├── raycast/                # Raycast settings (import manually)
@@ -291,7 +291,7 @@ License server blocking is kernel-level and applies from boot, so there is no ra
 
 Import your settings manually from:
 ```
-data/raycast/
+assets/raycast/
 ```
 
 ### AWS Amplify CLI

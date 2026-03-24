@@ -6,8 +6,8 @@
   ...
 }:
 let
-  setupIntelliJIdeaScript = ./../../data/idea/install.sh;
-  pathIntelliJIdeaLayout = ./../../data/idea/window.layouts.xml;
+  setupIntelliJIdeaScript = ./../../assets/idea/install.sh;
+  pathIntelliJIdeaLayout = ./../../assets/idea/window.layouts.xml;
 
   profileSource = ./../../home-manager/programs/flashspace/profiles.yaml;
   settingSource = ./../../home-manager/programs/flashspace/settings.yaml;
@@ -125,6 +125,8 @@ in
       "figma"
 
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
+
+      "docker"
 
     ];
 
