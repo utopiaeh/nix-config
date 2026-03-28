@@ -11,7 +11,7 @@ let
 in
 
 {
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
 
   imports = [
     ../modules/iterm2
@@ -142,33 +142,9 @@ in
           bat --paging=always "$@"
         }
 
-        # darwin-rebuild with optional host argument
-        rebuild() {
-          local host="''${1:-$(hostname)}"
-          if [[ $# -gt 0 ]]; then
-            shift
-          fi
-          sudo darwin-rebuild switch --flake ".#''${host}" "$@"
-        }
-
         # Open project in IntelliJ IDEA
         idea() {
           open -a "IntelliJ IDEA" "$@" >/dev/null 2>&1
-        }
-
-        # Nix store garbage collection
-        cleanup() {
-          echo "❯❯❯❯ · Store size before cleanup: $(sudo du -sh /nix/store | cut -f1)"
-
-          echo "❯❯❯❯ · Deleting generations older than 14 days..."
-          sudo nix-env -p /nix/var/nix/profiles/system --delete-generations 14d
-          nix-env --delete-generations 14d
-
-          echo "❯❯❯❯ · Running garbage collection..."
-          sudo nix-collect-garbage -d
-          nix-collect-garbage -d
-
-          echo "❯❯❯❯ ✓ Done. Store size after: $(sudo du -sh /nix/store | cut -f1)"
         }
 
         # Run packages without installing via nix

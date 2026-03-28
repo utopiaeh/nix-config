@@ -29,7 +29,6 @@ in
     mode = "0400";
   };
 
-
   system.stateVersion = 5;
   # Set primary user for system-wide activation
   system.primaryUser = "${username}";
@@ -59,7 +58,6 @@ in
   environment.variables = { };
 
   environment.systemPackages = [ ];
-
 
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
@@ -126,7 +124,9 @@ in
 
       "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
 
-      "docker"
+      "docker-desktop"
+
+      # "sw33tlie/macshot/macshot"
 
     ];
 

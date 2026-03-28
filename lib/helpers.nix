@@ -15,25 +15,29 @@
           ./../hosts/common/darwin-common-dock.nix;
       rustOverlay = inputs.rust-overlay.overlays.default;
       claudeCode = inputs.claude-code.overlays.default;
+      overlayDir = ../overlays;
+      localOverlays =
+        let
+          files = builtins.attrNames (builtins.readDir overlayDir);
+          nixFiles = builtins.filter (n: builtins.match ".*\\.nix" n != null) files;
+        in
+        map (n: import (overlayDir + "/${n}")) nixFiles;
 
     in
 
     inputs.nix-darwin.lib.darwinSystem {
       specialArgs = { inherit system inputs username; };
-      #extraSpecialArgs = { inherit inputs; }
       modules = [
-        # ../modules/darwin
         inputs.sops-nix.darwinModules.sops
         ../hosts/common/common-packages.nix
         ../hosts/common/darwin-common.nix
         customConf
-        # Add nodejs overlay to fix build issues (https://github.com/NixOS/nixpkgs/issues/402079)
         {
           nixpkgs.overlays = [
             rustOverlay
             claudeCode
-            (import ../overlays/node.nix)
-          ];
+          ]
+          ++ localOverlays;
         }
         inputs.home-manager.darwinModules.home-manager
         {
@@ -53,12 +57,13 @@
             enable = true;
             enableRosetta = true;
             autoMigrate = true;
-            mutableTaps = true;
+            mutableTaps = false;
             user = "${username}";
             taps = with inputs; {
               "homebrew/homebrew-core" = homebrew-core;
               "homebrew/homebrew-cask" = homebrew-cask;
               "homebrew/homebrew-bundle" = homebrew-bundle;
+              # "sw33tLie/homebrew-macshot" = homebrew-macshot;
             };
           };
         }

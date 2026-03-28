@@ -29,6 +29,11 @@
       flake = false;
     };
 
+    # homebrew-macshot = {
+    #   url = "github:sw33tLie/homebrew-macshot";
+    #   flake = false;
+    # };
+
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -53,6 +58,19 @@
       stateVersion = "24.05";
       libx = import ./lib { inherit inputs outputs stateVersion; };
 
+      pkgs = inputs.nixpkgs-darwin.legacyPackages.aarch64-darwin;
+
+      mkApp = name: text: {
+        type = "app";
+        program = toString (
+          pkgs.writeShellApplication {
+            inherit name;
+            text = text;
+          }
+          + "/bin/${name}"
+        );
+      };
+
     in
     {
 
@@ -62,6 +80,33 @@
 
         # work
         flow48 = libx.mkDarwin { hostname = "flow48"; };
+      };
+
+      # Run with: nix run .#rebuild
+      apps.aarch64-darwin = {
+        rebuild = mkApp "rebuild" ''
+          FLAKE=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+          sudo darwin-rebuild switch --flake "$FLAKE#$(scutil --get LocalHostName)"
+        '';
+        rollback = mkApp "rollback" ''
+          sudo darwin-rebuild --rollback
+        '';
+        cleanup = mkApp "cleanup" ''
+          nix-collect-garbage --delete-older-than 14d
+        '';
+      };
+
+      # Bootstrap env for fresh machines: nix develop
+      devShells.aarch64-darwin.default = pkgs.mkShell {
+        packages = with pkgs; [
+          git
+          sops
+          age
+          ssh-to-age
+        ];
+        shellHook = ''
+          echo "❯❯❯❯ · Bootstrap shell ready — run: nix run .#build-switch"
+        '';
       };
 
       templates = {
