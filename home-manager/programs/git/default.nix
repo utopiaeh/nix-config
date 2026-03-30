@@ -27,6 +27,7 @@
         ".DS_Store"
       ];
       lfs.enable = true;
+      signing.format = null;
     };
 
     diff-so-fancy = {

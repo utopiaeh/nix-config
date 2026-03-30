@@ -55,8 +55,7 @@
     let
       inherit (self) outputs;
 
-      stateVersion = "24.05";
-      libx = import ./lib { inherit inputs outputs stateVersion; };
+      libx = import ./lib { inherit inputs; };
 
       pkgs = inputs.nixpkgs-darwin.legacyPackages.aarch64-darwin;
 

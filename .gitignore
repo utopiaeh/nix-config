@@ -3,3 +3,4 @@ result
 .idea
 secrets/**/*.yaml
 !secrets/**/*.enc.yaml
+.claude

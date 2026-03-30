@@ -116,9 +116,15 @@ Secrets are encrypted with `sops` and `age`, derived from your SSH key.
 
 ---
 
-**Already have encrypted secrets in the repo?**
+**Already have `~/.config/sops/age/keys.txt`?**
 
-Just regenerate the age key from your SSH key — sops will decrypt automatically during rebuild:
+Skip this step entirely — sops will decrypt automatically during rebuild.
+
+---
+
+**Have the SSH key but no age key file?**
+
+Just regenerate it:
 
 ```sh
 mkdir -p ~/.config/sops/age
@@ -129,7 +135,7 @@ Skip to step 7.
 
 ---
 
-**Setting up secrets for the first time or with a new SSH key?**
+**First time / new SSH key?**
 
 Derive your age key:
 
@@ -144,15 +150,7 @@ Get your age public key and add it to `.sops.yaml` under the rules for your mach
 nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
 ```
 
-Create and encrypt `secrets/flow48/secrets.yaml`:
-
-```sh
-cp secrets/secrets_example.yaml secrets/flow48/secrets.yaml
-# fill in: ssh_key (cat ~/.ssh/id_ed25519) and github_token
-sops -e secrets/flow48/secrets.yaml > secrets/flow48/secrets.enc.yaml
-```
-
-Create and encrypt `secrets/shared/secrets.yaml`:
+Create and encrypt `secrets/shared/secrets.yaml` (required for all machines):
 
 ```sh
 cp secrets/shared/secrets_example.yaml secrets/shared/secrets.yaml
@@ -160,17 +158,26 @@ cp secrets/shared/secrets_example.yaml secrets/shared/secrets.yaml
 sops -e secrets/shared/secrets.yaml > secrets/shared/secrets.enc.yaml
 ```
 
+For `flow48` only — also create and encrypt the machine-specific secrets:
+
+```sh
+cp secrets/secrets_example.yaml secrets/flow48/secrets.yaml
+# fill in: ssh_key (cat ~/.ssh/id_ed25519) and github_token
+sops -e secrets/flow48/secrets.yaml > secrets/flow48/secrets.enc.yaml
+```
+
 > **Important:** Delete the unencrypted files after encrypting — never commit them.
 
 ```sh
-rm secrets/flow48/secrets.yaml secrets/shared/secrets.yaml
+rm secrets/shared/secrets.yaml
+# if flow48: rm secrets/flow48/secrets.yaml
 ```
 
 ---
 
 ### 7. Set your hostname
 
-Your hostname must match the name defined in `flake.nix` (`flow48` or `mac-pro`). Check your current local hostname:
+Your hostname must match the name defined in `flake.nix` (`mac-pro` or `flow48`). Check your current local hostname:
 
 ```sh
 scutil --get LocalHostName
@@ -179,8 +186,8 @@ scutil --get LocalHostName
 To change it:
 
 ```sh
-sudo scutil --set HostName flow48
-sudo scutil --set LocalHostName flow48
+sudo scutil --set HostName mac-pro
+sudo scutil --set LocalHostName mac-pro
 ```
 
 ### 8. First build (bootstrap only)
