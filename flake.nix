@@ -91,7 +91,11 @@
           sudo darwin-rebuild --rollback
         '';
         cleanup = mkApp "cleanup" ''
+          echo "Cleaning user generations..."
           nix-collect-garbage --delete-older-than 14d
+
+          echo "Cleaning system generations (requires sudo)..."
+          sudo nix-collect-garbage --delete-older-than 14d
         '';
       };
 
@@ -116,6 +120,10 @@
         esp32-rust = {
           path = ./templates/esp32-rust;
           description = "ESP32-S3 Rust project (espflash, ldproxy, esp-generate)";
+        };
+        api-rust = {
+          path = ./templates/api-rust;
+          description = "Rust API project with Diesel CLI (PostgreSQL)";
         };
         default = self.templates.node;
       };
