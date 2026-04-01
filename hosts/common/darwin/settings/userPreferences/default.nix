@@ -63,6 +63,29 @@
     # Turn on app auto-update
     "com.apple.commerce".AutoUpdate = true;
     "com.googlecode.iterm2".PromptOnQuit = false;
+    "com.sw33tlie.macshot.macshot" = {
+      hotkeyKeyCode = 21; # Capture Area: Cmd+Shift+4
+      hotkeyModifiers = 768;
+      "hotkeyDisabled_1" = false;
+      hotkeyFullScreenKeyCode = 20; # Capture Screen: Cmd+Shift+3
+      hotkeyFullScreenModifiers = 768;
+      "hotkeyDisabled_2" = false;
+      hotkeyRecordKeyCode = 22; # Record Area: Cmd+Shift+6
+      hotkeyRecordModifiers = 768;
+      "hotkeyDisabled_3" = false;
+      hotkeyRecordFullScreenKeyCode = 28; # Record Screen: Cmd+Shift+8
+      hotkeyRecordFullScreenModifiers = 768;
+      "hotkeyDisabled_4" = false;
+      hotkeyHistoryKeyCode = 4; # History: Cmd+Shift+H
+      hotkeyHistoryModifiers = 768;
+      "hotkeyDisabled_5" = false;
+      hotkeyOCRKeyCode = 23; # Capture OCR: Cmd+Shift+5
+      hotkeyOCRModifiers = 768;
+      "hotkeyDisabled_6" = false;
+      hotkeyQuickCaptureKeyCode = 26; # Quick Capture: Cmd+Shift+7
+      hotkeyQuickCaptureModifiers = 768;
+      "hotkeyDisabled_7" = false;
+    };
     "com.google.Chrome" = {
       AppleEnableSwipeNavigateWithScrolls = true;
       DisablePrintPreview = true;

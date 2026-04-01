@@ -29,10 +29,10 @@
       flake = false;
     };
 
-    # homebrew-macshot = {
-    #   url = "github:sw33tLie/homebrew-macshot";
-    #   flake = false;
-    # };
+    homebrew-macshot = {
+      url = "github:sw33tLie/homebrew-macshot";
+      flake = false;
+    };
 
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";

@@ -124,6 +124,22 @@
         "type": "github"
       }
     },
+    "homebrew-macshot": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775068237,
+        "narHash": "sha256-8zYrrF6ncI111QUUZ86RqIwG6QW5pOjhXCPWyZK/C7k=",
+        "owner": "sw33tLie",
+        "repo": "homebrew-macshot",
+        "rev": "0e8bd67bfb1b97c61f83d136b08f3d6c60e4da9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sw33tLie",
+        "repo": "homebrew-macshot",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -185,6 +201,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "homebrew-macshot": "homebrew-macshot",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": [

@@ -20,14 +20,14 @@ in
     ./darwin/settings/system
     ./darwin/settings/userPreferences
     ./darwin/settings/disableHotkeys
-    ./darwin/cleanshot.nix
+    #./darwin/cleanshot.nix
   ];
 
-  sops.secrets."cleanshot_license" = {
-    sopsFile = ../../secrets/shared/secrets.enc.yaml;
-    owner = username;
-    mode = "0400";
-  };
+  # sops.secrets."cleanshot_license" = {
+  #   sopsFile = ../../secrets/shared/secrets.enc.yaml;
+  #   owner = username;
+  #   mode = "0400";
+  # };
 
   system.stateVersion = 5;
   # Set primary user for system-wide activation
@@ -88,6 +88,7 @@ in
 
     taps = [
       #"FelixKratz/formulae" #sketchybar
+      "sw33tlie/homebrew-macshot"
     ];
 
     casks = [
@@ -126,7 +127,7 @@ in
 
       "docker-desktop"
 
-      # "sw33tlie/macshot/macshot"
+      "sw33tlie/homebrew-macshot/macshot"
 
     ];
 
