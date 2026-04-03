@@ -6,6 +6,22 @@ Everything — shell, tools, editor, fonts, apps, system settings — is managed
 
 ---
 
+## Contents
+
+- [How it works](#how-it-works)
+- [Project structure](#project-structure)
+- [Setup](#setup)
+  - [New machine](#new-machine) — machine not yet defined in this repo
+  - [Existing machine](#existing-machine) — machine already defined, reinstalling or restoring
+- [Rebuild & update](#rebuild--update)
+- [Regenerating your SSH key](#regenerating-your-ssh-key)
+- [Built-in commands](#built-in-commands)
+- [Post-build manual steps](#post-build-manual-steps)
+- [Day-to-day reference](#day-to-day-reference)
+- [Project templates](#project-templates)
+
+---
+
 ## How it works
 
 | Layer | Tool | What it manages |
@@ -17,6 +33,8 @@ Everything — shell, tools, editor, fonts, apps, system settings — is managed
 
 When you run `rebuild`, Nix reads the config, computes what changed, and applies it atomically. If something breaks, roll back to the previous generation.
 
+Secrets are encrypted using `age`, derived from your SSH key. Your SSH key is the master key for everything — lose it and you lose access to your secrets.
+
 ---
 
 ## Project structure
@@ -25,17 +43,18 @@ When you run `rebuild`, Nix reads the config, computes what changed, and applies
 nix-config/
 ├── flake.nix                   # Entry point — defines all machines
 ├── flake.lock                  # Pinned dependency versions
+├── .sops.yaml                  # Defines which age keys can decrypt which secrets
 ├── hosts/
 │   ├── common/
 │   │   ├── darwin-common.nix   # Shared macOS settings, Homebrew apps, fonts
 │   │   └── common-packages.nix # System-wide CLI tools
 │   └── darwin/
-│       ├── flow48/             # MacBook Pro config
+│       ├── <your-machine>/     # Machine-specific config
 │       └── mac-pro/            # Mac Pro config
 ├── home-manager/
 │   ├── profiles/
 │   │   ├── base.nix            # User environment (shell, git, SSH, aliases...)
-│   │   ├── flow48.nix          # MacBook Pro home config
+│   │   ├── <your-machine>.nix  # Machine-specific home config
 │   │   └── mac-pro.nix         # Mac Pro home config
 │   └── programs/
 │       ├── rust/               # Rust toolchain + rust-analyzer
@@ -49,9 +68,9 @@ nix-config/
 │   ├── raycast/                # Raycast settings (import manually)
 │   └── wallpapers/
 ├── secrets/
-│   ├── flow48/                 # Machine-specific secrets (ssh_key, github_token)
-│   ├── shared/                 # Shared secrets (cleanshot_license)
-│   └── secrets_example.yaml    # Template for flow48 secrets
+│   ├── <your-machine>/         # Machine-specific secrets (ssh_key, tokens)
+│   ├── shared/                 # Secrets accessible by all machines
+│   └── secrets_example.yaml    # Template for machine secrets
 └── templates/                  # Flake templates for new projects
     ├── node-lts/
     └── esp32-rust-project/
@@ -59,15 +78,28 @@ nix-config/
 
 ---
 
-## Setting up on a fresh machine
+## Setup
 
-### 1. Install Xcode command line tools
+> **Which path should I follow?**
+>
+> - [New machine](#new-machine) — you're setting up a machine that is not yet defined in `flake.nix` (brand new or third machine)
+> - [Existing machine](#existing-machine) — the machine is already in `flake.nix`, you're reinstalling or restoring
+
+---
+
+### New machine
+
+Steps 1–6 are shared, then the paths diverge.
+
+#### 1. Install Xcode command line tools
+
+Required for git and other build tools.
 
 ```sh
 xcode-select --install
 ```
 
-### 2. Install Nix
+#### 2. Install Nix
 
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
@@ -75,124 +107,126 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 Open a new terminal after installation so `nix` is on your PATH.
 
-### 3. Set up your SSH key
+#### 3. Generate an SSH key and add it to GitHub
 
-If you don't have one:
+This SSH key will become your permanent key — it will be stored encrypted in the repo and deployed on every rebuild.
 
 ```sh
 ssh-keygen -t ed25519 -C "utopiaeh01@gmail.com"
 ```
 
-Add the public key to GitHub: **Settings → SSH and GPG keys**
+Copy the public key and add it to GitHub at **Settings → SSH and GPG keys**:
 
 ```sh
 cat ~/.ssh/id_ed25519.pub
 ```
 
-If you see errors like `Cannot read ssh key '/etc/ssh/ssh_host_rsa_key'` later, run:
-
-```sh
-sudo ssh-keygen -A
-```
-
-### 4. Clone this repo
+#### 4. Clone this repo
 
 ```sh
 git clone git@github.com:utopiaeh/nix-config.git ~/nix-config
 cd ~/nix-config
 ```
 
-### 5. Open the bootstrap shell
+#### 5. Open the bootstrap shell
 
 ```sh
 nix develop
 ```
 
-This drops you into a shell with `sops`, `age`, and `ssh-to-age` — the tools needed to set up secrets before the first build.
+This drops you into a shell with `sops`, `age`, and `ssh-to-age` available — the tools needed to set up secrets before the first build.
 
-### 6. Set up secrets
+#### 6. Derive your age key from your SSH key
 
-Secrets are encrypted with `sops` and `age`, derived from your SSH key.
-
----
-
-**Already have `~/.config/sops/age/keys.txt`?**
-
-Skip this step entirely — sops will decrypt automatically during rebuild.
-
----
-
-**Have the SSH key but no age key file?**
-
-Just regenerate it:
+sops encrypts secrets using `age`. This step converts your SSH private key into an age private key and saves it locally so sops can decrypt secrets during the build.
 
 ```sh
 mkdir -p ~/.config/sops/age
-nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
+ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
 ```
 
-Skip to step 7.
-
----
-
-**First time / new SSH key?**
-
-Derive your age key:
+Get your age **public** key — you will need it in the next step:
 
 ```sh
-mkdir -p ~/.config/sops/age
-nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
+age-keygen -y ~/.config/sops/age/keys.txt
+# outputs something like: age1abc123...
 ```
 
-Get your age public key and add it to `.sops.yaml` under the rules for your machine:
+#### 7. Set the hostname
 
 ```sh
-nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
+sudo scutil --set HostName <your-machine>
+sudo scutil --set LocalHostName <your-machine>
 ```
 
-Create and encrypt `secrets/shared/secrets.yaml` (required for all machines):
+#### 8. Register the machine in the repo
+
+**Add it to `flake.nix`** under `darwinConfigurations`:
+
+```nix
+<your-machine> = libx.mkDarwin { hostname = "<your-machine>"; };
+```
+
+**Add its age public key to `.sops.yaml`** (the key from step 6):
+
+```yaml
+- path_regex: ^secrets/<your-machine>/.*\.yaml$
+  key_groups:
+    - age:
+        - age1abc123...
+```
+
+**Create the machine config** at `hosts/darwin/<your-machine>/default.nix`:
+
+```nix
+{ config, username, pkgs, lib, ... }:
+{
+  sops = {
+    age.sshKeyPaths = [ "/Users/${username}/.ssh/id_ed25519" ];
+    age.keyFile = "/Users/${username}/.config/sops/age/keys.txt";
+    defaultSopsFile = ../../../secrets/${config.networking.hostName}/secrets.enc.yaml;
+
+    secrets."ssh_key" = {
+      path = "/Users/${username}/.ssh/id_ed25519";
+      owner = username;
+      mode = "0600";
+    };
+  };
+}
+```
+
+**Create the home-manager profile** at `home-manager/profiles/<your-machine>.nix`:
+
+```nix
+{ ... }:
+{
+  imports = [ ./base.nix ];
+}
+```
+
+#### 9. Create and encrypt the machine secrets
 
 ```sh
-cp secrets/shared/secrets_example.yaml secrets/shared/secrets.yaml
-# fill in: cleanshot_license
-sops -e secrets/shared/secrets.yaml > secrets/shared/secrets.enc.yaml
+mkdir -p secrets/<your-machine>
+cp secrets/secrets_example.yaml secrets/<your-machine>/secrets.yaml
 ```
 
-For `flow48` only — also create and encrypt the machine-specific secrets:
+Open `secrets/<your-machine>/secrets.yaml` and fill in:
+- `ssh_key` — paste the full contents of `~/.ssh/id_ed25519`
+- any other tokens required
+
+Encrypt it:
 
 ```sh
-cp secrets/secrets_example.yaml secrets/flow48/secrets.yaml
-# fill in: ssh_key (cat ~/.ssh/id_ed25519) and github_token
-sops -e secrets/flow48/secrets.yaml > secrets/flow48/secrets.enc.yaml
+sops -e secrets/<your-machine>/secrets.yaml > secrets/<your-machine>/secrets.enc.yaml
+rm secrets/<your-machine>/secrets.yaml
 ```
 
-> **Important:** Delete the unencrypted files after encrypting — never commit them.
+> Never commit the unencrypted `.yaml` file — only the `.enc.yaml`.
 
-```sh
-rm secrets/shared/secrets.yaml
-# if flow48: rm secrets/flow48/secrets.yaml
-```
+#### 10. First build
 
----
-
-### 7. Set your hostname
-
-Your hostname must match the name defined in `flake.nix` (`mac-pro` or `flow48`). Check your current local hostname:
-
-```sh
-scutil --get LocalHostName
-```
-
-To change it:
-
-```sh
-sudo scutil --set HostName mac-pro
-sudo scutil --set LocalHostName mac-pro
-```
-
-### 8. First build (bootstrap only)
-
-`nix run .#rebuild` won't work yet — it calls `darwin-rebuild` internally, which doesn't exist until nix-darwin is installed. This two-step command bootstraps it:
+`nix run .#rebuild` calls `darwin-rebuild` internally, which doesn't exist until nix-darwin is installed. Use this two-step bootstrap for the very first build:
 
 ```sh
 nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurations.$(scutil --get LocalHostName).system"
@@ -201,9 +235,89 @@ nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurat
 
 After this completes, `darwin-rebuild` is on your PATH and `nix run .#rebuild` works for all future updates.
 
+> If you see errors like `Cannot read ssh key '/etc/ssh/ssh_host_rsa_key'`, run `sudo ssh-keygen -A` and rebuild.
+
+---
+
+### Existing machine
+
+Use this path when the machine is already defined in `flake.nix` — you're reinstalling, restoring, or setting up on the same machine again.
+
+#### 1. Install Xcode command line tools
+
+```sh
+xcode-select --install
+```
+
+#### 2. Install Nix
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+Open a new terminal after installation.
+
+#### 3. Add your SSH key to GitHub
+
+If you already have the SSH key (e.g. from a backup), add its public key to GitHub at **Settings → SSH and GPG keys**:
+
+```sh
+cat ~/.ssh/id_ed25519.pub
+```
+
+If you don't have the key anymore, follow the [new machine](#new-machine) path and regenerate everything.
+
+#### 4. Clone this repo
+
+```sh
+git clone git@github.com:utopiaeh/nix-config.git ~/nix-config
+cd ~/nix-config
+```
+
+#### 5. Open the bootstrap shell
+
+```sh
+nix develop
+```
+
+#### 6. Restore your age key
+
+sops needs the age private key to decrypt secrets during the build. Regenerate it from your SSH key:
+
+```sh
+mkdir -p ~/.config/sops/age
+ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
+```
+
+#### 7. Verify hostname
+
+Make sure your hostname matches what's defined in `flake.nix`:
+
+```sh
+scutil --get LocalHostName
+```
+
+To change it:
+
+```sh
+sudo scutil --set HostName <your-machine>
+sudo scutil --set LocalHostName <your-machine>
+```
+
+#### 8. First build
+
+```sh
+nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurations.$(scutil --get LocalHostName).system"
+./result/sw/bin/darwin-rebuild switch --flake ".#$(scutil --get LocalHostName)"
+```
+
+> If you see errors like `Cannot read ssh key '/etc/ssh/ssh_host_rsa_key'`, run `sudo ssh-keygen -A` and rebuild.
+
 ---
 
 ## Rebuild & update
+
+Rebuild after any config change:
 
 ```sh
 nix run .#rebuild
@@ -225,14 +339,108 @@ Roll back to the previous generation:
 
 ```sh
 nix run .#rollback
-# or
-darwin-rebuild switch --rollback
 ```
 
-List generations:
+List all generations:
 
 ```sh
 darwin-rebuild --list-generations
+```
+
+---
+
+## Regenerating your SSH key
+
+The SSH private key is stored as a sops-encrypted secret and deployed by sops-nix to `~/.ssh/id_ed25519` on every rebuild. Because of this, you can't just run `ssh-keygen` — the key is managed by Nix.
+
+The tricky part: sops uses your **current** SSH key (converted to an age key) to decrypt secrets. If you replace the key without a proper transition, sops won't be able to decrypt anything during the next rebuild. The solution is to keep both old and new age keys active during the transition, then remove the old one after the new key is deployed.
+
+#### Step 1 — Generate a new key pair
+
+```sh
+ssh-keygen -t ed25519 -f /tmp/new_ssh_key -N "" -C "utopiaeh01@gmail.com"
+```
+
+> Saves to `/tmp` because `~/.ssh/id_ed25519` is a symlink managed by sops-nix — you can't write to it directly. `-N ""` means no passphrase.
+
+#### Step 2 — Convert the new SSH key to an age public key
+
+```sh
+nix shell nixpkgs#ssh-to-age --command ssh-to-age < /tmp/new_ssh_key.pub
+```
+
+> sops doesn't use SSH keys directly — it works with age keys. This converts your new SSH public key into the `age1...` string you'll put in `.sops.yaml`.
+
+#### Step 3 — Add both old and new age keys to `.sops.yaml`
+
+```yaml
+- age:
+    - age1oldkey...  # old — keep during transition so rebuild can still decrypt
+    - age1newkey...  # new
+```
+
+> Both keys are needed at this point. The next rebuild will still use the old SSH key (still on disk) to decrypt — removing it now would break the rebuild before the new key is deployed.
+
+#### Step 4 — Re-encrypt secrets with both keys
+
+```sh
+sops updatekeys secrets/<your-machine>/secrets.enc.yaml --yes
+sops updatekeys secrets/shared/secrets.enc.yaml --yes
+```
+
+> Now both old and new age keys can decrypt the secrets files.
+
+#### Step 5 — Update the `ssh_key` secret with the new private key
+
+```sh
+sops secrets/<your-machine>/secrets.enc.yaml
+```
+
+> Opens the secrets file decrypted in your editor. Replace the `ssh_key` value with the contents of `/tmp/new_ssh_key`, save, and close — sops re-encrypts automatically on exit.
+
+#### Step 6 — Rebuild
+
+```sh
+nix run .#rebuild
+```
+
+> sops decrypts using the old SSH key (still active on disk), reads the new `ssh_key` value, and writes it to `/run/secrets/ssh_key` → `~/.ssh/id_ed25519`.
+
+#### Step 7 — Update the public key file and refresh the SSH agent
+
+sops-nix only manages the private key — `~/.ssh/id_ed25519.pub` is not updated automatically and will be stale.
+
+```sh
+ssh-keygen -yf /run/secrets/ssh_key > ~/.ssh/id_ed25519.pub
+ssh-add -D
+ssh-add ~/.ssh/id_ed25519
+```
+
+#### Step 8 — Add the new key to GitHub and remove the old one
+
+Go to **github.com → Settings → SSH and GPG keys**, add the new public key and delete the old one.
+
+Test the connection:
+
+```sh
+ssh -T git@github.com
+```
+
+#### Step 9 — Remove the old age key and re-encrypt
+
+Edit `.sops.yaml` to remove the old age key, keeping only the new one. Then re-encrypt:
+
+```sh
+sops updatekeys secrets/<your-machine>/secrets.enc.yaml --yes
+sops updatekeys secrets/shared/secrets.enc.yaml --yes
+```
+
+> Now only the new key can decrypt the secrets. The transition is complete.
+
+#### Step 10 — Clean up temp files
+
+```sh
+rm /tmp/new_ssh_key /tmp/new_ssh_key.pub
 ```
 
 ---
@@ -263,7 +471,7 @@ Runs any Nix package without installing it. Downloaded on first use, cached for 
 , python3
 ```
 
-### Flake apps (work before shell is configured)
+### Flake apps
 
 | Command | What it does |
 |---|---|
@@ -284,17 +492,6 @@ Preferences are managed declaratively and applied on each rebuild. If the theme 
 Font for macOS Terminal (if preferred over iTerm2):
 ```
 MesloLGL Nerd Font
-```
-
-### CleanShot X
-
-1. Open CleanShot X and enter your license key
-2. In a new terminal (or after `source ~/.zshrc`), run `cleanshot-activate`
-3. Run `rebuild` — license servers are blocked permanently via `/etc/hosts`
-
-To re-activate after a license reset:
-```sh
-rm ~/.config/cleanshot-activated && rebuild
 ```
 
 ### Raycast
@@ -324,11 +521,11 @@ Config is applied automatically from `home-manager/programs/flashspace/` on each
 | New CLI tool (personal) | `home.packages` in `base.nix` |
 | Shell alias | `programs.zsh.shellAliases` in `base.nix` |
 | Environment variable | `home.sessionVariables` in `base.nix` |
-| Machine-specific package | `flow48.nix` or `mac-pro.nix` |
+| Machine-specific package | `hosts/darwin/<your-machine>/default.nix` |
 
 ### Rust toolchain
 
-Managed via `rust-overlay` in `home-manager/programs/rust/default.nix`. Includes `rust-analyzer`, `rust-src`, and `llvm-tools`. Updates automatically after `nix flake update rust-overlay && rebuild`.
+Managed via `rust-overlay` in `home-manager/programs/rust/default.nix`. Includes `rust-analyzer`, `rust-src`, and `llvm-tools`. Updates automatically after `nix flake update rust-overlay && nix run .#rebuild`.
 
 ### Nix LSP in Zed
 
