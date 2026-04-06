@@ -3,11 +3,4 @@ creation_rules:
   - path_regex: ^secrets/flow48/.*\.yaml$
     key_groups:
       - age:
-          - age1hwvkvdrmvmzhczqm0n6gmgj9zqaqmzgdt4amqhdtv8hl6t5tj96qlk2rls
-
-  # Shared secrets — accessible by all machines
-  # Add mac-pro age key here once set up on that machine
-  - path_regex: ^secrets/shared/.*\.yaml$
-    key_groups:
-      - age:
-          - age1hwvkvdrmvmzhczqm0n6gmgj9zqaqmzgdt4amqhdtv8hl6t5tj96qlk2rls
+          - age16flp6pl33nnasnzvvn0fja28l4c4e8y0c3v4qjfsem5hanmjkaeqdhlrvw

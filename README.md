@@ -15,6 +15,7 @@ Everything — shell, tools, editor, fonts, apps, system settings — is managed
   - [Existing machine](#existing-machine) — machine already defined, reinstalling or restoring
 - [Rebuild & update](#rebuild--update)
 - [Regenerating your SSH key](#regenerating-your-ssh-key)
+- [SSH and sops recovery](#ssh-and-sops-recovery)
 - [Built-in commands](#built-in-commands)
 - [Post-build manual steps](#post-build-manual-steps)
 - [Day-to-day reference](#day-to-day-reference)
@@ -33,7 +34,7 @@ Everything — shell, tools, editor, fonts, apps, system settings — is managed
 
 When you run `rebuild`, Nix reads the config, computes what changed, and applies it atomically. If something breaks, roll back to the previous generation.
 
-Secrets are encrypted using `age`, derived from your SSH key. Your SSH key is the master key for everything — lose it and you lose access to your secrets.
+Secrets are encrypted using `age`. A standalone age key is stored at `~/.config/sops/age/keys.txt` — this is the master key for decryption. Your SSH key is stored as a secret encrypted by that age key, not the other way around.
 
 ---
 
@@ -136,13 +137,14 @@ nix develop
 
 This drops you into a shell with `sops`, `age`, and `ssh-to-age` available — the tools needed to set up secrets before the first build.
 
-#### 6. Derive your age key from your SSH key
+#### 6. Generate a standalone age key
 
-sops encrypts secrets using `age`. This step converts your SSH private key into an age private key and saves it locally so sops can decrypt secrets during the build.
+sops encrypts secrets using `age`. Generate a dedicated age key and save it locally — this key decrypts secrets during every build and on boot.
 
 ```sh
 mkdir -p ~/.config/sops/age
-ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
+age-keygen -o ~/.config/sops/age/keys.txt
+chmod 600 ~/.config/sops/age/keys.txt
 ```
 
 Get your age **public** key — you will need it in the next step:
@@ -151,6 +153,8 @@ Get your age **public** key — you will need it in the next step:
 age-keygen -y ~/.config/sops/age/keys.txt
 # outputs something like: age1abc123...
 ```
+
+> **Keep `~/.config/sops/age/keys.txt` safe.** This file is not managed by Nix — back it up somewhere secure (1Password, etc). Losing it means losing the ability to decrypt your secrets.
 
 #### 7. Set the hostname
 
@@ -182,7 +186,6 @@ sudo scutil --set LocalHostName <your-machine>
 { config, username, pkgs, lib, ... }:
 {
   sops = {
-    age.sshKeyPaths = [ "/Users/${username}/.ssh/id_ed25519" ];
     age.keyFile = "/Users/${username}/.config/sops/age/keys.txt";
     defaultSopsFile = ../../../secrets/${config.networking.hostName}/secrets.enc.yaml;
 
@@ -194,6 +197,8 @@ sudo scutil --set LocalHostName <your-machine>
   };
 }
 ```
+
+> Do not add `age.sshKeyPaths` here. Using the SSH key as the sops decryption key creates a circular dependency — sops needs the SSH key to decrypt secrets, but the SSH key is itself a secret. The `age.keyFile` alone is sufficient and avoids this.
 
 **Create the home-manager profile** at `home-manager/profiles/<your-machine>.nix`:
 
@@ -282,12 +287,15 @@ nix develop
 
 #### 6. Restore your age key
 
-sops needs the age private key to decrypt secrets during the build. Regenerate it from your SSH key:
+sops needs the age private key at `~/.config/sops/age/keys.txt` to decrypt secrets during the build. Restore it from your backup (1Password, etc).
 
 ```sh
 mkdir -p ~/.config/sops/age
-ssh-to-age -private-key -i ~/.ssh/id_ed25519 > ~/.config/sops/age/keys.txt
+# paste or copy your backed-up keys.txt content here
+chmod 600 ~/.config/sops/age/keys.txt
 ```
+
+If you have lost this key entirely, follow the [SSH and sops recovery](#ssh-and-sops-recovery) section instead.
 
 #### 7. Verify hostname
 
@@ -442,6 +450,81 @@ sops updatekeys secrets/shared/secrets.enc.yaml --yes
 ```sh
 rm /tmp/new_ssh_key /tmp/new_ssh_key.pub
 ```
+
+---
+
+## SSH and sops recovery
+
+Use this if sops fails to activate on boot (secrets not decrypted, `~/.ssh/id_ed25519` missing or broken).
+
+### What causes this
+
+sops-nix decrypts secrets on every boot using `~/.config/sops/age/keys.txt`. If that file is missing or incorrect, decryption fails, no secrets are placed, and your SSH key disappears. This can leave you unable to push to GitHub.
+
+> Do not configure `age.sshKeyPaths` pointing at your SSH key in the sops config. This creates a circular dependency — sops needs the SSH key to decrypt, but the SSH key is the secret it needs to decrypt. Always use `age.keyFile` only.
+
+### If `~/.config/sops/age/keys.txt` is intact
+
+The age key file exists but sops still failed. Try re-running activation manually:
+
+```sh
+# Verify the key file decrypts your secrets
+SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt sops --decrypt secrets/<your-machine>/secrets.enc.yaml
+
+# If that works, rebuild to re-activate
+darwin-rebuild switch --flake ".#$(scutil --get LocalHostName)"
+```
+
+### If `~/.config/sops/age/keys.txt` is lost — restore from backup
+
+```sh
+mkdir -p ~/.config/sops/age
+# restore keys.txt from 1Password or wherever you backed it up
+chmod 600 ~/.config/sops/age/keys.txt
+darwin-rebuild switch --flake ".#$(scutil --get LocalHostName)"
+```
+
+### If both the age key and SSH key are lost — full reset
+
+You cannot decrypt the old secrets. Generate everything from scratch:
+
+**1. Generate a new age key:**
+```sh
+mkdir -p ~/.config/sops/age
+age-keygen -o ~/.config/sops/age/keys.txt
+chmod 600 ~/.config/sops/age/keys.txt
+age-keygen -y ~/.config/sops/age/keys.txt   # note the public key
+```
+
+**2. Generate a new SSH key:**
+```sh
+ssh-keygen -t ed25519 -C "your@email.com" -f /tmp/new_ssh_key -N ""
+```
+
+**3. Update `.sops.yaml`** with the new age public key from step 1.
+
+**4. Re-encrypt secrets** (the old file is unreadable — create a new one):
+```sh
+export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+nix develop  # get sops in PATH
+sops secrets/<your-machine>/secrets.enc.yaml
+```
+Paste the contents of `/tmp/new_ssh_key` as the `ssh_key` value. Add any other tokens.
+
+**5. Place the SSH key temporarily** so the build can complete:
+```sh
+cp /tmp/new_ssh_key ~/.ssh/id_ed25519
+chmod 600 ~/.ssh/id_ed25519
+```
+
+**6. Rebuild:**
+```sh
+darwin-rebuild switch --flake ".#$(scutil --get LocalHostName)"
+```
+
+**7. Add the new SSH public key to GitHub**, then remove the old one.
+
+**8. Back up `~/.config/sops/age/keys.txt`** somewhere secure so this doesn't happen again.
 
 ---
 

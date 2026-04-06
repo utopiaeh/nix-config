@@ -1,0 +1,185 @@
+{
+  "actions" : [
+    {
+      "direction" : "Center",
+      "keybind" : [
+        8,
+        58,
+        59
+      ]
+    },
+    {
+      "anchor" : 8,
+      "direction" : "Custom",
+      "height" : 50,
+      "keybind" : [
+        51,
+        58,
+        59
+      ],
+      "name" : "Reasonable Size",
+      "positionMode" : 0,
+      "sizeMode" : 0,
+      "unit" : 1,
+      "width" : 50
+    },
+    {
+      "cycle" : [
+        {
+          "direction" : "BottomHalf",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "BottomThird",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "BottomTwoThirds",
+          "keybind" : [
+
+          ]
+        }
+      ],
+      "direction" : "Cycle",
+      "keybind" : [
+        58,
+        59,
+        125
+      ],
+      "name" : "Bottom Cycle"
+    },
+    {
+      "cycle" : [
+        {
+          "direction" : "LeftHalf",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "LeftThird",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "LeftThreeFourths",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "LeftTwoThirds",
+          "keybind" : [
+
+          ]
+        }
+      ],
+      "direction" : "Cycle",
+      "keybind" : [
+        58,
+        59,
+        123
+      ],
+      "name" : "Left Cycle"
+    },
+    {
+      "cycle" : [
+        {
+          "direction" : "RightHalf",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "RightThird",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "RightThreeFourths",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "RightTwoThirds",
+          "keybind" : [
+
+          ]
+        }
+      ],
+      "direction" : "Cycle",
+      "keybind" : [
+        58,
+        59,
+        124
+      ],
+      "name" : "Right Cycle"
+    },
+    {
+      "cycle" : [
+        {
+          "direction" : "TopHalf",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "TopThird",
+          "keybind" : [
+
+          ]
+        },
+        {
+          "direction" : "TopTwoThirds",
+          "keybind" : [
+
+          ]
+        }
+      ],
+      "direction" : "Cycle",
+      "keybind" : [
+        58,
+        59,
+        126
+      ],
+      "name" : "Top Cycle"
+    },
+    {
+      "direction" : "Maximize",
+      "keybind" : [
+        36,
+        58,
+        59
+      ]
+    },
+    {
+      "direction" : "NextScreen",
+      "keybind" : [
+        56,
+        58,
+        59,
+        124
+      ]
+    },
+    {
+      "direction" : "PreviousScreen",
+      "keybind" : [
+        56,
+        58,
+        59,
+        123
+      ]
+    }
+  ],
+  "triggerKey" : [
+    63
+  ],
+  "version" : "1.4.2"
+}

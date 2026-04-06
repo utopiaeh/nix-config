@@ -129,6 +129,9 @@ in
 
       "sw33tlie/homebrew-macshot/macshot"
 
+      # Windows Manager
+      "loop"
+
     ];
 
     masApps = {

@@ -32,7 +32,5 @@
     just
     just-lsp
 
-    # Windows Manager
-    loop
   ];
 }
