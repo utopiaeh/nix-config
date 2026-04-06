@@ -31,5 +31,8 @@
     # Task runner
     just
     just-lsp
+
+    # Windows Manager
+    loop
   ];
 }
