@@ -97,6 +97,30 @@
           echo "Cleaning system generations (requires sudo)..."
           sudo nix-collect-garbage --delete-older-than 14d
         '';
+        edit-secrets = mkApp "edit-secrets" ''
+          MACHINE="''${1:-}"
+          if [ -z "$MACHINE" ]; then
+            echo "Usage: nix run .#edit-secrets -- <machine>"
+            echo "Available: $(ls secrets/ | grep -v secrets_example | tr '\n' ' ')"
+            exit 1
+          fi
+
+          FLAKE=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+          SECRETS_FILE="$FLAKE/secrets/$MACHINE/secrets.enc.yaml"
+
+          if [ ! -f "$SECRETS_FILE" ]; then
+            echo "Error: $SECRETS_FILE not found"
+            exit 1
+          fi
+
+          TMP=$(mktemp /tmp/secrets-XXXXXX.yaml)
+          trap 'rm -f "$TMP"' EXIT
+
+          ${pkgs.sops}/bin/sops --decrypt "$SECRETS_FILE" > "$TMP"
+          ''${EDITOR:-nano} "$TMP"
+          ${pkgs.sops}/bin/sops --encrypt "$TMP" > "$SECRETS_FILE"
+          echo "Secrets updated for $MACHINE"
+        '';
       };
 
       # Bootstrap env for fresh machines: nix develop
