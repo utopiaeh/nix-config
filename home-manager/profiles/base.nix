@@ -114,12 +114,14 @@ in
       syntaxHighlighting.enable = true;
 
       shellAliases = {
+        dev = "cd ~/Developer";
+
         cl = "clear";
         lg = "lazygit";
         tscl = "npx tsc";
-        dev = "cd ~/Developer";
-        fix-sound = "sudo killall coreaudiod";
-        cleanshot-activate = "touch ~/.config/cleanshot-activated && echo 'Marker created. Run rebuild to apply blocking.'";
+
+        fix-sound = "sudo launchctl kickstart -k system/com.apple.audio.coreaudiod";
+
         tpl-node = "nix flake init -t 'github:utopiaeh/nix-config#node'";
         tpl-esp32 = "nix flake init -t 'github:utopiaeh/nix-config#esp32-rust'";
       };

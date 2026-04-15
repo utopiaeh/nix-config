@@ -106,7 +106,6 @@ in
       # Utils
       "logi-options+"
       "middleclick"
-      # "hiddenbar"
       "thaw"
       "alt-tab"
       "transmission"
