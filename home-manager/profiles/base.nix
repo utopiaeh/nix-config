@@ -120,7 +120,7 @@ in
         lg = "lazygit";
         tscl = "npx tsc";
 
-        fix-sound = "sudo launchctl kickstart -k system/com.apple.audio.coreaudiod";
+        fix-sound = "sudo killall coreaudiod";
 
         tpl-node = "nix flake init -t 'github:utopiaeh/nix-config#node'";
         tpl-esp32 = "nix flake init -t 'github:utopiaeh/nix-config#esp32-rust'";
