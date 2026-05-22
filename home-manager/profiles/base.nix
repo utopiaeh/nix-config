@@ -42,21 +42,18 @@ in
       enable = true;
       enableDefaultConfig = false;
 
-      extraConfig = ''
-        StrictHostKeyChecking no
-      '';
-
-      matchBlocks = {
+      settings = {
         "github.com" = {
-          hostname = "ssh.github.com";
-          identityFile = "~/.ssh/id_ed25519";
-          identitiesOnly = true;
+          HostName = "ssh.github.com";
+          IdentityFile = "~/.ssh/id_ed25519";
+          IdentitiesOnly = true;
         };
 
         "*" = {
-          user = "${username}";
-          addKeysToAgent = "yes";
-          extraOptions.UseKeychain = "yes";
+          User = "${username}";
+          AddKeysToAgent = "yes";
+          UseKeychain = "yes";
+          StrictHostKeyChecking = "no";
         };
       };
     };
