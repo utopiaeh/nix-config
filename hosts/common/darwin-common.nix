@@ -92,14 +92,14 @@ in
     ];
 
     casks = [
-      "raycast"
+      # "raycast"
 
       "telegram"
 
       "google-chrome"
       "zen"
 
-      "iina"
+      # "iina"
       "spotify"
       "notion"
 
