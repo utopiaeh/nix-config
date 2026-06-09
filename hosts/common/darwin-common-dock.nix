@@ -3,8 +3,8 @@
     persistent-apps = [
       "/Applications/Zen.app"
 
-      "/Applications/IntelliJ IDEA.app"
       "/Applications/Zed.app"
+      "/Applications/IntelliJ IDEA.app"
 
       "/Applications/Telegram.app"
       "/Applications/Discord.app"
