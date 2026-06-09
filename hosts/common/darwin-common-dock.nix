@@ -4,7 +4,6 @@
       "/Applications/Zen.app"
 
       "/Applications/Zed.app"
-      "/Applications/IntelliJ IDEA.app"
 
       "/Applications/Telegram.app"
       "/Applications/Discord.app"

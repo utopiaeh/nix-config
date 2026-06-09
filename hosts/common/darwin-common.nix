@@ -6,9 +6,6 @@
   ...
 }:
 let
-  setupIntelliJIdeaScript = ./../../assets/idea/install.sh;
-  pathIntelliJIdeaLayout = ./../../assets/idea/window.layouts.xml;
-
   profileSource = ./../../home-manager/programs/flashspace/profiles.yaml;
   settingSource = ./../../home-manager/programs/flashspace/settings.yaml;
   targetPathFlashspace = "/Users/${username}/.config/flashspace";
@@ -22,12 +19,6 @@ in
     ./darwin/settings/disableHotkeys
     #./darwin/cleanshot.nix
   ];
-
-  # sops.secrets."cleanshot_license" = {
-  #   sopsFile = ../../secrets/shared/secrets.enc.yaml;
-  #   owner = username;
-  #   mode = "0400";
-  # };
 
   system.stateVersion = 5;
   # Set primary user for system-wide activation
@@ -115,7 +106,6 @@ in
       "chatgpt"
 
       "zed"
-      "intellij-idea"
       "sublime-text"
       "visual-studio-code"
       "postman"
@@ -146,9 +136,6 @@ in
   system.activationScripts.postActivation.text = ''
     echo "❯❯❯❯ · Removing quarantine attribute from /Applications..."
     sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
-
-    echo "❯❯❯❯ · Installing IntelliJ IDEA layout..."
-    ${setupIntelliJIdeaScript} ${username} ${pathIntelliJIdeaLayout}
 
     echo "❯❯❯❯ · Installing FlashSpace profile and settings..."
     mkdir -p "${targetPathFlashspace}"

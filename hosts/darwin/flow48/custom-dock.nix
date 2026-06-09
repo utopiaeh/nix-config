@@ -2,7 +2,6 @@
   system.defaults.dock = {
     persistent-apps = [
       "/Applications/Zen.app"
-      "/Applications/IntelliJ IDEA.app"
       "/Applications/Zed.app"
 
       "/Applications/Telegram.app"
