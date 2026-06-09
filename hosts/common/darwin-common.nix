@@ -97,7 +97,7 @@ in
       # Utils
       "logi-options+"
       "middleclick"
-      "thaw"
+      "hiddenbar"
       "alt-tab"
       "transmission"
       "pearcleaner"
