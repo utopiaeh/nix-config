@@ -98,7 +98,7 @@ in
       "logi-options+"
       "middleclick"
       "hiddenbar"
-      "alt-tab"
+      # "alt-tab"
       "transmission"
       "pearcleaner"
       "betterdisplay"
