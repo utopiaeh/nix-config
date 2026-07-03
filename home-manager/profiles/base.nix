@@ -6,7 +6,6 @@
 }:
 
 let
-  cleanshotPackage = import ../programs/cleanshot { inherit pkgs; };
   wallpaper = ../../assets/wallpapers/enchanted_forest_giant_by_billy_christian.jpg;
 in
 
