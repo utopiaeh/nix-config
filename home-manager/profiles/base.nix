@@ -163,12 +163,6 @@ in
     };
   };
 
-  home.activation.linkCleanshotToApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ -d "${cleanshotPackage}/Applications/CleanShot X.app" ] && [ ! -e "/Applications/CleanShot X.app" ]; then
-      ln -s "${cleanshotPackage}/Applications/CleanShot X.app" "/Applications/"
-    fi
-  '';
-
   home.activation.createDeveloperDirectory = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if [ ! -d "/Users/${username}/Developer" ]; then
       mkdir -p "/Users/${username}/Developer"
