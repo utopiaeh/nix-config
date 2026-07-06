@@ -9,7 +9,7 @@ jobs:
   flake-check:
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - run: nix flake check --no-build
 
@@ -19,6 +19,6 @@ jobs:
       matrix:
         host: [mac-pro, flow48]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - run: nix build ".#darwinConfigurations.${{ matrix.host }}.system" --no-link

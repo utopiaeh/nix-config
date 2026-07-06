@@ -32,7 +32,7 @@ in
       modules = [
         sops-nix.darwinModules.sops
         ../hosts/common/common-packages.nix
-        ../hosts/common/darwin-common.nix
+        ../hosts/common/darwin
         customConf
         {
           nixpkgs.overlays = [

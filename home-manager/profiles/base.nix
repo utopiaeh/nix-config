@@ -15,11 +15,11 @@ in
   imports = [
     ../modules/iterm2
     ../programs/iterm2
-    ../programs/git
+    ../programs/git.nix
     ../programs/flashspace
-    ../programs/rust
-    ../programs/nix
-    ../programs/node
+    ../programs/rust.nix
+    ../programs/nix.nix
+    ../programs/node.nix
   ];
 
   home.packages = with pkgs; [

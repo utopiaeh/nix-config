@@ -9,7 +9,7 @@ jobs:
   update:
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - run: nix flake update
       - uses: peter-evans/create-pull-request@v6

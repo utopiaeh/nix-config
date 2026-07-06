@@ -6,19 +6,18 @@
   ...
 }:
 let
-  profileSource = ./../../home-manager/programs/flashspace/profiles.yaml;
-  settingSource = ./../../home-manager/programs/flashspace/settings.yaml;
+  profileSource = ./../../../home-manager/programs/flashspace/profiles.yaml;
+  settingSource = ./../../../home-manager/programs/flashspace/settings.yaml;
   targetPathFlashspace = "/Users/${username}/.config/flashspace";
 
 in
 {
 
   imports = [
-    ./darwin/settings/system
-    ./darwin/settings/userPreferences
-    ./darwin/settings/disableHotkeys
-    ./darwin/homebrew.nix
-    #./darwin/cleanshot.nix
+    ./settings/system.nix
+    ./settings/userPreferences.nix
+    ./settings/disableHotkeys.nix
+    ./homebrew.nix
   ];
 
   system.stateVersion = 5;
