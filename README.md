@@ -8,6 +8,7 @@ Everything — shell, tools, editor, fonts, apps, system settings — is managed
 
 ## Contents
 
+- [Quickstart (new Mac)](#quickstart-new-mac)
 - [How it works](#how-it-works)
 - [Project structure](#project-structure)
 - [Setup](#setup)
@@ -18,6 +19,49 @@ Everything — shell, tools, editor, fonts, apps, system settings — is managed
 - [Secrets](#secrets)
   - [Rotating your SSH key](#rotating-your-ssh-key)
   - [Recovery](#recovery)
+
+---
+
+## Quickstart (new Mac)
+
+For a Mac already registered in this repo (your hostname already exists in `flake.nix`). You'll need your **age key** from your password manager backup (see [Secrets](#secrets)) — it's a small text file.
+
+**1. Install Xcode tools and Nix:**
+```sh
+xcode-select --install
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+Open a new terminal window after this finishes.
+
+**2. Restore your age key** (from the Passwords app, 1Password, etc.):
+```sh
+mkdir -p ~/.config/sops/age
+nano ~/.config/sops/age/keys.txt   # paste the key, save (Ctrl+O, Enter, Ctrl+X)
+chmod 600 ~/.config/sops/age/keys.txt
+```
+
+**3. Clone this repo:**
+```sh
+git clone https://github.com/utopiaeh/nix-config.git ~/nix-config
+cd ~/nix-config
+```
+
+**4. Build your Mac:**
+```sh
+nix --extra-experimental-features 'nix-command flakes' build ".#darwinConfigurations.$(scutil --get LocalHostName).system"
+./result/sw/bin/darwin-rebuild switch --flake ".#$(scutil --get LocalHostName)"
+```
+This takes a while the first time — it's installing everything.
+
+**5. Add your SSH key to GitHub:**
+```sh
+cat ~/.ssh/id_ed25519.pub
+```
+Copy the output, then go to github.com → Settings → SSH and GPG keys → New SSH key, and paste it.
+
+Done. From now on, run `nix run .#rebuild` any time you want to pull in updates.
+
+Something went wrong? See [Existing machine](#existing-machine) below for the detailed version, or [Recovery](#recovery) if secrets aren't working.
 
 ---
 
@@ -50,7 +94,7 @@ nix-config/
 ├── .github/workflows/                # CI — flake check, build, weekly input updates
 ├── hosts/
 │   ├── common/
-│   │   ├── darwin-common.nix        # Shared macOS settings, fonts, activation
+│   │   ├── darwin/default.nix       # Shared macOS settings, fonts, activation
 │   │   ├── darwin/homebrew.nix      # Homebrew casks, taps, Mac App Store apps
 │   │   └── common-packages.nix      # System-wide CLI tools
 │   └── darwin/
