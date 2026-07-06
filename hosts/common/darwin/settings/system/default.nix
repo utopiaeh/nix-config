@@ -23,10 +23,44 @@
       NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
       LaunchServices.LSQuarantine = false; # disables "Are you sure?" for new apps
       loginwindow.GuestEnabled = false;
-      finder.FXPreferredViewStyle = "Nlsv";
 
       universalaccess = {
         reduceMotion = false; # Reduce motion for accessibility
+      };
+
+      dock = {
+        autohide = true;
+        launchanim = false;
+        static-only = false;
+        show-recents = false;
+        show-process-indicators = true;
+        orientation = "bottom";
+        tilesize = 46;
+        minimize-to-application = true;
+        mineffect = "scale";
+      };
+
+      finder = {
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowHardDrivesOnDesktop = false;
+        ShowMountedServersOnDesktop = false;
+        ShowRemovableMediaOnDesktop = true;
+        _FXSortFoldersFirst = true;
+        # When performing a search, search the current folder by default
+        FXDefaultSearchScope = "SCcf";
+        NewWindowTarget = "Desktop";
+        AppleShowAllExtensions = true;
+        FXEnableExtensionChangeWarning = false;
+        ShowStatusBar = true;
+        ShowPathbar = true;
+        FXPreferredViewStyle = "Nlsv";
+      };
+
+      ActivityMonitor = {
+        OpenMainWindow = true;
+        IconType = 5;
+        SortColumn = "CPUUsage";
+        SortDirection = 0;
       };
     };
   };

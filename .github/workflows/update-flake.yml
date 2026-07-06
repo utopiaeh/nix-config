@@ -1,0 +1,20 @@
+name: update-flake
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # weekly, Monday 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - run: nix flake update
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          title: "chore: update flake inputs"
+          commit-message: "chore: update flake inputs"
+          branch: update-flake-inputs
+          delete-branch: true

@@ -121,6 +121,28 @@
           ${pkgs.sops}/bin/sops --encrypt "$TMP" > "$SECRETS_FILE"
           echo "Secrets updated for $MACHINE"
         '';
+        check-secrets = mkApp "check-secrets" ''
+          MACHINE="''${1:-$(scutil --get LocalHostName)}"
+          SECRETS_FILE="secrets/$MACHINE/secrets.enc.yaml"
+          AGE_KEY="$HOME/.config/sops/age/keys.txt"
+
+          if [ ! -f "$SECRETS_FILE" ]; then
+            echo "No secrets configured for $MACHINE ($SECRETS_FILE not found) — skipping."
+            exit 0
+          fi
+
+          if [ ! -f "$AGE_KEY" ]; then
+            echo "Error: age key not found at $AGE_KEY"
+            exit 1
+          fi
+
+          if ${pkgs.sops}/bin/sops --decrypt "$SECRETS_FILE" > /dev/null; then
+            echo "OK: $SECRETS_FILE decrypts cleanly with $AGE_KEY"
+          else
+            echo "Error: failed to decrypt $SECRETS_FILE"
+            exit 1
+          fi
+        '';
       };
 
       # Bootstrap env for fresh machines: nix develop

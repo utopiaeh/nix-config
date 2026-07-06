@@ -1,20 +1,8 @@
 {
   system.defaults.CustomUserPreferences = {
     "com.apple.finder" = {
-      ShowExternalHardDrivesOnDesktop = true;
-      ShowHardDrivesOnDesktop = false;
-      ShowMountedServersOnDesktop = false;
-      ShowRemovableMediaOnDesktop = true;
-      _FXSortFoldersFirst = true;
-      # When performing a search, search the current folder by default
-      FXDefaultSearchScope = "SCcf";
+      # No typed nix-darwin equivalent for these two
       DisableAllAnimations = true;
-      NewWindowTarget = "PfDe";
-      NewWindowTargetPath = "file://$\{HOME\}/Desktop/";
-      AppleShowAllExtensions = true;
-      FXEnableExtensionChangeWarning = false;
-      ShowStatusBar = true;
-      ShowPathbar = true;
       WarnOnEmptyTrash = false;
     };
     "com.apple.desktopservices" = {
@@ -23,22 +11,8 @@
       DSDontWriteUSBStores = true;
     };
     "com.apple.dock" = {
-      autohide = true;
-      launchanim = false;
-      static-only = false;
-      show-recents = false;
-      show-process-indicators = true;
-      orientation = "bottom";
-      tilesize = 46;
-      minimize-to-application = true;
-      mineffect = "scale";
+      # No typed nix-darwin equivalent for this key
       enable-window-tool = false;
-    };
-    "com.apple.ActivityMonitor" = {
-      OpenMainWindow = true;
-      IconType = 5;
-      SortColumn = "CPUUsage";
-      SortDirection = 0;
     };
     "com.apple.Safari" = {
       # Privacy: don’t send search queries to Apple

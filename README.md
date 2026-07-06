@@ -14,6 +14,7 @@ Everything — shell, tools, editor, fonts, apps, system settings — is managed
   - [New machine](#new-machine)
   - [Existing machine](#existing-machine)
 - [Day-to-day](#day-to-day)
+- [CI](#ci)
 - [Secrets](#secrets)
   - [Rotating your SSH key](#rotating-your-ssh-key)
   - [Recovery](#recovery)
@@ -46,9 +47,11 @@ nix-config/
 ├── flake.nix                        # Entry point — defines all machines
 ├── flake.lock                       # Pinned dependency versions
 ├── .sops.yaml                       # Which age keys can decrypt which secrets
+├── .github/workflows/                # CI — flake check, build, weekly input updates
 ├── hosts/
 │   ├── common/
-│   │   ├── darwin-common.nix        # Shared macOS settings, Homebrew, fonts
+│   │   ├── darwin-common.nix        # Shared macOS settings, fonts, activation
+│   │   ├── darwin/homebrew.nix      # Homebrew casks, taps, Mac App Store apps
 │   │   └── common-packages.nix      # System-wide CLI tools
 │   └── darwin/
 │       └── <machine>/               # Machine-specific config
@@ -57,7 +60,7 @@ nix-config/
 │   │   ├── base.nix                 # Shell, git, SSH, aliases, env vars
 │   │   └── <machine>.nix            # Machine-specific home config
 │   └── programs/                    # rust, node, git, nix LSP, iterm2...
-├── assets/                          # starship, raycast, wallpapers...
+├── assets/                          # starship theme, wallpapers...
 ├── secrets/
 │   ├── <machine>/secrets.enc.yaml   # Encrypted machine secrets
 │   └── secrets_example.yaml         # Template
@@ -276,6 +279,7 @@ nix flake update rust-overlay && nix run .#rebuild   # update one input
 nix run .#rollback                                   # roll back to previous generation
 nix run .#cleanup                                    # garbage collect (older than 14 days)
 nix run .#edit-secrets -- <machine>                  # edit encrypted secrets
+nix run .#check-secrets -- <machine>                 # verify secrets decrypt cleanly
 darwin-rebuild --list-generations                    # list all generations
 ```
 
@@ -284,9 +288,10 @@ darwin-rebuild --list-generations                    # list all generations
 | Command | What it does |
 |---|---|
 | `fix-sound` | Restarts the macOS audio daemon |
-| `idea [path]` | Opens a project in IntelliJ IDEA |
 | `dev` | `cd ~/Developer` |
+| `cl` | Clear terminal |
 | `lg` | Opens lazygit |
+| `tscl` | Runs `npx tsc` |
 | `, <package>` | Runs a Nix package without installing it |
 | `tpl-node` | Initializes a Node.js project from template |
 | `tpl-esp32` | Initializes an ESP32-S3 Rust project from template |
@@ -297,7 +302,7 @@ The `,` command is especially useful — e.g. `, ffmpeg -i video.mp4 output.gif`
 
 | What | Where |
 |---|---|
-| New GUI app | `homebrew.casks` in `darwin-common.nix` |
+| New GUI app | `homebrew.casks` in `hosts/common/darwin/homebrew.nix` |
 | New CLI tool (system-wide) | `environment.systemPackages` in `common-packages.nix` |
 | New CLI tool (personal) | `home.packages` in `base.nix` |
 | Shell alias | `programs.zsh.shellAliases` in `base.nix` |
@@ -307,10 +312,9 @@ The `,` command is especially useful — e.g. `, ffmpeg -i video.mp4 output.gif`
 ### Post-build manual steps
 
 - **iTerm2** — if theme or font looks wrong, quit and reopen
-- **Raycast** — import settings manually from `assets/raycast/`
 - **FlashSpace** — config applied automatically from `home-manager/programs/flashspace/`
 - **MiddleClick** — enable in Accessibility settings
-- **AltTab / BetterDisplay** — grant Screen Recording permission
+- **BetterDisplay** — grant Screen Recording permission
 
 ### Project templates
 
@@ -320,6 +324,17 @@ tpl-node        # Node.js (pnpm, typescript)
 tpl-esp32       # ESP32-S3 Rust project
 direnv allow    # load dev environment
 ```
+
+---
+
+## CI
+
+GitHub Actions (`.github/workflows/`) runs on every push/PR:
+
+- `check.yml` — `nix flake check` plus a full build of both `mac-pro` and `flow48` system derivations. Secrets aren't needed for this — sops-nix only decrypts at activation (`darwin-rebuild switch`), not at build time.
+- `update-flake.yml` — weekly (Mondays), opens a PR bumping all flake inputs. Review and merge manually; nothing auto-merges.
+
+Garbage collection is manual, not automatic (`nix.gc.automatic = false`) — run `nix run .#cleanup` when you want to reclaim space.
 
 ---
 

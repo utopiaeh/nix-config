@@ -17,6 +17,7 @@ in
     ./darwin/settings/system
     ./darwin/settings/userPreferences
     ./darwin/settings/disableHotkeys
+    ./darwin/homebrew.nix
     #./darwin/cleanshot.nix
   ];
 
@@ -38,7 +39,8 @@ in
       warn-dirty = false;
     };
     channel.enable = false;
-
+    # GC is manual via `nix run .#cleanup`, not automatic on every rebuild.
+    gc.automatic = false;
   };
 
   nixpkgs = {
@@ -57,66 +59,6 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.meslo-lg
   ];
-
-  homebrew = {
-    enable = true;
-
-    global = {
-      autoUpdate = false;
-    };
-
-    onActivation = {
-      cleanup = "zap";
-      autoUpdate = false;
-      upgrade = true;
-    };
-
-    taps = [
-      "sw33tlie/homebrew-macshot"
-    ];
-
-    casks = [
-      "telegram"
-
-      "google-chrome"
-      "zen"
-
-      "spotify"
-      "notion"
-
-      # Utils
-      "logi-options+"
-      "middleclick"
-      "hiddenbar"
-      "transmission"
-      "pearcleaner"
-      "betterdisplay"
-      "discord"
-
-      "chatgpt"
-
-      "zed"
-      "sublime-text"
-      "visual-studio-code"
-      "postman"
-
-      "figma"
-
-      "flashspace" # FlashSpace is a tool for managing and sharing window layouts on macOS
-
-      "docker-desktop"
-
-      "sw33tlie/homebrew-macshot/macshot"
-
-      # Windows Manager
-      "loop"
-
-    ];
-
-    masApps = {
-      "Amphetamine" = 937984704;
-    };
-  };
 
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;

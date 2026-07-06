@@ -1,6 +1,13 @@
 { inputs, ... }:
 let
-  inherit (inputs) nix-darwin home-manager nix-homebrew rust-overlay claude-code sops-nix;
+  inherit (inputs)
+    nix-darwin
+    home-manager
+    nix-homebrew
+    rust-overlay
+    claude-code
+    sops-nix
+    ;
 in
 {
   mkDarwin =
@@ -31,7 +38,8 @@ in
           nixpkgs.overlays = [
             rust-overlay.overlays.default
             claude-code.overlays.default
-          ] ++ localOverlays;
+          ]
+          ++ localOverlays;
         }
         home-manager.darwinModules.home-manager
         {
@@ -61,6 +69,13 @@ in
             };
           };
         }
+        # Keep homebrew.taps in sync with nix-homebrew.taps (avoids config drift)
+        (
+          { config, ... }:
+          {
+            homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
+          }
+        )
       ];
     };
 }
