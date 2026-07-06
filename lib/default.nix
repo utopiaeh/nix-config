@@ -10,12 +10,7 @@ in
       system ? "aarch64-darwin",
     }:
     let
-      customConfPath = ./../hosts/darwin/${hostname};
-      customConf =
-        if builtins.pathExists customConfPath then
-          customConfPath + "/default.nix"
-        else
-          ./../hosts/common/darwin-common-dock.nix;
+      customConf = ./../hosts/darwin/${hostname}/default.nix;
       overlayDir = ../overlays;
       localOverlays =
         let

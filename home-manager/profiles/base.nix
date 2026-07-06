@@ -140,11 +140,6 @@ in
           bat --paging=always "$@"
         }
 
-        # # Open project in IntelliJ IDEA
-        # idea() {
-        #   open -a "IntelliJ IDEA" "$@" >/dev/null 2>&1
-        # }
-
         # Run packages without installing via nix
         , () {
           nix run nixpkgs#comma -- "$@"

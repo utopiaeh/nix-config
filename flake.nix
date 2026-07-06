@@ -132,7 +132,7 @@
           ssh-to-age
         ];
         shellHook = ''
-          echo "❯❯❯❯ · Bootstrap shell ready — run: nix run .#build-switch"
+          echo "❯❯❯❯ · Bootstrap shell ready — run: nix run .#rebuild"
         '';
       };
 

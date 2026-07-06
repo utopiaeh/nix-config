@@ -1,9 +1,6 @@
 { ... }:
 {
-  homebrew = {
-    casks = [
-      "discord"
-      "qflipper"
-    ];
-  };
+  homebrew.casks = [
+    "qflipper"
+  ];
 }

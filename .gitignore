@@ -4,3 +4,4 @@ result
 secrets/**/*.yaml
 !secrets/**/*.enc.yaml
 .claude
+.DS_Store

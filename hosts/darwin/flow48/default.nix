@@ -24,6 +24,5 @@
   homebrew.casks = [
     "slack"
     "tunnelblick"
-    "discord"
   ];
 }
