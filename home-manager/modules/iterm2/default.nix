@@ -519,20 +519,24 @@ in
     home.activation = mkMerge [
       (mkIf cfg.copyApplications {
         copyITerm2ToApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-                    if [ -d "$HOME/Applications/iTerm2.app" ]; then
-                      echo "❯❯❯❯ · Removing existing iTerm2.app..."
-                      chmod -R +w "$HOME/Applications/iTerm2.app" || true
-                      $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app" || {
-                        echo "❯❯❯❯ ✗ Failed to remove existing iTerm2.app, trying alternative method..."
-                        $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type f -exec chmod 644 {} \; || true
-                        $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type d -exec chmod 755 {} \; || true
-                        $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app"
-                      }
-                    fi
+                    if [ -d "$HOME/Applications/iTerm2.app" ] && cmp -s "${cfg.package}/Applications/iTerm2.app/Contents/Info.plist" "$HOME/Applications/iTerm2.app/Contents/Info.plist" 2>/dev/null; then
+                      echo "❯❯❯❯ · iTerm2.app already up to date, skipping."
+                    else
+                      if [ -d "$HOME/Applications/iTerm2.app" ]; then
+                        echo "❯❯❯❯ · Removing existing iTerm2.app..."
+                        chmod -R +w "$HOME/Applications/iTerm2.app" || true
+                        $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app" || {
+                          echo "❯❯❯❯ ✗ Failed to remove existing iTerm2.app, trying alternative method..."
+                          $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type f -exec chmod 644 {} \; || true
+                          $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type d -exec chmod 755 {} \; || true
+                          $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app"
+                        }
+                      fi
 
-          #          echo "❯❯❯❯ ⓘ ️Copying iTerm2.app to $HOME/Applications..."
-          #          $DRY_RUN_CMD mkdir -p "$HOME/Applications"
-          #          $DRY_RUN_CMD cp -R "${cfg.package}/Applications/iTerm2.app" "$HOME/Applications/iTerm2.app"
+                      echo "❯❯❯❯ · Copying iTerm2.app to $HOME/Applications..."
+                      $DRY_RUN_CMD mkdir -p "$HOME/Applications"
+                      $DRY_RUN_CMD cp -R "${cfg.package}/Applications/iTerm2.app" "$HOME/Applications/iTerm2.app"
+                    fi
         '';
       })
 
@@ -551,17 +555,31 @@ in
             echo "❯❯❯❯ ⚠ iTerm2 is running — changes may not take effect until restart."
           fi
 
+          # Track the resolved Nix store path we last applied, not the live
+          # preferences file — iTerm2 itself rewrites DEFAULT_PREF at runtime
+          # (window state, recents), so comparing against it would never settle.
+          STATE_FILE="$HOME/.config/iTerm2/.last-applied-pref"
+          CURRENT_SRC=$(readlink -f "$MANAGED_PREF" 2>/dev/null || echo "$MANAGED_PREF")
+
           # Wait for the managed file to be written
           if [ -e "$MANAGED_PREF" ]; then
-            echo "❯❯❯❯ · Copying iTerm2 preferences to default location..."
-            $DRY_RUN_CMD cp "$MANAGED_PREF" "$DEFAULT_PREF"
-            # Ensure proper permissions
-            $DRY_RUN_CMD chmod 644 "$DEFAULT_PREF"
+            if [ -e "$STATE_FILE" ] && [ "$(cat "$STATE_FILE")" = "$CURRENT_SRC" ]; then
+              echo "❯❯❯❯ · iTerm2 preferences unchanged, skipping."
+            else
+              echo "❯❯❯❯ · Copying iTerm2 preferences to default location..."
+              $DRY_RUN_CMD cp "$MANAGED_PREF" "$DEFAULT_PREF"
+              # Ensure proper permissions
+              $DRY_RUN_CMD chmod 644 "$DEFAULT_PREF"
 
-            # Kill cfprefsd to force preference reload
-            if command -v pkill >/dev/null 2>&1; then
-              echo "❯❯❯❯ · Reloading preference cache..."
-              $DRY_RUN_CMD pkill -f cfprefsd || true
+              # Kill cfprefsd to force preference reload
+              if command -v pkill >/dev/null 2>&1; then
+                echo "❯❯❯❯ · Reloading preference cache..."
+                $DRY_RUN_CMD pkill -f cfprefsd || true
+              fi
+
+              if [ -z "$DRY_RUN_CMD" ]; then
+                echo "$CURRENT_SRC" > "$STATE_FILE"
+              fi
             fi
           else
             echo "❯❯❯❯ ⚠ Managed iTerm2 preferences file not found at $MANAGED_PREF"

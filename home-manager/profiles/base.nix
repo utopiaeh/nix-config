@@ -170,7 +170,8 @@ in
 
   home.activation.setDesktopWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       WALLPAPER_PATH=${wallpaper}
-      if [ -f "$WALLPAPER_PATH" ]; then
+      CURRENT_PATH=$(/usr/bin/osascript -e 'tell application "System Events" to picture of desktop 1' 2>/dev/null || true)
+      if [ -f "$WALLPAPER_PATH" ] && [ "$CURRENT_PATH" != "$WALLPAPER_PATH" ]; then
         /usr/bin/osascript <<EOF
         tell application "System Events"
           set picture of every desktop to POSIX file "$WALLPAPER_PATH"

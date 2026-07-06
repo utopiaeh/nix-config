@@ -64,12 +64,12 @@ in
 
   system.activationScripts.postActivation.text = ''
     echo "❯❯❯❯ · Removing quarantine attribute from /Applications..."
-    sudo find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; || true
+    find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; 2>/dev/null
 
     echo "❯❯❯❯ · Installing FlashSpace profile and settings..."
     mkdir -p "${targetPathFlashspace}"
-    cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
-    cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
+    cmp -s ${profileSource} "${targetPathFlashspace}/profiles.yaml" || cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
+    cmp -s ${settingSource} "${targetPathFlashspace}/settings.yaml" || cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
 
   '';
 
