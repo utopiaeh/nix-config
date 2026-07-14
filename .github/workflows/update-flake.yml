@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - run: nix flake update
-      - uses: peter-evans/create-pull-request@v6
+      - uses: peter-evans/create-pull-request@v7
         with:
           title: "chore: update flake inputs"
           commit-message: "chore: update flake inputs"
