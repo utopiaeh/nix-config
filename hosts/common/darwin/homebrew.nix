@@ -50,6 +50,7 @@
       # Windows Manager
       "loop"
 
+      "sanyam-g/homebrew-switch/switch"
     ];
 
     masApps = {

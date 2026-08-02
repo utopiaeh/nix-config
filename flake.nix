@@ -34,6 +34,11 @@
       flake = false;
     };
 
+    homebrew-switch = {
+      url = "github:Sanyam-G/homebrew-switch";
+      flake = false;
+    };
+
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";

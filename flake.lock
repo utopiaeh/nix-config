@@ -140,6 +140,22 @@
         "type": "github"
       }
     },
+    "homebrew-switch": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785649783,
+        "narHash": "sha256-RL3j7iBX6v4ApM5yMSdQn4V113bsld2UstVi3Q1L59o=",
+        "owner": "Sanyam-G",
+        "repo": "homebrew-switch",
+        "rev": "daa74a102f0505922b3efc2719553a39113d0953",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Sanyam-G",
+        "repo": "homebrew-switch",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -202,6 +218,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "homebrew-macshot": "homebrew-macshot",
+        "homebrew-switch": "homebrew-switch",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": [
