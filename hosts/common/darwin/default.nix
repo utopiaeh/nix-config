@@ -5,12 +5,6 @@
   pkgs,
   ...
 }:
-let
-  profileSource = ./../../../home-manager/programs/flashspace/profiles.yaml;
-  settingSource = ./../../../home-manager/programs/flashspace/settings.yaml;
-  targetPathFlashspace = "/Users/${username}/.config/flashspace";
-
-in
 {
 
   imports = [
@@ -28,19 +22,8 @@ in
 
   time.timeZone = "Europe/Chisinau";
 
-  nix = {
-    enable = false;
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      warn-dirty = false;
-    };
-    channel.enable = false;
-    # GC is manual via `nix run .#cleanup`, not automatic on every rebuild.
-    gc.automatic = false;
-  };
+  # Standalone Nix (not nix-darwin) manages /etc/nix/nix.conf; GC is manual via `nix run .#cleanup`.
+  nix.enable = false;
 
   nixpkgs = {
     config.allowUnfree = true;
@@ -65,12 +48,6 @@ in
   system.activationScripts.postActivation.text = ''
     echo "❯❯❯❯ · Removing quarantine attribute from /Applications..."
     find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; 2>/dev/null
-
-    echo "❯❯❯❯ · Installing FlashSpace profile and settings..."
-    mkdir -p "${targetPathFlashspace}"
-    cmp -s ${profileSource} "${targetPathFlashspace}/profiles.yaml" || cp ${profileSource} "${targetPathFlashspace}/profiles.yaml"
-    cmp -s ${settingSource} "${targetPathFlashspace}/settings.yaml" || cp ${settingSource} "${targetPathFlashspace}/settings.yaml"
-
   '';
 
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   programs = {
@@ -6,7 +6,7 @@
       enable = true;
       settings = {
         user = {
-          email = "utopiaeh01@gmail.com";
+          email = lib.mkDefault "utopiaeh01@gmail.com";
           name = "utopiaeh";
         };
         init = {

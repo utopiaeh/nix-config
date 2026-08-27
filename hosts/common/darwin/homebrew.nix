@@ -7,7 +7,7 @@
     };
 
     onActivation = {
-      cleanup = "zap";
+      cleanup = "check";
       autoUpdate = false;
       upgrade = true;
     };

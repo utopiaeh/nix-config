@@ -588,48 +588,7 @@ in
       })
     ];
 
-    xdg.configFile."iTerm2/com.googlecode.iterm2.plist".text =
-      let
-        # Convert a Nix value to XML plist representation
-        plistValue =
-          v:
-          if builtins.isString v then
-            "<string>${lib.strings.escape [ "<" ">" "&" ] v}</string>"
-          else if builtins.isInt v then
-            "<integer>${toString v}</integer>"
-          else if builtins.isFloat v then
-            "<real>${toString v}</real>"
-          else if builtins.isBool v then
-            if v then "<true/>" else "<false/>"
-          else if builtins.isNull v then
-            "<null/>"
-          else if builtins.isAttrs v then
-            ''
-              <dict>
-            ''
-            + lib.strings.concatStrings (
-              lib.attrsets.mapAttrsToList (
-                k: val: "  <key>${lib.strings.escape [ "<" ">" "&" ] k}</key>\n  ${plistValue val}\n"
-              ) v
-            )
-            + "</dict>"
-          else if builtins.isList v then
-            ''
-              <array>
-            ''
-            + lib.strings.concatMapStrings (item: "  ${plistValue item}\n") v
-            + "</array>"
-          else
-            throw "Unsupported type for plist conversion";
-
-        plistHeader = ''
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-        '';
-
-        plistFooter = "</plist>";
-      in
-      plistHeader + plistValue iTerm2PlistContent + plistFooter;
+    xdg.configFile."iTerm2/com.googlecode.iterm2.plist".source =
+      (pkgs.formats.plist { }).generate "com.googlecode.iterm2.plist" iTerm2PlistContent;
   };
 }

@@ -2,6 +2,7 @@
   pkgs,
   lib,
   username,
+  config,
   ...
 }:
 
@@ -158,12 +159,13 @@ in
   };
 
   home.activation.createDeveloperDirectory = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ ! -d "/Users/${username}/Developer" ]; then
-      mkdir -p "/Users/${username}/Developer"
-      chown ${username}:staff "/Users/${username}/Developer"
+    if [ ! -d "${config.home.homeDirectory}/Developer" ]; then
+      mkdir -p "${config.home.homeDirectory}/Developer"
+      chown ${username}:staff "${config.home.homeDirectory}/Developer"
     fi
   '';
 
+  # ponytail: relies on a private, undocumented Apple framework path — may break across macOS versions, no fallback if it disappears.
   home.activation.applyKeyboardShortcuts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
