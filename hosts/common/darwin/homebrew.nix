@@ -15,6 +15,8 @@
     # taps derived from nix-homebrew.taps (see lib/default.nix)
 
     casks = [
+      "raycast"
+
       "telegram"
 
       "google-chrome"
@@ -51,6 +53,7 @@
       "loop"
 
       "sanyam-g/homebrew-switch/switch"
+
     ];
 
     masApps = {
