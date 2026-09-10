@@ -19,7 +19,6 @@ in
     ../programs/git.nix
     ../programs/flashspace
     ../programs/macshot.nix
-    ../programs/loop.nix
     ../programs/switch.nix
     ../programs/rust.nix
     ../programs/nix.nix
