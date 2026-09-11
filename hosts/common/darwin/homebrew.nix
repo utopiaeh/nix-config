@@ -7,7 +7,7 @@
     };
 
     onActivation = {
-      cleanup = "uninstall"; # temporarily removing unlisted casks (loop); revert to "check" after next rebuild
+      cleanup = "uninstall"; # auto-remove casks not listed here (keeps app data/prefs)
       autoUpdate = false;
       upgrade = true;
     };
@@ -18,6 +18,7 @@
       # "raycast"
 
       "telegram"
+      "iterm2"
 
       "google-chrome"
       "zen"

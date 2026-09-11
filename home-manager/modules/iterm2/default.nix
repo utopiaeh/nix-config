@@ -480,6 +480,12 @@ in
       description = "The iTerm2 package to use.";
     };
 
+    installPackage = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to install iTerm2 via nix. Disable if it's managed by Homebrew instead.";
+    };
+
     copyApplications = mkOption {
       type = types.bool;
       default = false;
@@ -514,7 +520,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home.packages = lib.optional cfg.installPackage cfg.package;
 
     home.activation = mkMerge [
       (mkIf cfg.copyApplications {
