@@ -32,7 +32,7 @@
       "hiddenbar"
       "transmission"
       "pearcleaner"
-      "betterdisplay"
+      "crisp"
       "discord"
 
       "chatgpt"
