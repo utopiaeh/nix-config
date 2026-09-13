@@ -4,6 +4,7 @@
 {
   programs.iterm2 = {
     enable = true;
+    installPackage = false; # iTerm2.app installed via Homebrew cask instead
     copyApplications = false;
 
     settings.appearance.theme = "minimal";

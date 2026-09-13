@@ -7,7 +7,7 @@
     };
 
     onActivation = {
-      cleanup = "check";
+      cleanup = "uninstall"; # auto-remove casks not listed here (keeps app data/prefs)
       autoUpdate = false;
       upgrade = true;
     };
@@ -15,9 +15,10 @@
     # taps derived from nix-homebrew.taps (see lib/default.nix)
 
     casks = [
-      "raycast"
+      # "raycast"
 
       "telegram"
+      "iterm2"
 
       "google-chrome"
       "zen"
@@ -49,11 +50,8 @@
 
       "sw33tlie/homebrew-macshot/macshot"
 
-      # Windows Manager
-      "loop"
-
       "sanyam-g/homebrew-switch/switch"
-
+      "abue-ammar/homebrew-tinycast/tinycast"
     ];
 
     masApps = {
