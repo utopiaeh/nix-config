@@ -44,6 +44,11 @@
       flake = false;
     };
 
+    homebrew-artginzburg-tap = {
+      url = "github:artginzburg/homebrew-tap";
+      flake = false;
+    };
+
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";

@@ -58,6 +58,22 @@
         "type": "github"
       }
     },
+    "homebrew-artginzburg-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788912275,
+        "narHash": "sha256-9HC6T7fUE3AV63pQkip0TRGxq2+Bcl5ZTEUqLAZe+PM=",
+        "owner": "artginzburg",
+        "repo": "homebrew-tap",
+        "rev": "c985b8c95bd1d28c9fb1dd07b75fcfda58699105",
+        "type": "github"
+      },
+      "original": {
+        "owner": "artginzburg",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
     "homebrew-bundle": {
       "flake": false,
       "locked": {
@@ -212,6 +228,7 @@
       "inputs": {
         "claude-code": "claude-code",
         "home-manager": "home-manager",
+        "homebrew-artginzburg-tap": "homebrew-artginzburg-tap",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",

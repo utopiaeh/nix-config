@@ -28,7 +28,7 @@
 
       # Utils
       "logi-options+"
-      "middleclick"
+      "artginzburg/tap/wheelclick"
       "hiddenbar"
       "transmission"
       "pearcleaner"
