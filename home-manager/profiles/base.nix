@@ -28,6 +28,7 @@ in
   home.packages = with pkgs; [
     neovim
     claude-code
+    nightlight
   ];
 
   home.sessionVariables = {

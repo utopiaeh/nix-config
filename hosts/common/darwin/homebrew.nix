@@ -29,7 +29,6 @@
       # Utils
       "logi-options+"
       "artginzburg/tap/wheelclick"
-      "hiddenbar"
       "transmission"
       "pearcleaner"
       "crisp"
