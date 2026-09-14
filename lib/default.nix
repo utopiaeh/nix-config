@@ -68,6 +68,7 @@ in
               "sw33tlie/homebrew-macshot" = homebrew-macshot;
               "sanyam-g/homebrew-switch" = homebrew-switch;
               "abue-ammar/homebrew-tinycast" = homebrew-tinycast;
+              "artginzburg/homebrew-tap" = homebrew-artginzburg-tap;
             };
           };
         }
