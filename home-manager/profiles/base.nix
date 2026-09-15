@@ -20,6 +20,8 @@ in
     ../programs/flashspace
     ../programs/macshot.nix
     ../programs/switch.nix
+    ../programs/crisp.nix
+    ../programs/wheelclick.nix
     ../programs/rust.nix
     ../programs/nix.nix
     ../programs/node.nix
