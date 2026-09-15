@@ -57,7 +57,7 @@ in
         {
           nix-homebrew = {
             enable = true;
-            enableRosetta = true;
+            enableRosetta = false; # no Intel-only casks in use; drop the unused /usr/local prefix
             autoMigrate = true;
             mutableTaps = false;
             user = "${username}";
