@@ -4,6 +4,22 @@
       # No typed nix-darwin equivalent for these two
       DisableAllAnimations = true;
       WarnOnEmptyTrash = false;
+      FXArrangeGroupViewBy = "Name";
+      FXPreferredGroupBy = "Name";
+      ShowPathbar = true;
+      ShowStatusBar = true;
+      "_FXSortFoldersFirst" = true;
+      FXDefaultSearchScope = "SCcf"; # search the current folder by default
+      NewWindowTarget = "PfDe"; # new Finder windows open to...
+      NewWindowTargetPath = "file://\${HOME}/Desktop/"; # ...the Desktop
+      ShowHardDrivesOnDesktop = false;
+      ShowExternalHardDrivesOnDesktop = true;
+      ShowRemovableMediaOnDesktop = true;
+      ShowMountedServersOnDesktop = false;
+    };
+    "com.apple.WindowManager" = {
+      GloballyEnabled = false; # Stage Manager off
+      AutoHide = false;
     };
     "com.apple.desktopservices" = {
       # Avoid creating .DS_Store files on network or USB volumes
@@ -13,6 +29,9 @@
     "com.apple.dock" = {
       # No typed nix-darwin equivalent for this key
       enable-window-tool = false;
+      # Bottom-right hot corner (check System Settings → Desktop & Dock → Hot Corners for the current label)
+      "wvous-br-corner" = 1;
+      "wvous-br-modifier" = 0;
     };
     "com.apple.Safari" = {
       # Privacy: don’t send search queries to Apple
@@ -59,6 +78,19 @@
       hotkeyQuickCaptureKeyCode = 26; # Quick Capture: Cmd+Shift+7
       hotkeyQuickCaptureModifiers = 768;
       "hotkeyDisabled_7" = false;
+    };
+    "com.apple.menuextra.clock" = {
+      ShowAMPM = true;
+      ShowDate = 0; # 0 = When Space Allows
+      ShowDayOfWeek = true;
+      TimeAnnouncementsEnabled = false;
+      TimeAnnouncementsIntervalIdentifier = "EveryHourInterval";
+    };
+    "com.apple.controlcenter" = {
+      "NSStatusItem Visible AirDrop" = false;
+      "NSStatusItem VisibleCC Battery" = true;
+      "NSStatusItem VisibleCC WiFi" = true;
+      "NSStatusItem VisibleCC Clock" = true;
     };
     "com.google.Chrome" = {
       AppleEnableSwipeNavigateWithScrolls = true;
