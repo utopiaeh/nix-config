@@ -50,7 +50,7 @@
       "sw33tlie/homebrew-macshot/macshot"
 
       "sanyam-g/homebrew-switch/switch"
-      "abue-ammar/homebrew-tinycast/tinycast"
+      "abue-ammar/homebrew-tinycast/tinycast@beta"
     ];
 
     masApps = {
