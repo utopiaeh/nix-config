@@ -22,6 +22,7 @@ in
     ../programs/switch.nix
     ../programs/crisp.nix
     ../programs/wheelclick.nix
+    ../programs/zed-dev-extensions.nix
     ../programs/rust.nix
     ../programs/nix.nix
     ../programs/node.nix
@@ -31,6 +32,7 @@ in
     neovim
     claude-code
     nightlight
+    openjdk25
   ];
 
   home.sessionVariables = {
