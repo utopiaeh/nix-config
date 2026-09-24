@@ -170,22 +170,6 @@
         "type": "github"
       }
     },
-    "intellij-lsp-zed": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789482831,
-        "narHash": "sha256-A0FDM/wuL4rn8ytVrKibywuGV0jvG8qlB9CXsIwGHeQ=",
-        "owner": "hlucas13",
-        "repo": "intellij-lsp-zed",
-        "rev": "a1d39742fd64fc825f241096d20ffe5234e280f6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hlucas13",
-        "repo": "intellij-lsp-zed",
-        "type": "github"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -251,7 +235,6 @@
         "homebrew-macshot": "homebrew-macshot",
         "homebrew-switch": "homebrew-switch",
         "homebrew-tinycast": "homebrew-tinycast",
-        "intellij-lsp-zed": "intellij-lsp-zed",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": [

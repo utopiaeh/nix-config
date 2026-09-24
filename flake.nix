@@ -49,11 +49,6 @@
       flake = false;
     };
 
-    intellij-lsp-zed = {
-      url = "github:hlucas13/intellij-lsp-zed";
-      flake = false;
-    };
-
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
