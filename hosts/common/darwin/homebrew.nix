@@ -34,7 +34,6 @@
       "crisp"
       "discord"
 
-      "chatgpt"
 
       "zed"
       "sublime-text"
