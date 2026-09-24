@@ -34,7 +34,6 @@
       "crisp"
       "discord"
 
-      "chatgpt"
 
       "zed"
       "sublime-text"
@@ -55,6 +54,7 @@
 
     masApps = {
       "Amphetamine" = 937984704;
+      "Xcode" = 497799835;
     };
   };
 }

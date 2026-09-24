@@ -6,8 +6,7 @@
       extensions = [
         "rust-src"
         "llvm-tools"
-      ];
-    })
+      ];    })
 
     pkgs.rust-analyzer
     pkgs.pkg-config

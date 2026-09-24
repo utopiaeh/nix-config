@@ -31,6 +31,7 @@ in
     neovim
     claude-code
     nightlight
+    openjdk25
   ];
 
   home.sessionVariables = {
