@@ -34,7 +34,6 @@
       "crisp"
       "discord"
 
-      "chatgpt"
 
       "zed"
       "sublime-text"
@@ -50,11 +49,12 @@
       "sw33tlie/homebrew-macshot/macshot"
 
       "sanyam-g/homebrew-switch/switch"
-      "abue-ammar/homebrew-tinycast/tinycast"
+      "abue-ammar/homebrew-tinycast/tinycast@beta"
     ];
 
     masApps = {
       "Amphetamine" = 937984704;
+      "Xcode" = 497799835;
     };
   };
 }

@@ -21,6 +21,7 @@
       NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
       NSGlobalDomain.NSWindowShouldDragOnGesture = true;
       NSGlobalDomain.NSAutomaticSpellingCorrectionEnabled = false;
+      NSGlobalDomain.AppleICUForce24HourTime = false; # 12-hour clock
       LaunchServices.LSQuarantine = false; # disables "Are you sure?" for new apps
       loginwindow.GuestEnabled = false;
 
