@@ -106,6 +106,22 @@
         "type": "github"
       }
     },
+    "homebrew-claude-usage": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788006789,
+        "narHash": "sha256-ZWU1WFGzc+NtNSmLA0mw6Nc1cWyR+B6XPbaEJzAYmls=",
+        "owner": "hamed-elfayome",
+        "repo": "homebrew-claude-usage",
+        "rev": "949e2a7938382b295bf5aef064da32423255a4b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hamed-elfayome",
+        "repo": "homebrew-claude-usage",
+        "type": "github"
+      }
+    },
     "homebrew-core": {
       "flake": false,
       "locked": {
@@ -170,6 +186,22 @@
         "type": "github"
       }
     },
+    "mattpocock-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791543409,
+        "narHash": "sha256-NljCSZNI3sZ+vbCw7pRdrwR7try4BxOFp4gdjuWYtzs=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "49dd158d1076134a641b33efb035946536778336",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -231,10 +263,12 @@
         "homebrew-artginzburg-tap": "homebrew-artginzburg-tap",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
+        "homebrew-claude-usage": "homebrew-claude-usage",
         "homebrew-core": "homebrew-core",
         "homebrew-macshot": "homebrew-macshot",
         "homebrew-switch": "homebrew-switch",
         "homebrew-tinycast": "homebrew-tinycast",
+        "mattpocock-skills": "mattpocock-skills",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": [

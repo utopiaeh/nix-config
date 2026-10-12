@@ -25,11 +25,11 @@ in
     ../programs/rust.nix
     ../programs/nix.nix
     ../programs/node.nix
+    ../programs/claude.nix
   ];
 
   home.packages = with pkgs; [
     neovim
-    claude-code
     nightlight
     openjdk25
   ];

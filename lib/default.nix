@@ -69,6 +69,7 @@ in
               "sanyam-g/homebrew-switch" = homebrew-switch;
               "abue-ammar/homebrew-tinycast" = homebrew-tinycast;
               "artginzburg/homebrew-tap" = homebrew-artginzburg-tap;
+              "hamed-elfayome/homebrew-claude-usage" = homebrew-claude-usage;
             };
           };
         }
