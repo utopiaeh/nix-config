@@ -276,8 +276,7 @@
         ],
         "nixpkgs-darwin": "nixpkgs-darwin",
         "rust-overlay": "rust-overlay",
-        "sops-nix": "sops-nix",
-        "tdai-memory": "tdai-memory"
+        "sops-nix": "sops-nix"
       }
     },
     "rust-overlay": {
@@ -332,23 +331,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "tdai-memory": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1791877025,
-        "narHash": "sha256-fPaZpOyVrq8lao1vEXUoe31wHqxLvICnx6xPcVMPBXQ=",
-        "owner": "TencentCloud",
-        "repo": "TencentDB-Agent-Memory",
-        "rev": "badbd2179d06f4e0e1f2133bd3482880beab8a02",
-        "type": "github"
-      },
-      "original": {
-        "owner": "TencentCloud",
-        "ref": "feat/server_team",
-        "repo": "TencentDB-Agent-Memory",
         "type": "github"
       }
     }

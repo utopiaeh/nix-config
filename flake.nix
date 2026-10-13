@@ -54,12 +54,6 @@
       flake = false;
     };
 
-    # Team-memory stack only exists on this branch; switch to main once it's merged.
-    tdai-memory = {
-      url = "github:TencentCloud/TencentDB-Agent-Memory?ref=feat/server_team";
-      flake = false;
-    };
-
     homebrew-claude-usage = {
       url = "github:hamed-elfayome/homebrew-claude-usage";
       flake = false;
