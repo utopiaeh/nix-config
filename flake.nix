@@ -168,6 +168,29 @@
             exit 1
           fi
         '';
+        # Fails if a private key or plaintext secret is in the tree (tracked + untracked, not ignored)
+        scan-keys = mkApp "scan-keys" ''
+          cd "$(git rev-parse --show-toplevel)"
+          fail=0
+
+          # -l: print filenames only, never the key itself
+          if git grep -lIE --untracked \
+            -e '-----BEGIN ([A-Z]+ )?PRIVATE KEY-----' \
+            -e 'AGE-SECRET-KEY-1[0-9A-Z]{20,}'; then
+            echo "Error: private key material in the files above"
+            fail=1
+          fi
+
+          for f in $(git ls-files -co --exclude-standard 'secrets/*/*.yaml'); do
+            if ! grep -q '^sops:' "$f"; then
+              echo "Error: $f is not sops-encrypted"
+              fail=1
+            fi
+          done
+
+          [ "$fail" -eq 0 ] && echo "OK: no private keys or plaintext secrets"
+          exit "$fail"
+        '';
       };
 
       # Bootstrap env for fresh machines: nix develop

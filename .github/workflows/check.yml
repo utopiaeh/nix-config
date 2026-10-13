@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: DeterminateSystems/nix-installer-action@main
       - run: nix flake check --no-build
+      - run: nix run .#scan-keys
 
   build:
     runs-on: macos-14
