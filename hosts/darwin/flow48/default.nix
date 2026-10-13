@@ -19,6 +19,10 @@
       mode = "0600";
     };
 
+    secrets."anthropic_api_key" = {
+      owner = username;
+      mode = "0400";
+    };
   };
 
   homebrew.casks = [

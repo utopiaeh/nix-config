@@ -40,8 +40,6 @@
           # destructive
           "Bash(git reset --hard:*)"
           "Bash(git clean:*)"
-          "Bash(rm -rf:*)"
-          "Bash(rm -fr:*)"
           # secrets (Read tool only; shell reads like `cat .env` are not covered)
           "Read(**/.env*)"
           "Read(**/*.pem)"
@@ -49,6 +47,12 @@
           "Read(~/.ssh/**)"
           "Read(~/.aws/**)"
           "Read(~/.config/sops/**)"
+        ];
+
+        # Always prompt, even in auto/accept-edits mode
+        ask = [
+          "Bash(rm -rf:*)"
+          "Bash(rm -fr:*)"
         ];
 
         # From /fewer-permission-prompts: frequent read-only / check commands
@@ -98,16 +102,5 @@
       // {
         java-coach = ./claude/skills/java-coach;
       };
-
-    # Local MCP servers (no secrets here, values land in the world-readable store).
-    # claude.ai connectors (Slack, Notion, Figma, Atlassian, ...) come from your account, not from here.
-    mcpServers.caveman-shrink = {
-      type = "stdio";
-      command = "npx";
-      args = [
-        "-y"
-        "caveman-shrink"
-      ];
-    };
   };
 }

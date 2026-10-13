@@ -5,7 +5,10 @@
 }:
 
 {
-  imports = [ ./base.nix ];
+  imports = [
+    ./base.nix
+    ../programs/tdai.nix
+  ];
 
   # AWS Amplify CLI has no Nix package — installed via npm on first activation.
   # To remove: npm uninstall -g @aws-amplify/cli
