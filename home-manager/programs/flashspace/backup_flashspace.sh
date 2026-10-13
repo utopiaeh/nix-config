@@ -4,7 +4,7 @@ set -euo pipefail  # Exit on errors, undefined variables, or failed pipes
 
 # Define paths
 FLASHSAPCE_PATH="$HOME/.config/flashspace"
-DEST_PATH="/Users/$USER/nix-config/home-manager/programs/flashspace"
+DEST_PATH="${NIX_CONFIG_DIR:-$HOME/nix-config}/home-manager/programs/flashspace"
 
 # Define files to sync
 FILES=("profiles.yaml" "settings.yaml")
@@ -51,9 +51,5 @@ for file in "${FILES[@]}"; do
   fi
 done
 
-cd "$DEST_PATH"
-if [ -n "$(git status --porcelain)" ]; then
-  git add .
-  git commit -m "Backup FlashSpace profiles: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
-  git push origin main
-fi
+# Public repo: review and commit yourself
+git -C "$DEST_PATH" status --short -- "${FILES[@]}"

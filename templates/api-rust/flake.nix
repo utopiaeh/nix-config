@@ -26,6 +26,8 @@
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
+            cargo
+            rustc
             diesel-cli
             postgresql
           ];

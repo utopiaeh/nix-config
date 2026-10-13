@@ -412,8 +412,7 @@ let
         "Columns" = profile.window.columns;
         "Rows" = profile.window.rows;
 
-        "Transparency" =
-          if profile.transparency.enable then profile.transparency.value else 0.0;
+        "Transparency" = if profile.transparency.enable then profile.transparency.value else 0.0;
         "Blur" = profile.blur.enable;
         "Blur Radius" = if profile.blur.enable then profile.blur.value else 0.0;
 
@@ -525,24 +524,24 @@ in
     home.activation = mkMerge [
       (mkIf cfg.copyApplications {
         copyITerm2ToApplications = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-                    if [ -d "$HOME/Applications/iTerm2.app" ] && cmp -s "${cfg.package}/Applications/iTerm2.app/Contents/Info.plist" "$HOME/Applications/iTerm2.app/Contents/Info.plist" 2>/dev/null; then
-                      echo "❯❯❯❯ · iTerm2.app already up to date, skipping."
-                    else
-                      if [ -d "$HOME/Applications/iTerm2.app" ]; then
-                        echo "❯❯❯❯ · Removing existing iTerm2.app..."
-                        chmod -R +w "$HOME/Applications/iTerm2.app" || true
-                        $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app" || {
-                          echo "❯❯❯❯ ✗ Failed to remove existing iTerm2.app, trying alternative method..."
-                          $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type f -exec chmod 644 {} \; || true
-                          $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type d -exec chmod 755 {} \; || true
-                          $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app"
-                        }
-                      fi
+          if [ -d "$HOME/Applications/iTerm2.app" ] && cmp -s "${cfg.package}/Applications/iTerm2.app/Contents/Info.plist" "$HOME/Applications/iTerm2.app/Contents/Info.plist" 2>/dev/null; then
+            echo "❯❯❯❯ · iTerm2.app already up to date, skipping."
+          else
+            if [ -d "$HOME/Applications/iTerm2.app" ]; then
+              echo "❯❯❯❯ · Removing existing iTerm2.app..."
+              chmod -R +w "$HOME/Applications/iTerm2.app" || true
+              $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app" || {
+                echo "❯❯❯❯ ✗ Failed to remove existing iTerm2.app, trying alternative method..."
+                $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type f -exec chmod 644 {} \; || true
+                $DRY_RUN_CMD find "$HOME/Applications/iTerm2.app" -type d -exec chmod 755 {} \; || true
+                $DRY_RUN_CMD rm -rf "$HOME/Applications/iTerm2.app"
+              }
+            fi
 
-                      echo "❯❯❯❯ · Copying iTerm2.app to $HOME/Applications..."
-                      $DRY_RUN_CMD mkdir -p "$HOME/Applications"
-                      $DRY_RUN_CMD cp -R "${cfg.package}/Applications/iTerm2.app" "$HOME/Applications/iTerm2.app"
-                    fi
+            echo "❯❯❯❯ · Copying iTerm2.app to $HOME/Applications..."
+            $DRY_RUN_CMD mkdir -p "$HOME/Applications"
+            $DRY_RUN_CMD cp -R "${cfg.package}/Applications/iTerm2.app" "$HOME/Applications/iTerm2.app"
+          fi
         '';
       })
 
@@ -595,6 +594,7 @@ in
     ];
 
     xdg.configFile."iTerm2/com.googlecode.iterm2.plist".source =
-      (pkgs.formats.plist { }).generate "com.googlecode.iterm2.plist" iTerm2PlistContent;
+      (pkgs.formats.plist { }).generate "com.googlecode.iterm2.plist"
+        iTerm2PlistContent;
   };
 }

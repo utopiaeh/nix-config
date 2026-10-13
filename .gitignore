@@ -13,3 +13,6 @@ id_rsa
 id_ed25519
 id_ecdsa
 keys.txt
+
+# backup_flashspace.sh local copies
+home-manager/programs/flashspace/backup_*.yaml

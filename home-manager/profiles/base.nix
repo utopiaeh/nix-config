@@ -30,7 +30,6 @@ in
 
   home.packages = with pkgs; [
     neovim
-    nightlight
     openjdk25
   ];
 
@@ -59,7 +58,7 @@ in
           User = "${username}";
           AddKeysToAgent = "yes";
           UseKeychain = "yes";
-          StrictHostKeyChecking = "no";
+          StrictHostKeyChecking = "accept-new";
         };
       };
     };
@@ -127,6 +126,7 @@ in
 
         tpl-node = "nix flake init -t 'github:utopiaeh/nix-config#node'";
         tpl-esp32 = "nix flake init -t 'github:utopiaeh/nix-config#esp32-rust'";
+        tpl-api-rust = "nix flake init -t 'github:utopiaeh/nix-config#api-rust'";
       };
 
       initContent = ''

@@ -16,7 +16,8 @@ in
   home.activation.installFlashSpaceConfig = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     echo "❯❯❯❯ · Installing FlashSpace profile and settings..."
     mkdir -p "${targetPath}"
-    cmp -s ${profileSource} "${targetPath}/profiles.yaml" || cp ${profileSource} "${targetPath}/profiles.yaml"
-    cmp -s ${settingSource} "${targetPath}/settings.yaml" || cp ${settingSource} "${targetPath}/settings.yaml"
+    # Seed only: FlashSpace owns these after first run; save UI changes back with backup_flashspace.sh
+    [ -e "${targetPath}/profiles.yaml" ] || install -m 644 ${profileSource} "${targetPath}/profiles.yaml"
+    [ -e "${targetPath}/settings.yaml" ] || install -m 644 ${settingSource} "${targetPath}/settings.yaml"
   '';
 }

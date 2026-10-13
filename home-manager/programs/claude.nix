@@ -35,6 +35,12 @@
           # no commits/pushes/PRs (also covers push --force)
           "Bash(git commit:*)"
           "Bash(git push:*)"
+          # "merge *" (word boundary) so `git merge-base` stays allowed
+          "Bash(git merge *)"
+          # global flags before the subcommand (git -C dir commit, git -c k=v push)
+          "Bash(git * commit *)"
+          "Bash(git * push *)"
+          "Bash(git * merge *)"
           "Bash(gh pr create:*)"
           "Bash(gh pr merge:*)"
           # destructive
@@ -47,6 +53,8 @@
           "Read(~/.ssh/**)"
           "Read(~/.aws/**)"
           "Read(~/.config/sops/**)"
+          "Read(~/.gnupg/**)"
+          "Read(**/secrets/**)"
         ];
 
         # Always prompt, even in auto/accept-edits mode
@@ -68,8 +76,6 @@
           "Bash(docker compose ps)"
           "Bash(docker compose ps *)"
           "Bash(brew list *)"
-          "Bash(curl -s http://localhost:*)"
-          "Bash(curl -s \"http://localhost:*)"
           "mcp__claude_ai_Atlassian_MCP__getJiraIssue"
           "mcp__claude_ai_Figma__get_design_context"
           "mcp__claude_ai_Figma__get_metadata"

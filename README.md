@@ -108,7 +108,7 @@ nix-config/
 ├── secrets/
 │   ├── <machine>/secrets.enc.yaml   # Encrypted machine secrets
 │   └── secrets_example.yaml         # Template
-└── templates/                       # Flake templates (node, esp32)
+└── templates/                       # Flake templates (node, esp32, api-rust)
 ```
 
 ---
@@ -226,7 +226,9 @@ cp secrets/secrets_example.yaml /tmp/secrets.yaml
 Edit `/tmp/secrets.yaml` — paste the contents of `~/.ssh/id_ed25519` as the `ssh_key` value.
 
 ```sh
-nix shell nixpkgs#sops --command sops --encrypt /tmp/secrets.yaml > secrets/<your-machine>/secrets.enc.yaml
+nix shell nixpkgs#sops --command sops --encrypt \
+  --filename-override secrets/<your-machine>/secrets.enc.yaml \
+  --output secrets/<your-machine>/secrets.enc.yaml /tmp/secrets.yaml
 rm /tmp/secrets.yaml   # never commit the unencrypted file
 ```
 
@@ -366,6 +368,7 @@ The `,` command is especially useful — e.g. `, ffmpeg -i video.mp4 output.gif`
 mkdir -p ~/Developer/my-app && cd ~/Developer/my-app
 tpl-node        # Node.js (pnpm, typescript)
 tpl-esp32       # ESP32-S3 Rust project
+tpl-api-rust    # Rust API (Diesel, PostgreSQL)
 direnv allow    # load dev environment
 ```
 
@@ -494,7 +497,9 @@ ssh_key: |
 
 Encrypt it:
 ```sh
-nix shell nixpkgs#sops --command sops --encrypt /tmp/secrets.yaml > secrets/<your-machine>/secrets.enc.yaml
+nix shell nixpkgs#sops --command sops --encrypt \
+  --filename-override secrets/<your-machine>/secrets.enc.yaml \
+  --output secrets/<your-machine>/secrets.enc.yaml /tmp/secrets.yaml
 rm /tmp/secrets.yaml
 ```
 
