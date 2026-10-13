@@ -14,7 +14,6 @@
         };
         merge = {
           conflictStyle = "diff3";
-          tool = "meld";
         };
         pull = {
           rebase = true;

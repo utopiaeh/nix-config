@@ -3,5 +3,16 @@ result
 .idea
 secrets/**/*.yaml
 !secrets/**/*.enc.yaml
-.claude
+.claude/settings.local.json
 .DS_Store
+
+# private keys — never commit (public keys like *.pub / .sops.yaml recipients are fine)
+*.pem
+*.key
+id_rsa
+id_ed25519
+id_ecdsa
+keys.txt
+
+# backup_flashspace.sh local copies
+home-manager/programs/flashspace/backup_*.yaml

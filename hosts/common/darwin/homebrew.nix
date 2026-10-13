@@ -15,7 +15,6 @@
     # taps derived from nix-homebrew.taps (see lib/default.nix)
 
     casks = [
-      # "raycast"
 
       "telegram"
       "iterm2"
@@ -27,18 +26,16 @@
       "notion"
 
       # Utils
-      "logi-options+"
+      "openlogi"
       "artginzburg/tap/wheelclick"
       "transmission"
       "pearcleaner"
       "crisp"
       "discord"
 
-
       "zed"
-      "sublime-text"
-      "visual-studio-code"
-      "postman"
+      "intellij-idea"
+      "bruno"
 
       "figma"
 
@@ -50,6 +47,7 @@
 
       "sanyam-g/homebrew-switch/switch"
       "abue-ammar/homebrew-tinycast/tinycast@beta"
+      "hamed-elfayome/claude-usage/claude-usage-tracker"
     ];
 
     masApps = {

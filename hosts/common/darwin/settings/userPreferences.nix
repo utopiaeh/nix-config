@@ -1,21 +1,11 @@
 {
   system.defaults.CustomUserPreferences = {
     "com.apple.finder" = {
-      # No typed nix-darwin equivalent for these two
+      # No typed nix-darwin equivalent; the rest lives in system.defaults.finder (system.nix)
       DisableAllAnimations = true;
       WarnOnEmptyTrash = false;
       FXArrangeGroupViewBy = "Name";
       FXPreferredGroupBy = "Name";
-      ShowPathbar = true;
-      ShowStatusBar = true;
-      "_FXSortFoldersFirst" = true;
-      FXDefaultSearchScope = "SCcf"; # search the current folder by default
-      NewWindowTarget = "PfDe"; # new Finder windows open to...
-      NewWindowTargetPath = "file://\${HOME}/Desktop/"; # ...the Desktop
-      ShowHardDrivesOnDesktop = false;
-      ShowExternalHardDrivesOnDesktop = true;
-      ShowRemovableMediaOnDesktop = true;
-      ShowMountedServersOnDesktop = false;
     };
     "com.apple.WindowManager" = {
       GloballyEnabled = false; # Stage Manager off

@@ -45,9 +45,4 @@
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  system.activationScripts.postActivation.text = ''
-    echo "❯❯❯❯ · Removing quarantine attribute from /Applications..."
-    find /Applications -type d -name "*.app" -exec xattr -r -d com.apple.quarantine {} \; 2>/dev/null
-  '';
-
 }

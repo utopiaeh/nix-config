@@ -49,6 +49,16 @@
       flake = false;
     };
 
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
+
+    homebrew-claude-usage = {
+      url = "github:hamed-elfayome/homebrew-claude-usage";
+      flake = false;
+    };
+
     # Secrets management
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -116,7 +126,7 @@
           MACHINE="''${1:-}"
           if [ -z "$MACHINE" ]; then
             echo "Usage: nix run .#edit-secrets -- <machine>"
-            echo "Available: $(ls secrets/ | grep -v secrets_example | tr '\n' ' ')"
+            echo "Available: $(cd secrets && printf '%s ' */ | tr -d /)"
             exit 1
           fi
 
@@ -128,17 +138,21 @@
             exit 1
           fi
 
-          TMP=$(mktemp /tmp/secrets-XXXXXX.yaml)
-          trap 'rm -f "$TMP"' EXIT
-
-          ${pkgs.sops}/bin/sops --decrypt "$SECRETS_FILE" > "$TMP"
-          ''${EDITOR:-nano} "$TMP"
-          ${pkgs.sops}/bin/sops --encrypt "$TMP" > "$SECRETS_FILE"
+          # sops edits via a private temp file and only re-encrypts on a clean exit
+          rc=0
+          EDITOR="''${EDITOR:-nano}" ${pkgs.sops}/bin/sops "$SECRETS_FILE" || rc=$?
+          # 200 = sops "file has not changed"
+          if [ "$rc" -eq 200 ]; then
+            echo "No changes for $MACHINE"
+            exit 0
+          fi
+          [ "$rc" -eq 0 ] || exit "$rc"
           echo "Secrets updated for $MACHINE"
         '';
         check-secrets = mkApp "check-secrets" ''
           MACHINE="''${1:-$(scutil --get LocalHostName)}"
-          SECRETS_FILE="secrets/$MACHINE/secrets.enc.yaml"
+          FLAKE=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+          SECRETS_FILE="$FLAKE/secrets/$MACHINE/secrets.enc.yaml"
           AGE_KEY="$HOME/.config/sops/age/keys.txt"
 
           if [ ! -f "$SECRETS_FILE" ]; then
@@ -151,12 +165,38 @@
             exit 1
           fi
 
-          if ${pkgs.sops}/bin/sops --decrypt "$SECRETS_FILE" > /dev/null; then
+          if SOPS_AGE_KEY_FILE="$AGE_KEY" ${pkgs.sops}/bin/sops --decrypt "$SECRETS_FILE" > /dev/null; then
             echo "OK: $SECRETS_FILE decrypts cleanly with $AGE_KEY"
           else
             echo "Error: failed to decrypt $SECRETS_FILE"
             exit 1
           fi
+        '';
+        # Fails if a private key or plaintext secret is in the tree (tracked, incl. gitignored-but-tracked, + untracked)
+        scan-keys = mkApp "scan-keys" ''
+          cd "$(git rev-parse --show-toplevel)"
+          fail=0
+
+          # -l: print filenames only, never the key itself
+          hits=$(git ls-files -z -co --exclude-standard -- ':!secrets/secrets_example.yaml' \
+            | xargs -0 grep -lsIE \
+              -e '-----BEGIN ([A-Z]+ )?PRIVATE KEY-----' \
+              -e 'AGE-SECRET-KEY-1[0-9A-Z]{20,}' || true)
+          if [ -n "$hits" ]; then
+            echo "$hits"
+            echo "Error: private key material in the files above"
+            fail=1
+          fi
+
+          for f in $(git ls-files -co --exclude-standard 'secrets/*/*.yaml'); do
+            if ! grep -q '^sops:' "$f"; then
+              echo "Error: $f is not sops-encrypted"
+              fail=1
+            fi
+          done
+
+          [ "$fail" -eq 0 ] && echo "OK: no private keys or plaintext secrets"
+          exit "$fail"
         '';
       };
 
