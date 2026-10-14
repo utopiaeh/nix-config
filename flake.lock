@@ -138,22 +138,6 @@
         "type": "github"
       }
     },
-    "homebrew-macshot": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790167613,
-        "narHash": "sha256-W3VS4vMSQiXRs7tPBhomxIYqJVR0VMx83sC95QFLzFc=",
-        "owner": "sw33tLie",
-        "repo": "homebrew-macshot",
-        "rev": "e75e0fe2f035edb1ac50af1ed66889cf344600a2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sw33tLie",
-        "repo": "homebrew-macshot",
-        "type": "github"
-      }
-    },
     "homebrew-switch": {
       "flake": false,
       "locked": {
@@ -265,7 +249,6 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-claude-usage": "homebrew-claude-usage",
         "homebrew-core": "homebrew-core",
-        "homebrew-macshot": "homebrew-macshot",
         "homebrew-switch": "homebrew-switch",
         "homebrew-tinycast": "homebrew-tinycast",
         "mattpocock-skills": "mattpocock-skills",

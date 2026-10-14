@@ -6,12 +6,15 @@ secrets/**/*.yaml
 .claude/settings.local.json
 .DS_Store
 
-# private keys — never commit (public keys like *.pub / .sops.yaml recipients are fine)
 *.pem
 *.key
+*.p12
+*.pfx
 id_rsa
-id_ed25519
+id_dsa
 id_ecdsa
+id_ed25519
+id_*_sk
 keys.txt
 
 # backup_flashspace.sh local copies

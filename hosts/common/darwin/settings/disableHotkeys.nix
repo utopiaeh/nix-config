@@ -1,6 +1,14 @@
 let
-  # parameters = [ ascii keycode modifiers ]; space = 32/49; ⌃ 262144, ⌥ 524288, ⌘ 1048576
-  on = modifiers: {
+  # Cocoa modifier flags; a combo is their sum
+  ctrl = 262144;
+  opt = 524288;
+  cmd = 1048576;
+
+  off = {
+    enabled = false;
+  };
+  # parameters = [ ascii keycode modifiers ]; space = 32 / 49
+  spaceWith = modifiers: {
     enabled = true;
     value = {
       parameters = [
@@ -17,31 +25,17 @@ in
   system.defaults.CustomUserPreferences = {
     "com.apple.symbolichotkeys" = {
       AppleSymbolicHotKeys = {
-        "60" = {
-          enabled = false;
-        }; # ⌃ + Space -> Select previous input source
-        "61" = on 786432; # ⌃ + ⌥ + Space -> Select next input source
-        "64" = {
-          enabled = false;
-        }; # ⌘ + Space -> Spotlight
-        "65" = on 1572864; # ⌘ + ⌥ + Space -> Finder search window
+        "60" = off; # ⌃ + Space -> Select previous input source
+        "61" = spaceWith (ctrl + opt); # Select next input source
+        "64" = off; # ⌘ + Space -> Spotlight
+        "65" = spaceWith (cmd + opt); # Finder search window
 
         # Screenshots
-        "28" = {
-          enabled = false;
-        }; # Save picture of screen as a file
-        "29" = {
-          enabled = false;
-        }; # Copy picture of screen to the clipboard
-        "30" = {
-          enabled = false;
-        }; # Save picture of selected area as a file
-        "31" = {
-          enabled = false;
-        }; # Copy picture of selected area to the clipboard
-        "184" = {
-          enabled = false;
-        }; # Screenshot and recording options
+        "28" = off; # Save picture of screen as a file
+        "29" = off; # Copy picture of screen to the clipboard
+        "30" = off; # Save picture of selected area as a file
+        "31" = off; # Copy picture of selected area to the clipboard
+        "184" = off; # Screenshot and recording options
       };
     };
   };

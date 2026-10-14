@@ -64,7 +64,6 @@ workspaceSwitcherSortByLastActivation: false
 workspaceSwitcherCurrentDisplayWorkspaces: true
 enableIntegrations: false
 runScriptOnLaunch: ''
-runScriptOnWorkspaceChange: sketchybar --trigger flashspace_workspace_change WORKSPACE="$WORKSPACE"
-  DISPLAY="$DISPLAY"
+runScriptOnWorkspaceChange: ''
 runScriptAfterWorkspaceChange: ''
-runScriptOnProfileChange: sketchybar --reload
+runScriptOnProfileChange: ''

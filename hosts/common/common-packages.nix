@@ -4,7 +4,6 @@
   environment.systemPackages = with pkgs; [
     # Version control
     gh
-    git-crypt
 
     # General utilities
     tree

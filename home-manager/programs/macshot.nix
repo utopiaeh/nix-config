@@ -1,7 +1,7 @@
 { config, ... }:
 
 {
-  # sw33tLie/macshot — https://github.com/sw33tLie/homebrew-macshot
+  # sw33tLie/macshot — https://github.com/sw33tLie/macshot
   # Tool/action ordering (enabledTools, enabledActions, captureMenuItemOrder, ...) isn't
   # declared here: those are app-managed caches of known tool IDs, not user prefs.
   targets.darwin.defaults."com.sw33tlie.macshot.macshot" = {
@@ -53,5 +53,12 @@
     hotkeyRecordFullScreenModifiers = 768;
     hotkeyScrollCaptureKeyCode = 25;
     hotkeyScrollCaptureModifiers = 768;
+    "hotkeyDisabled_1" = false;
+    "hotkeyDisabled_2" = false;
+    "hotkeyDisabled_3" = false;
+    "hotkeyDisabled_4" = false;
+    "hotkeyDisabled_5" = false;
+    "hotkeyDisabled_6" = false;
+    "hotkeyDisabled_7" = false;
   };
 }

@@ -9,7 +9,8 @@ Validate the current working tree of this nix-darwin repo. Run each step, stop a
 1. Format: `nixfmt --check` on changed/new `.nix` files only (`git ls-files -m -o --exclude-standard '*.nix'`). Some untouched files are not formatted yet; don't flag those.
 2. Eval: `nix flake check --no-build`
 3. Build current host: `nix build ".#darwinConfigurations.$(scutil --get LocalHostName).system" --no-link`
-   - If the change touches `hosts/common/`, `lib/`, `flake.nix`, `flake.lock` or `home-manager/profiles/base.nix`, also build the other host (`mac-pro` / `flow48`) — CI builds both.
+   - Also build the other host (`mac-pro` / `flow48`) unless every change is under `hosts/darwin/<this-host>/` or `home-manager/profiles/<this-host>.nix`. CI builds both.
+   - New untracked files are invisible to the flake ("path does not exist"). Tell the user to `git add` them; don't stage yourself. To validate meanwhile, use `path:.#...` instead of `.#...`.
 
 Never run `darwin-rebuild switch`, `nix run .#rebuild` or anything with `sudo`. On success, tell the user to apply with `nix run .#rebuild`.
 

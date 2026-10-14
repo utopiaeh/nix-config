@@ -14,7 +14,7 @@
     if [ ! -x "$HOME/.npm-global/bin/amplify" ]; then
       export NPM_CONFIG_PREFIX="$HOME/.npm-global"
       ${pkgs.nodejs}/bin/npm install -g --fund=false @aws-amplify/cli@14.5.1 \
-        || echo "warning: amplify install failed (offline?), retrying next switch"
+        || echo "❯❯❯❯ ✗ Amplify install failed (offline?), retrying next switch" >&2
     fi
   '';
 }
