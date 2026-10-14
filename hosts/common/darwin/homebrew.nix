@@ -16,7 +16,6 @@
 
     casks = [
 
-      "claude"
       "telegram"
       "iterm2"
 
@@ -28,6 +27,7 @@
 
       # Utils
       "openlogi"
+
       "artginzburg/tap/wheelclick"
       "transmission"
       "pearcleaner"
@@ -44,9 +44,9 @@
 
       "docker-desktop"
 
-      "macshot"
+      "sw33tlie/homebrew-macshot/macshot"
 
-      "sanyam-g/switch/switch"
+      "sanyam-g/homebrew-switch/switch"
       "abue-ammar/homebrew-tinycast/tinycast@beta"
       "hamed-elfayome/claude-usage/claude-usage-tracker"
     ];
