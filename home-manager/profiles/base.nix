@@ -26,11 +26,11 @@ in
     ../programs/nix.nix
     ../programs/node.nix
     ../programs/claude.nix
+    ../programs/idea.nix
   ];
 
   home.packages = with pkgs; [
     neovim
-    openjdk25
   ];
 
   home.sessionVariables = {
@@ -43,6 +43,12 @@ in
   };
 
   programs = {
+    # also sets JAVA_HOME, which IDEA and Gradle use to find the JDK
+    java = {
+      enable = true;
+      package = pkgs.openjdk25;
+    };
+
     ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -173,14 +179,15 @@ in
 
   # ponytail: relies on a private, undocumented Apple framework path — may break across macOS versions, no fallback if it disappears.
   home.activation.applyKeyboardShortcuts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    /usr/bin/sudo -u ${username} /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    # already runs as the user; sudo here could prompt mid-rebuild
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u || true
   '';
 
   home.activation.setDesktopWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       WALLPAPER_PATH=${wallpaper}
       CURRENT_PATH=$(/usr/bin/osascript -e 'tell application "System Events" to picture of desktop 1' 2>/dev/null || true)
       if [ -f "$WALLPAPER_PATH" ] && [ "$CURRENT_PATH" != "$WALLPAPER_PATH" ]; then
-        /usr/bin/osascript <<EOF
+        /usr/bin/osascript <<EOF || echo "❯❯❯❯ ✗ wallpaper not set (allow Automation → System Events)" >&2
         tell application "System Events"
           set picture of every desktop to POSIX file "$WALLPAPER_PATH"
         end tell

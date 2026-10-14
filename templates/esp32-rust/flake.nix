@@ -3,7 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -27,9 +30,10 @@
             espflash
             ldproxy
             esp-generate
+            espup
 
             # Stable Rust for host-side tooling (cargo, clippy, rustfmt)
-            # The Xtensa toolchain for the target is managed by espup — see README
+            # The Xtensa target toolchain lives outside nix: run `espup install` once
             rust-bin.stable.latest.default
           ];
 

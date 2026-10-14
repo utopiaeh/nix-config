@@ -465,7 +465,8 @@ let
         "New Bookmarks" = profilesData;
         "Default Bookmark Guid" = defaultProfileGuid;
         "TabStyleWithAutomaticOption" = themeValue;
-      };
+      }
+      // cfg.extraPrefs;
     in
     plist;
 in
@@ -509,6 +510,15 @@ in
           description = "Window theme style.";
         };
       };
+    };
+
+    extraPrefs = mkOption {
+      type = types.attrsOf types.anything;
+      default = { };
+      example = {
+        PromptOnQuit = false;
+      };
+      description = "Raw top-level keys merged into the generated plist (copyPrefs overwrites anything set via `defaults`).";
     };
 
     profiles = mkOption {
@@ -579,7 +589,7 @@ in
               # Kill cfprefsd to force preference reload
               if command -v pkill >/dev/null 2>&1; then
                 echo "❯❯❯❯ · Reloading preference cache..."
-                $DRY_RUN_CMD pkill -f cfprefsd || true
+                $DRY_RUN_CMD pkill -x cfprefsd || true
               fi
 
               if [ -z "$DRY_RUN_CMD" ]; then

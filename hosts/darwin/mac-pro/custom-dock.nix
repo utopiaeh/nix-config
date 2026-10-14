@@ -7,7 +7,6 @@
       "/Applications/iTerm.app"
 
       "/Applications/Telegram.app"
-      "/Applications/Slack.app"
 
       "/Applications/Claude.app"
 

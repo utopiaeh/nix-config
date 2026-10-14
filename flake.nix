@@ -29,11 +29,6 @@
       flake = false;
     };
 
-    homebrew-macshot = {
-      url = "github:sw33tLie/homebrew-macshot";
-      flake = false;
-    };
-
     homebrew-switch = {
       url = "github:Sanyam-G/homebrew-switch";
       flake = false;
@@ -126,12 +121,16 @@
           MACHINE="''${1:-}"
           if [ -z "$MACHINE" ]; then
             echo "Usage: nix run .#edit-secrets -- <machine>"
-            echo "Available: $(cd secrets && printf '%s ' */ | tr -d /)"
+            if [ -d secrets ]; then
+              echo "Available: $(cd secrets && printf '%s ' */ | tr -d /)"
+            else
+              echo "Available: none (no secrets/ directory)"
+            fi
             exit 1
           fi
 
-          FLAKE=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
-          SECRETS_FILE="$FLAKE/secrets/$MACHINE/secrets.enc.yaml"
+          REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+          SECRETS_FILE="$REPO_ROOT/secrets/$MACHINE/secrets.enc.yaml"
 
           if [ ! -f "$SECRETS_FILE" ]; then
             echo "Error: $SECRETS_FILE not found"
@@ -140,7 +139,9 @@
 
           # sops edits via a private temp file and only re-encrypts on a clean exit
           rc=0
-          EDITOR="''${EDITOR:-nano}" ${pkgs.sops}/bin/sops "$SECRETS_FILE" || rc=$?
+          # macOS sops looks in ~/Library/Application Support by default, not ~/.config
+          SOPS_AGE_KEY_FILE="''${SOPS_AGE_KEY_FILE:-$HOME/.config/sops/age/keys.txt}" \
+            EDITOR="''${EDITOR:-nano}" ${pkgs.sops}/bin/sops "$SECRETS_FILE" || rc=$?
           # 200 = sops "file has not changed"
           if [ "$rc" -eq 200 ]; then
             echo "No changes for $MACHINE"
@@ -151,8 +152,8 @@
         '';
         check-secrets = mkApp "check-secrets" ''
           MACHINE="''${1:-$(scutil --get LocalHostName)}"
-          FLAKE=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
-          SECRETS_FILE="$FLAKE/secrets/$MACHINE/secrets.enc.yaml"
+          REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+          SECRETS_FILE="$REPO_ROOT/secrets/$MACHINE/secrets.enc.yaml"
           AGE_KEY="$HOME/.config/sops/age/keys.txt"
 
           if [ ! -f "$SECRETS_FILE" ]; then
@@ -172,21 +173,26 @@
             exit 1
           fi
         '';
-        # Fails if a private key or plaintext secret is in the tree (tracked, incl. gitignored-but-tracked, + untracked)
         scan-keys = mkApp "scan-keys" ''
-          cd "$(git rev-parse --show-toplevel)"
+          cd "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
           fail=0
 
           # -l: print filenames only, never the key itself
-          hits=$(git ls-files -z -co --exclude-standard -- ':!secrets/secrets_example.yaml' \
-            | xargs -0 grep -lsIE \
+          # Per file so an unreadable file (grep exit 2) fails the scan instead of being skipped
+          while IFS= read -r -d "" f; do
+            [ -e "$f" ] || continue
+            rc=0
+            grep -qIE \
               -e '-----BEGIN ([A-Z]+ )?PRIVATE KEY-----' \
-              -e 'AGE-SECRET-KEY-1[0-9A-Z]{20,}' || true)
-          if [ -n "$hits" ]; then
-            echo "$hits"
-            echo "Error: private key material in the files above"
-            fail=1
-          fi
+              -e 'AGE-SECRET-KEY-1[0-9A-Z]{20,}' -- "$f" 2>/dev/null || rc=$?
+            if [ "$rc" -eq 0 ]; then
+              echo "Error: private key material in $f"
+              fail=1
+            elif [ "$rc" -gt 1 ]; then
+              echo "Error: cannot read $f"
+              fail=1
+            fi
+          done < <(git ls-files -z -co --exclude-standard -- ':!secrets/secrets_example.yaml')
 
           for f in $(git ls-files -co --exclude-standard 'secrets/*/*.yaml'); do
             if ! grep -q '^sops:' "$f"; then
@@ -209,7 +215,10 @@
           ssh-to-age
         ];
         shellHook = ''
-          echo "❯❯❯❯ · Bootstrap shell ready — run: nix run .#rebuild"
+          echo "❯❯❯❯ · Bootstrap shell ready. First build (darwin-rebuild isn't installed yet):"
+          echo '  nix build ".#darwinConfigurations.$(scutil --get LocalHostName).system"'
+          echo '  sudo ./result/sw/bin/darwin-rebuild switch --flake ".#$(scutil --get LocalHostName)"'
+          echo "  Afterwards: nix run .#rebuild"
         '';
       };
 

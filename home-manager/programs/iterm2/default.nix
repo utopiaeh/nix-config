@@ -8,6 +8,7 @@
     copyApplications = false;
 
     settings.appearance.theme = "minimal";
+    extraPrefs.PromptOnQuit = false;
 
     profiles = [
       {

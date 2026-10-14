@@ -16,6 +16,7 @@
 
     casks = [
 
+      "claude"
       "telegram"
       "iterm2"
 
@@ -43,9 +44,9 @@
 
       "docker-desktop"
 
-      "sw33tlie/homebrew-macshot/macshot"
+      "macshot"
 
-      "sanyam-g/homebrew-switch/switch"
+      "sanyam-g/switch/switch"
       "abue-ammar/homebrew-tinycast/tinycast@beta"
       "hamed-elfayome/claude-usage/claude-usage-tracker"
     ];

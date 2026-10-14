@@ -10,10 +10,7 @@
     })
 
     pkgs.rust-analyzer
-    pkgs.pkg-config
-    pkgs.openssl
     pkgs.cargo-llvm-cov
-
   ];
 
   home.sessionVariables.CARGO_HOME = "$HOME/.cargo";

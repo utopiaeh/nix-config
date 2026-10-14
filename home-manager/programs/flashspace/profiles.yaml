@@ -31,12 +31,6 @@ profiles:
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
-    - name: Sublime Text
-      bundleIdentifier: com.sublimetext.4
-      iconPath: /Applications/Sublime Text.app/Contents/Resources/Sublime Text.icns
-    - name: Code
-      bundleIdentifier: com.microsoft.VSCode
-      iconPath: /Applications/Visual Studio Code.app/Contents/Resources/Code.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
     openAppsOnActivation: false
   - id: 7BE6E7A9-7FEE-4A83-9345-C2D5B2EC4389
@@ -119,12 +113,6 @@ profiles:
     - name: Zed
       bundleIdentifier: dev.zed.Zed
       iconPath: /Applications/Zed.app/Contents/Resources/Zed.icns
-    - name: Sublime Text
-      bundleIdentifier: com.sublimetext.4
-      iconPath: /Applications/Sublime Text.app/Contents/Resources/Sublime Text.icns
-    - name: Code
-      bundleIdentifier: com.microsoft.VSCode
-      iconPath: /Applications/Visual Studio Code.app/Contents/Resources/Code.icns
     symbolIconName: chevron.left.forwardslash.chevron.right
     openAppsOnActivation: true
   - id: 8AE89212-9434-4C74-B29A-9E707AE82E8E
