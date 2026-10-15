@@ -1,4 +1,15 @@
 {
+  config,
+  lib,
+  pkgs,
+  username,
+  ...
+}:
+
+let
+  caskNames = lib.concatMapStringsSep " " (c: lib.escapeShellArg c.name) config.homebrew.casks;
+in
+{
   homebrew = {
     enable = true;
 
@@ -56,4 +67,18 @@
       "Xcode" = 497799835;
     };
   };
+
+  # Gatekeeper stays on (LSQuarantine default) for everything else; only apps from the casks
+  # declared above skip the "downloaded from the Internet" prompt. Homebrew removed --no-quarantine.
+  system.activationScripts.postActivation.text = lib.mkAfter ''
+    echo "❯❯❯❯ · Removing quarantine from declared Homebrew casks..."
+    apps=$(sudo --user=${username} --set-home env HOMEBREW_NO_AUTO_UPDATE=1 \
+      /opt/homebrew/bin/brew info --json=v2 --cask ${caskNames} 2>/dev/null \
+      | ${pkgs.jq}/bin/jq -r '.casks[].artifacts[] | select(has("app")) | .target // empty' || true)
+    while IFS= read -r app; do
+      if [ -d "$app" ] && xattr -p com.apple.quarantine "$app" >/dev/null 2>&1; then
+        xattr -dr com.apple.quarantine "$app" || true
+      fi
+    done <<< "$apps"
+  '';
 }

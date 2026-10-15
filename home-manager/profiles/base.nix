@@ -33,6 +33,10 @@ in
     neovim
   ];
 
+  # Stable path for macOS java_home and IDEA's JDK detection; JAVA_HOME's store path changes on every update
+  home.file."Library/Java/JavaVirtualMachines/zulu-25.jdk".source =
+    "${config.programs.java.package}/Library/Java/JavaVirtualMachines/zulu-25.jdk";
+
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
