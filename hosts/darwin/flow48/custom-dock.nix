@@ -1,3 +1,4 @@
+{ username, ... }:
 {
   system.defaults.dock = {
     persistent-apps = [
@@ -5,7 +6,7 @@
 
       "/Applications/Zed.app"
       "/Applications/IntelliJ IDEA.app"
-      "/Applications/iTerm.app"
+      "/Users/${username}/Applications/Home Manager Apps/Ghostty.app"
 
       "/Applications/Telegram.app"
       "/Applications/Slack.app"

@@ -127,7 +127,7 @@ nix-config/
 │   │   ├── base.nix                 # Shell, git, SSH, aliases, env vars
 │   │   └── <machine>.nix            # Machine-specific home config
 │   ├── modules/                     # Local home-manager modules (iterm2)
-│   └── programs/                    # rust, node, git, nix LSP, iterm2, claude, idea...
+│   └── programs/                    # rust, node, git, nix LSP, iterm2, ghostty, claude, idea...
 ├── assets/                          # starship theme, wallpapers...
 ├── secrets/
 │   ├── <machine>/secrets.enc.yaml   # Encrypted machine secrets
@@ -431,6 +431,8 @@ Grant these in **System Settings → Privacy & Security** when each app asks (or
 | **Docker Desktop** | Launch once to finish setup (also provides the driver `minikube` needs) |
 | **Claude Usage Tracker** | On first launch, follow its setup to paste your claude.ai session key |
 | **iTerm2** | If theme or font looks wrong, quit and reopen |
+| **Ghostty** | Installed by Nix into `~/Applications/Home Manager Apps`; config in `home-manager/programs/ghostty.nix` |
+| **Terminal you rebuild from** | **App Management** (System Settings → Privacy & Security), so home-manager can update its app copies; without it activation stops with "permission denied" |
 | **IntelliJ IDEA** | Launch once, then rebuild to install the layout; quit IDEA before rebuilding or it overwrites the layout on exit |
 
 **FlashSpace config** is only copied from `home-manager/programs/flashspace/` when `~/.config/flashspace/` has no files yet. After that FlashSpace owns them: changes in the repo don't reach an existing Mac, and to save changes made in the app back to the repo run `~/.config/scripts/backup_flashspace.sh` (then review and commit).
