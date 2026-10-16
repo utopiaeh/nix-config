@@ -126,8 +126,7 @@ nix-config/
 │   ├── profiles/
 │   │   ├── base.nix                 # Shell, git, SSH, aliases, env vars
 │   │   └── <machine>.nix            # Machine-specific home config
-│   ├── modules/                     # Local home-manager modules (iterm2)
-│   └── programs/                    # rust, node, git, nix LSP, iterm2, ghostty, claude, idea...
+│   └── programs/                    # rust, node, git, nix LSP, ghostty, claude, idea...
 ├── assets/                          # starship theme, wallpapers...
 ├── secrets/
 │   ├── <machine>/secrets.enc.yaml   # Encrypted machine secrets
@@ -430,7 +429,6 @@ Grant these in **System Settings → Privacy & Security** when each app asks (or
 | **Tinycast** | Accessibility. Its ⌘Space palette hotkey is set by the config; import a backup from `assets/*.tinycast` for the rest. |
 | **Docker Desktop** | Launch once to finish setup (also provides the driver `minikube` needs) |
 | **Claude Usage Tracker** | On first launch, follow its setup to paste your claude.ai session key |
-| **iTerm2** | If theme or font looks wrong, quit and reopen |
 | **Ghostty** | Installed by Nix into `~/Applications/Home Manager Apps`; config in `home-manager/programs/ghostty.nix` |
 | **Terminal you rebuild from** | **App Management** (System Settings → Privacy & Security), so home-manager can update its app copies; without it activation stops with "permission denied" |
 | **IntelliJ IDEA** | Launch once, then rebuild to install the layout; quit IDEA before rebuilding or it overwrites the layout on exit |

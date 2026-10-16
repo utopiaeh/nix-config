@@ -29,7 +29,6 @@ in
 
       "claude"
       "telegram"
-      "iterm2"
 
       "google-chrome"
       "zen"

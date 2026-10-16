@@ -11,7 +11,6 @@
     enable = true;
     package = pkgs.ghostty-bin;
 
-    # Carried over from the iTerm2 profile (home-manager/programs/iterm2)
     settings = {
       font-family = "MesloLGL Nerd Font";
       font-size = 16;

@@ -38,9 +38,9 @@ profiles:
     display: BenQ GW2470
     shortcut: opt+3
     apps:
-    - name: iTerm2
-      bundleIdentifier: com.googlecode.iterm2
-      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    - name: Ghostty
+      bundleIdentifier: com.mitchellh.ghostty
+      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
     symbolIconName: apple.terminal
     openAppsOnActivation: true
   - id: 109F235F-CE46-4BA2-9BB1-2F027F0D440B
@@ -120,14 +120,14 @@ profiles:
     display: Built-in Retina Display
     shortcut: opt+3
     apps:
-    - name: iTerm2
-      bundleIdentifier: com.googlecode.iterm2
-      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    - name: Ghostty
+      bundleIdentifier: com.mitchellh.ghostty
+      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
       autoOpen: true
     appToFocus:
-      name: iTerm2
-      bundleIdentifier: com.googlecode.iterm2
-      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+      name: Ghostty
+      bundleIdentifier: com.mitchellh.ghostty
+      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
     symbolIconName: apple.terminal
     openAppsOnActivation: true
   - id: 78FFB4B2-6C42-401E-881F-0C64860AA95B
@@ -215,13 +215,13 @@ profiles:
     shortcut: opt+3
     assignAppShortcut: ctrl+opt+3
     apps:
-    - name: iTerm2
-      bundleIdentifier: com.googlecode.iterm2
-      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+    - name: Ghostty
+      bundleIdentifier: com.mitchellh.ghostty
+      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
     appToFocus:
-      name: iTerm2
-      bundleIdentifier: com.googlecode.iterm2
-      iconPath: /nix/store/iiq4nvfvq2rgsdx3myamr0s922nb294c-iterm2-3.5.14/Applications/iTerm2.app/Contents/Resources/AppIcon.icns
+      name: Ghostty
+      bundleIdentifier: com.mitchellh.ghostty
+      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
     symbolIconName: apple.terminal
     openAppsOnActivation: true
   - id: 81CC1CCB-AFB3-461F-87F8-3C3BA4F5D79D
