@@ -5,7 +5,7 @@
 
       "/Applications/Zed.app"
       "/Applications/IntelliJ IDEA.app"
-      "/Applications/iTerm.app"
+      "/Applications/Ghostty.app"
 
       "/Applications/Telegram.app"
 

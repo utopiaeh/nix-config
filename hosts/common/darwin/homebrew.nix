@@ -28,8 +28,8 @@ in
     casks = [
 
       "claude"
+      "ghostty@tip"
       "telegram"
-      "iterm2"
 
       "google-chrome"
       "zen"

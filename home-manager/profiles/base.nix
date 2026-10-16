@@ -14,8 +14,7 @@ in
   home.stateVersion = "25.05";
 
   imports = [
-    ../modules/iterm2
-    ../programs/iterm2
+    ../programs/ghostty.nix
     ../programs/git.nix
     ../programs/flashspace
     ../programs/macshot.nix

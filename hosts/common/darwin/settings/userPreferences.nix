@@ -32,9 +32,6 @@
     "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
     # Prevent Photos from opening automatically when devices are plugged in
     "com.apple.ImageCapture".disableHotPlug = true;
-    # Also in programs.iterm2.extraPrefs; the iTerm2 module only recopies its plist when it
-    # changes, so this rewrite on every switch keeps the setting enforced
-    "com.googlecode.iterm2".PromptOnQuit = false;
     # Spotlight's ⌘Space is disabled in disableHotkeys.nix; Tinycast takes it over
     "com.tinycast.app.beta"."hotkey.togglePalette" = builtins.toJSON {
       combo._0 = {
