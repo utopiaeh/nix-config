@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  # Real copies instead of symlinks so Spotlight and the Dock handle Nix apps (Ghostty)
+  # Real copies instead of symlinks so Spotlight and the Dock handle Nix apps
   targets.darwin = {
     linkApps.enable = false;
     copyApps.enable = true;
@@ -9,7 +9,10 @@
 
   programs.ghostty = {
     enable = true;
-    package = pkgs.ghostty-bin;
+    # ponytail: app from the ghostty@tip cask (homebrew.nix), because title-bar tabs are broken in
+    # Ghostty 1.3.1 on macOS 27 (ghostty-org/ghostty discussions 14244, 14303; fixed for 1.4).
+    # Once pkgs.ghostty-bin is 1.4+, use it here again and drop the cask.
+    package = null;
 
     settings = {
       font-family = "MesloLGL Nerd Font";
@@ -41,7 +44,10 @@
       window-width = 120;
       window-height = 22;
       cursor-style = "block";
-      macos-titlebar-style = "transparent";
+      # Tabs integrated into the title bar, per fredrikaverpil.github.io/blog/2024/12/04/ghostty-on-macos
+      macos-titlebar-style = "tabs";
+      macos-titlebar-proxy-icon = "hidden";
+      window-title-font-family = "MesloLGL Nerd Font";
       window-new-tab-position = "end";
       confirm-close-surface = false;
       # ⌘⇧T (undo) reopens a closed tab, but only within undo-timeout
@@ -51,6 +57,10 @@
       keybind = [
         "super+shift+d=new_tab"
         "super+alt+d=new_split:down"
+        "ctrl+shift+left_bracket=previous_tab"
+        "ctrl+shift+right_bracket=next_tab"
+        "ctrl+shift+comma=move_tab:-1"
+        "ctrl+shift+period=move_tab:1"
       ];
     };
   };

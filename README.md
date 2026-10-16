@@ -429,8 +429,8 @@ Grant these in **System Settings → Privacy & Security** when each app asks (or
 | **Tinycast** | Accessibility. Its ⌘Space palette hotkey is set by the config; import a backup from `assets/*.tinycast` for the rest. |
 | **Docker Desktop** | Launch once to finish setup (also provides the driver `minikube` needs) |
 | **Claude Usage Tracker** | On first launch, follow its setup to paste your claude.ai session key |
-| **Ghostty** | Installed by Nix into `~/Applications/Home Manager Apps`; config in `home-manager/programs/ghostty.nix` |
-| **Terminal you rebuild from** | **App Management** (System Settings → Privacy & Security), so home-manager can update its app copies; without it activation stops with "permission denied" |
+| **Ghostty** | `ghostty@tip` cask (development builds, updates itself) until 1.4 fixes title-bar tabs on macOS 27; config in `home-manager/programs/ghostty.nix` |
+| **Terminal you rebuild from** (Ghostty) | **Full Disk Access** — writing Safari's sandboxed preferences needs it; without it activation stops with `Could not write domain .../com.apple.Safari`. **App Management** — so home-manager can update its app copies; without it activation stops with "permission denied" |
 | **IntelliJ IDEA** | Launch once, then rebuild to install the layout; quit IDEA before rebuilding or it overwrites the layout on exit |
 
 **FlashSpace config** is only copied from `home-manager/programs/flashspace/` when `~/.config/flashspace/` has no files yet. After that FlashSpace owns them: changes in the repo don't reach an existing Mac, and to save changes made in the app back to the repo run `~/.config/scripts/backup_flashspace.sh` (then review and commit).

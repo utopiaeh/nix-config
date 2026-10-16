@@ -40,7 +40,7 @@ profiles:
     apps:
     - name: Ghostty
       bundleIdentifier: com.mitchellh.ghostty
-      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
+      iconPath: /Applications/Ghostty.app/Contents/Resources/Ghostty.icns
     symbolIconName: apple.terminal
     openAppsOnActivation: true
   - id: 109F235F-CE46-4BA2-9BB1-2F027F0D440B
@@ -122,12 +122,12 @@ profiles:
     apps:
     - name: Ghostty
       bundleIdentifier: com.mitchellh.ghostty
-      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
+      iconPath: /Applications/Ghostty.app/Contents/Resources/Ghostty.icns
       autoOpen: true
     appToFocus:
       name: Ghostty
       bundleIdentifier: com.mitchellh.ghostty
-      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
+      iconPath: /Applications/Ghostty.app/Contents/Resources/Ghostty.icns
     symbolIconName: apple.terminal
     openAppsOnActivation: true
   - id: 78FFB4B2-6C42-401E-881F-0C64860AA95B
@@ -217,11 +217,11 @@ profiles:
     apps:
     - name: Ghostty
       bundleIdentifier: com.mitchellh.ghostty
-      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
+      iconPath: /Applications/Ghostty.app/Contents/Resources/Ghostty.icns
     appToFocus:
       name: Ghostty
       bundleIdentifier: com.mitchellh.ghostty
-      iconPath: /Users/utopiaeh/Applications/Home Manager Apps/Ghostty.app/Contents/Resources/Ghostty.icns
+      iconPath: /Applications/Ghostty.app/Contents/Resources/Ghostty.icns
     symbolIconName: apple.terminal
     openAppsOnActivation: true
   - id: 81CC1CCB-AFB3-461F-87F8-3C3BA4F5D79D
