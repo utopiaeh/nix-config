@@ -41,8 +41,17 @@
       window-width = 120;
       window-height = 22;
       cursor-style = "block";
-      macos-titlebar-style = "tabs";
+      macos-titlebar-style = "transparent";
+      window-new-tab-position = "end";
       confirm-close-surface = false;
+      # ⌘⇧T (undo) reopens a closed tab, but only within undo-timeout
+      undo-timeout = "30s";
+
+      # iTerm2 habit: ⌘⇧D opens a tab in the same folder; Ghostty's split-down moves to ⌘⌥D
+      keybind = [
+        "super+shift+d=new_tab"
+        "super+alt+d=new_split:down"
+      ];
     };
   };
 }
