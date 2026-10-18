@@ -160,6 +160,15 @@ in
         , () {
           nix run nixpkgs#comma -- "$@"
         }
+
+        # ulimit can't live in .envrc: direnv runs it in a subshell
+        _nix_config_ulimit() {
+          local repo=''${NIX_CONFIG_DIR:-$HOME/nix-config}
+          [[ ''${PWD:A}/ == ''${repo:A}/* ]] && ulimit -n 4096 2>/dev/null
+        }
+        autoload -Uz add-zsh-hook
+        add-zsh-hook chpwd _nix_config_ulimit
+        _nix_config_ulimit
       '';
     };
 
