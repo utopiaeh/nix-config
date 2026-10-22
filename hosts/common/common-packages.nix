@@ -6,6 +6,8 @@
     gh
 
     # General utilities
+    # Nix curl trusts the nixpkgs CA bundle, which drops CAs Mozilla distrusts; /usr/bin/curl does not
+    curl
     tree
     unzip
     watch
