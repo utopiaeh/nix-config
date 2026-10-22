@@ -43,6 +43,8 @@ in
     LSCOLORS = "gxfxcxdxbxgggdabagacad";
     SOPS_AGE_KEY_FILE = "$HOME/.config/sops/age/keys.txt";
     NPM_CONFIG_PREFIX = "$HOME/.npm-global";
+    # /etc/ssl/cert.pem (Apple) still has roots Mozilla distrusts for TLS; nixpkgs cacert drops them
+    SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
   };
 
   programs = {
