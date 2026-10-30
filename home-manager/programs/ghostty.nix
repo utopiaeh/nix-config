@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Real copies instead of symlinks so Spotlight and the Dock handle Nix apps
@@ -9,10 +9,7 @@
 
   programs.ghostty = {
     enable = true;
-    # ponytail: app from the ghostty@tip cask (homebrew.nix), because title-bar tabs are broken in
-    # Ghostty 1.3.1 on macOS 27 (ghostty-org/ghostty discussions 14244, 14303; fixed for 1.4).
-    # Once pkgs.ghostty-bin is 1.4+, use it here again and drop the cask.
-    package = null;
+    package = pkgs.ghostty-bin;
 
     settings = {
       font-family = "MesloLGL Nerd Font";
