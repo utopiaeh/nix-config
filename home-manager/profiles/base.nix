@@ -148,6 +148,13 @@ in
         [[ -n ''${key[Up]} ]] && bindkey "''${key[Up]}" up-line-or-search
         [[ -n ''${key[Down]} ]] && bindkey "''${key[Down]}" down-line-or-search
 
+        # Tab title: folder name when idle, program name while running
+        autoload -Uz add-zsh-hook
+        _tab_title_idle() { print -Pn "\e]2;%1~\a" }
+        _tab_title_cmd() { print -n "\e]2;''${1%% *}\a" }
+        add-zsh-hook precmd _tab_title_idle
+        add-zsh-hook preexec _tab_title_cmd
+
         # PATH (appended after Nix paths so Nix-managed tools take precedence)
         export PATH="$PATH:$HOME/go/bin"
         export PATH="$PATH:$HOME/.npm-global/bin"
