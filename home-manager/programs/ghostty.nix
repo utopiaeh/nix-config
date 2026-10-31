@@ -41,7 +41,7 @@
       window-width = 120;
       window-height = 22;
       cursor-style = "block";
-      macos-titlebar-style = "tabs";
+      macos-titlebar-style = "transparent";
       macos-titlebar-proxy-icon = "hidden";
       window-title-font-family = "MesloLGL Nerd Font";
       window-new-tab-position = "end";
