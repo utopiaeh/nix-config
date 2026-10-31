@@ -44,9 +44,16 @@
       macos-titlebar-style = "transparent";
       macos-titlebar-proxy-icon = "hidden";
       window-title-font-family = "MesloLGL Nerd Font";
+      # zsh sets short tab titles itself (base.nix)
+      shell-integration-features = "no-title,ssh-env,ssh-terminfo";
       window-new-tab-position = "end";
       confirm-close-surface = false;
       undo-timeout = "30s";
+      window-save-state = "always";
+      mouse-hide-while-typing = true;
+      macos-option-as-alt = "left";
+      # Nix pins the version
+      auto-update = "off";
 
       keybind = [
         "super+alt+d=new_split:down"
@@ -54,6 +61,7 @@
         "ctrl+shift+right_bracket=next_tab"
         "ctrl+shift+comma=move_tab:-1"
         "ctrl+shift+period=move_tab:1"
+        "global:ctrl+grave_accent=toggle_quick_terminal"
       ];
     };
   };
