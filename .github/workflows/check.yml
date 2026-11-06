@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   flake-check:
-    runs-on: macos-14
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
       - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
@@ -20,7 +20,7 @@ jobs:
       - run: nix run .#scan-keys
 
   build:
-    runs-on: macos-14
+    runs-on: macos-26
     strategy:
       matrix:
         host: [mac-pro, flow48]
