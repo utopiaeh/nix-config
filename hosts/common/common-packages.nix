@@ -23,6 +23,9 @@
     # Go runtime
     go
 
+    # Python tooling
+    uv
+
     # Kubernetes
     minikube
     kubectl
