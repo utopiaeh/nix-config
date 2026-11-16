@@ -1,7 +1,43 @@
-{ lib, inputs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
+let
+  cc = config.programs.claude-code;
+  # One config dir per account; the module exports CLAUDE_CONFIG_DIR=workDir, so plain `claude` is work
+  workDir = "${config.home.homeDirectory}/.claude-work";
+  personalDir = "${config.home.homeDirectory}/.claude-personal";
+in
+{
+  programs.zsh.shellAliases = {
+    claude-work = "CLAUDE_CONFIG_DIR=${workDir} claude";
+    claude-personal = "CLAUDE_CONFIG_DIR=${personalDir} claude";
+  };
+
+  # The claude-code module only manages one config dir (work), so mirror its CLAUDE.md, skills and
+  # settings into the personal one
+  home.file.".claude-personal/CLAUDE.md".source = cc.context;
+  home.file.".claude-personal/skills".source =
+    config.lib.file.mkOutOfStoreSymlink "${workDir}/skills";
+
+  home.activation.claudePersonalSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] (
+    lib.hm.generators.mkImpureConfigMerger {
+      inherit pkgs;
+      path = "${personalDir}/settings.json";
+      staticSettings = (pkgs.formats.json { }).generate "claude-personal-settings.json" cc.settings;
+      jqOperation = "$dynamic * $static";
+      format = "json";
+      empty = "{}";
+      mode = "600";
+    }
+  );
+
   programs.claude-code = {
     enable = true; # package = pkgs.claude-code (claude-code overlay)
+    configDir = workDir;
 
     # Claude and /plugin still write settings.json; declared keys are merged in on switch
     mutableSettings = true;
@@ -93,10 +129,11 @@
       };
 
       # Run the script bundled with the installed caveman plugin (newest cached version) so it
-      # always matches the plugin's state format; prints nothing until the plugin is installed
+      # always matches the plugin's state format; prints nothing until the plugin is installed.
+      # The prefix tells the work and personal profiles apart, since both share these settings
       statusLine = {
         type = "command";
-        command = ''f=$(ls -t "$HOME"/.claude/plugins/cache/caveman/caveman/*/hooks/caveman-statusline.sh "$HOME"/.claude/plugins/cache/caveman/caveman/*/src/hooks/caveman-statusline.sh 2>/dev/null | head -1); [ -n "$f" ] && exec bash "$f"'';
+        command = ''case "$CLAUDE_CONFIG_DIR" in *personal*) printf '[personal] ';; *) printf '[work] ';; esac; f=$(ls -t "''${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/caveman/caveman/*/hooks/caveman-statusline.sh "''${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/caveman/caveman/*/src/hooks/caveman-statusline.sh 2>/dev/null | head -1); [ -n "$f" ] && exec bash "$f"'';
       };
       effortLevel = "medium";
       theme = "dark";
@@ -107,13 +144,8 @@
 
     skills =
       lib.mapAttrs (_: path: "${inputs.mattpocock-skills}/skills/${path}") {
+        ask-matt = "engineering/ask-matt";
         code-review = "engineering/code-review";
-        diagnosing-bugs = "engineering/diagnosing-bugs";
-        grill-me = "productivity/grill-me";
-        grill-with-docs = "engineering/grill-with-docs";
-        grilling = "productivity/grilling";
-        prototype = "engineering/prototype";
-        tdd = "engineering/tdd";
       }
       // {
         java-coach = ./claude/skills/java-coach;

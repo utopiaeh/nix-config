@@ -41,6 +41,7 @@ in
       "artginzburg/tap/wheelclick"
       "transmission"
       "pearcleaner"
+      "thaw@beta" # menu bar manager (hide menu bar icons); 3.x is beta-only for now
       "crisp"
       "discord"
 
@@ -58,7 +59,6 @@ in
 
       "sanyam-g/switch/switch"
       "abue-ammar/homebrew-tinycast/tinycast@beta"
-      "hamed-elfayome/claude-usage/claude-usage-tracker"
     ];
 
     masApps = {

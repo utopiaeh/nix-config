@@ -25,3 +25,8 @@
 
 - For bug fixes, features, and refactors where more than one reasonable approach exists, present 2–4 options with trade-offs via `AskUserQuestion`, best-practice option first marked "(Recommended)", and let the user pick.
 - Skip the question when there is one obvious correct fix or the change is trivial.
+
+## Skills and plugins
+
+- Skills and plugins kept long-term are declared in `~/nix-config/home-manager/programs/claude.nix` (`programs.claude-code.skills`, `settings.enabledPlugins`).
+- Installing a skill directly (`npx skills add`, copying into `~/.claude-work/skills`) is fine for trying it out; it works in both the work and personal accounts. After installing one, ask the user whether to keep it and, if so, add it to `claude.nix`.
