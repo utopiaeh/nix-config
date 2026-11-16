@@ -247,7 +247,6 @@
         "homebrew-artginzburg-tap": "homebrew-artginzburg-tap",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
-        "homebrew-claude-usage": "homebrew-claude-usage",
         "homebrew-core": "homebrew-core",
         "homebrew-switch": "homebrew-switch",
         "homebrew-tinycast": "homebrew-tinycast",
