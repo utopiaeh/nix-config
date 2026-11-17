@@ -154,6 +154,22 @@
         "type": "github"
       }
     },
+    "homebrew-tokeneater": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794441888,
+        "narHash": "sha256-QMJxWY3jEWAVp2q9KAUPLv+hJca47mhRm+OdeFOV0l8=",
+        "owner": "AThevon",
+        "repo": "homebrew-tokeneater",
+        "rev": "8a8d64e097955d7e09361642833939960588b3c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AThevon",
+        "repo": "homebrew-tokeneater",
+        "type": "github"
+      }
+    },
     "mattpocock-skills": {
       "flake": false,
       "locked": {
@@ -234,6 +250,7 @@
         "homebrew-core": "homebrew-core",
         "homebrew-switch": "homebrew-switch",
         "homebrew-tinycast": "homebrew-tinycast",
+        "homebrew-tokeneater": "homebrew-tokeneater",
         "mattpocock-skills": "mattpocock-skills",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",

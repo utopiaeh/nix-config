@@ -63,6 +63,11 @@
       url = "github:sadjow/claude-code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    homebrew-tokeneater = {
+      url = "github:AThevon/homebrew-tokeneater";
+      flake = false;
+    };
   };
 
   outputs =
