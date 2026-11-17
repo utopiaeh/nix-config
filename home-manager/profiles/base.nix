@@ -26,7 +26,6 @@ in
     ../programs/node.nix
     ../programs/claude.nix
     ../programs/idea.nix
-    ../programs/tokeneater.nix
   ];
 
   home.packages = with pkgs; [

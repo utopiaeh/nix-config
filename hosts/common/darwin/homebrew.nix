@@ -61,7 +61,7 @@ in
 
       "hiddenbar"
 
-      "tokeneater"
+      "athevon/tokeneater/tokeneater"
     ];
 
     masApps = {
