@@ -19,7 +19,7 @@ in
     ../programs/flashspace
     ../programs/macshot.nix
     ../programs/switch.nix
-    ../programs/crisp.nix
+    # ../programs/crisp.nix
     ../programs/wheelclick.nix
     ../programs/rust.nix
     ../programs/nix.nix
@@ -30,7 +30,6 @@ in
 
   home.packages = with pkgs; [
     neovim
-    claude-usage-tracker
   ];
 
   # Stable path for macOS java_home and IDEA's JDK detection; JAVA_HOME's store path changes on every update

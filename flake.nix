@@ -33,6 +33,10 @@
       url = "github:Sanyam-G/homebrew-switch";
       flake = false;
     };
+    homebrew-fif7y = {
+      url = "github:fif7y/homebrew-tap";
+      flake = false;
+    };
 
     homebrew-tinycast = {
       url = "github:abue-ammar/homebrew-tinycast";

@@ -41,7 +41,7 @@ in
       "artginzburg/tap/wheelclick"
       "transmission"
       "pearcleaner"
-      "crisp"
+      # "crisp"
       "discord"
 
       "zed"
@@ -59,9 +59,10 @@ in
       "sanyam-g/switch/switch"
       "abue-ammar/homebrew-tinycast/tinycast@beta"
 
-      "hiddenbar"
+      # "hiddenbar"
 
       "athevon/tokeneater/tokeneater"
+      "fif7y/tap/dimble"
     ];
 
     masApps = {

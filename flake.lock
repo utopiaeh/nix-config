@@ -122,6 +122,22 @@
         "type": "github"
       }
     },
+    "homebrew-fif7y": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794673934,
+        "narHash": "sha256-xzrrcLDFbocY8XND5d1WLvFuh1TiFl2QzA4ckxeZxW0=",
+        "owner": "fif7y",
+        "repo": "homebrew-tap",
+        "rev": "4c200d4f961386f80f65eb0985a00621eed4eb7c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fif7y",
+        "repo": "homebrew-tap",
+        "type": "github"
+      }
+    },
     "homebrew-switch": {
       "flake": false,
       "locked": {
@@ -248,6 +264,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "homebrew-fif7y": "homebrew-fif7y",
         "homebrew-switch": "homebrew-switch",
         "homebrew-tinycast": "homebrew-tinycast",
         "homebrew-tokeneater": "homebrew-tokeneater",
