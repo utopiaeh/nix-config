@@ -19,7 +19,7 @@ in
     ../programs/flashspace
     ../programs/macshot.nix
     ../programs/switch.nix
-    ../programs/crisp.nix
+    # ../programs/crisp.nix
     ../programs/wheelclick.nix
     ../programs/rust.nix
     ../programs/nix.nix
@@ -30,7 +30,6 @@ in
 
   home.packages = with pkgs; [
     neovim
-    claude-usage-tracker
   ];
 
   # Stable path for macOS java_home and IDEA's JDK detection; JAVA_HOME's store path changes on every update
@@ -46,7 +45,13 @@ in
     NPM_CONFIG_PREFIX = "$HOME/.npm-global";
     # /etc/ssl/cert.pem (Apple) still has roots Mozilla distrusts for TLS; nixpkgs cacert drops them
     SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+    ANDROID_HOME = "$HOME/Library/Android/sdk";
   };
+
+  home.sessionPath = [
+    "$HOME/Library/Android/sdk/platform-tools"
+    "$HOME/Library/Android/sdk/emulator"
+  ];
 
   programs = {
     # also sets JAVA_HOME, which IDEA and Gradle use to find the JDK

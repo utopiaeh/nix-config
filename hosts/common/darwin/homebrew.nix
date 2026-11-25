@@ -41,11 +41,12 @@ in
       "artginzburg/tap/wheelclick"
       "transmission"
       "pearcleaner"
-      "crisp"
+      # "crisp"
       "discord"
 
       "zed"
       "intellij-idea"
+      "android-studio"
       "bruno"
 
       "figma"
@@ -61,7 +62,8 @@ in
 
       "hiddenbar"
 
-      "athevon/tokeneater/tokeneater"
+      # "athevon/tokeneater/tokeneater"
+      # "fif7y/tap/dimble"
     ];
 
     masApps = {

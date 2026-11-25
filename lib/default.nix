@@ -68,7 +68,8 @@ in
               "sanyam-g/homebrew-switch" = homebrew-switch;
               "abue-ammar/homebrew-tinycast" = homebrew-tinycast;
               "artginzburg/homebrew-tap" = homebrew-artginzburg-tap;
-              "athevon/homebrew-tokeneater" = inputs.homebrew-tokeneater;
+              # "athevon/homebrew-tokeneater" = homebrew-tokeneater;
+              # "fif7y/homebrew-tap" = homebrew-fif7y;
             };
           };
         }
