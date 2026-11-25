@@ -10,6 +10,7 @@ let
   # One config dir per account; the module exports CLAUDE_CONFIG_DIR=workDir, so plain `claude` is work
   workDir = "${config.home.homeDirectory}/.claude-work";
   personalDir = "${config.home.homeDirectory}/.claude-personal";
+  graphifySrc = "${pkgs.graphify}/${pkgs.python3.sitePackages}/graphify";
 in
 {
   programs.zsh.shellAliases = {
@@ -35,6 +36,8 @@ in
     }
   );
 
+  home.packages = [ pkgs.graphify ];
+
   programs.claude-code = {
     enable = true; # package = pkgs.claude-code (claude-code overlay)
     configDir = workDir;
@@ -57,12 +60,17 @@ in
           source = "github";
           repo = "DietrichGebert/ponytail";
         };
+        thedotmack.source = {
+          source = "github";
+          repo = "thedotmack/claude-mem";
+        };
       };
       enabledPlugins = {
         "caveman@caveman" = true; # SessionStart hook → caveman every session
         "ponytail@ponytail" = true; # SessionStart hook → ponytail every session
         "feature-dev@claude-plugins-official" = true;
         "figma@claude-plugins-official" = true;
+        "claude-mem@thedotmack" = true;
       };
 
       permissions = {
@@ -157,6 +165,10 @@ in
       }
       // {
         java-coach = ./claude/skills/java-coach;
+        graphify = pkgs.linkFarm "graphify-skill" {
+          "SKILL.md" = "${graphifySrc}/skill.md";
+          references = "${graphifySrc}/skills/claude/references";
+        };
       };
   };
 }

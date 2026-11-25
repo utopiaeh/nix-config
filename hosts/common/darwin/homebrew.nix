@@ -46,6 +46,7 @@ in
 
       "zed"
       "intellij-idea"
+      "android-studio"
       "bruno"
 
       "figma"
@@ -59,10 +60,10 @@ in
       "sanyam-g/switch/switch"
       "abue-ammar/homebrew-tinycast/tinycast@beta"
 
-      # "hiddenbar"
+      "hiddenbar"
 
-      "athevon/tokeneater/tokeneater"
-      "fif7y/tap/dimble"
+      # "athevon/tokeneater/tokeneater"
+      # "fif7y/tap/dimble"
     ];
 
     masApps = {
