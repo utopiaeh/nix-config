@@ -11,6 +11,14 @@ let
   workDir = "${config.home.homeDirectory}/.claude-work";
   personalDir = "${config.home.homeDirectory}/.claude-personal";
   graphifySrc = "${pkgs.graphify}/${pkgs.python3.sitePackages}/graphify";
+  graphify = pkgs.symlinkJoin {
+    name = "graphify-wrapped";
+    paths = [ pkgs.graphify ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      for f in $out/bin/*; do wrapProgram "$f" --set-default PYTHONHASHSEED 0; done
+    '';
+  };
 in
 {
   programs.zsh.shellAliases = {
@@ -36,7 +44,7 @@ in
     }
   );
 
-  home.packages = [ pkgs.graphify ];
+  home.packages = [ graphify ];
 
   programs.claude-code = {
     enable = true; # package = pkgs.claude-code (claude-code overlay)

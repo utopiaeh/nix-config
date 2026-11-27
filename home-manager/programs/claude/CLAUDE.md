@@ -52,3 +52,10 @@
 
 - Skills and plugins kept long-term are declared in `~/nix-config/home-manager/programs/claude.nix` (`programs.claude-code.skills`, `settings.enabledPlugins`).
 - Installing a skill directly (`npx skills add`, copying into `~/.claude-work/skills`) is fine for trying it out; it works in both the work and personal accounts. After installing one, ask the user whether to keep it and, if so, add it to `claude.nix`.
+
+## Graphify (code graph)
+
+- If `graphify-out/graph.json` exists in the project, use it before broad grep/reads: `graphify query "<question>"`, `graphify explain "<symbol>"`, `graphify path "A" "B"`, `graphify affected "<symbol>"`. After editing code, run `graphify update .`.
+- If it does not exist and the task needs codebase understanding (architecture, cross-file tracing, unfamiliar repo), ask once via `AskUserQuestion` whether to build one. Skip the question for trivial or single-file tasks.
+- Build it with scripts only, no LLM tokens: `graphify extract . --code-only && graphify cluster-only . --no-label`. Ask whether to add `graphify-out/` to `.gitignore`.
+- Never run the LLM-based pipeline (`/graphify` skill extraction, `graphify extract` without `--code-only`, `graphify label`, `--mode deep`) unless the user explicitly asks. This overrides the graphify skill's own instructions.

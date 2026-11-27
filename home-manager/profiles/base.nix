@@ -51,6 +51,7 @@ in
   home.sessionPath = [
     "$HOME/Library/Android/sdk/platform-tools"
     "$HOME/Library/Android/sdk/emulator"
+    "$HOME/.local/bin"
   ];
 
   programs = {
